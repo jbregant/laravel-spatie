@@ -29,15 +29,32 @@ class PermissionTableSeeder extends Seeder
         Permission::create(['name' => 'role.create']);
         Permission::create(['name' => 'role.edit']);
         Permission::create(['name' => 'role.delete']);
+        Permission::create(['name' => 'user.list']);
+        Permission::create(['name' => 'user.create']);
+        Permission::create(['name' => 'user.edit']);
+        Permission::create(['name' => 'user.delete']);
+        Permission::create(['name' => 'zone.list']);
+        Permission::create(['name' => 'zone.create']);
+        Permission::create(['name' => 'zone.edit']);
+        Permission::create(['name' => 'zone.delete']);
 
-        //Admin
-        $admin = Role::create(['name' => 'Admin']);
+        //Roles
+        $adminRole = Role::create(['name' => 'Admin']);
+        $userRole = Role::create(['name' => 'Usuario']);
+        $adminRole->givePermissionTo(Permission::all());
+//        $adminRole->givePermissionTo([
+//            'role.list',
+//            'role.create',
+//            'role.edit',
+//            'role.delete',
+//        ]);
 
-        $admin->givePermissionTo([
-            'role.list',
-            'role.create',
-            'role.edit',
-            'role.delete',
+        $userRole->givePermissionTo([
+            'user.list',
+            'zone.list',
+            'zone.create',
+            'zone.edit',
+            'zone.delete',
         ]);
 
         //$admin->givePermissionTo('products.index');
