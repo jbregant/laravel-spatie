@@ -37,6 +37,10 @@ class PermissionTableSeeder extends Seeder
         Permission::create(['name' => 'zone.create']);
         Permission::create(['name' => 'zone.edit']);
         Permission::create(['name' => 'zone.delete']);
+        Permission::create(['name' => 'collector.list']);
+        Permission::create(['name' => 'collector.create']);
+        Permission::create(['name' => 'collector.edit']);
+        Permission::create(['name' => 'collector.delete']);
 
         //Roles
         $adminRole = Role::create(['name' => 'Admin']);
@@ -55,6 +59,10 @@ class PermissionTableSeeder extends Seeder
             'zone.create',
             'zone.edit',
             'zone.delete',
+            'collector.list',
+            'collector.create',
+            'collector.edit',
+            'collector.delete',
         ]);
 
         //$admin->givePermissionTo('products.index');
