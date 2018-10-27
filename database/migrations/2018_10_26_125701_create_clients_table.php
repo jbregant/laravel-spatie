@@ -18,7 +18,7 @@ class CreateClientsTable extends Migration
             $table->string('name');
             $table->string('lastname');
             $table->string('address');
-            $table->string('city');
+            $table->string('city')->references('id')->on('cities');
             $table->string('phone');
             $table->boolean('status');
             $table->timestamps();

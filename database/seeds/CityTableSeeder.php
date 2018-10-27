@@ -16,7 +16,7 @@ class CityTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        DB::table('city')->truncate();
+        DB::table('cities')->truncate();
 
         Schema::enableForeignKeyConstraints();
 
