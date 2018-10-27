@@ -122,9 +122,11 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Configuración
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="{{ route('users.index') }}">Administrar Usuarios</a></li>
-                                <li><a class="nav-link" href="{{ route('roles.index') }}">Administrar Roles</a></li>
-                                <li><a class="nav-link" href="{{ route('zones.index') }}">Administrar Zonas</a></li>
+                                <li><a class="nav-link" href="{{ route('users.index') }}">Usuarios</a></li>
+                                <li><a class="nav-link" href="{{ route('roles.index') }}">Roles</a></li>
+                                <li><a class="nav-link" href="{{ route('zones.index') }}">Zonas</a></li>
+                                <li><a class="nav-link" href="{{ route('collectors.index') }}">Cobradores</a></li>
+                                <li><a class="nav-link" href="{{ route('cities.index') }}">Localidades</a></li>
                             </ul>
                         </div>
 

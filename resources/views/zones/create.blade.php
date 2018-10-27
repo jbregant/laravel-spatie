@@ -8,7 +8,7 @@
                 <h2>Crear nueva zona</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('roles.index') }}"> Volver</a>
+                <a class="btn btn-primary" href="{{ route('zones.index') }}"> Volver</a>
             </div>
         </div>
     </div>
