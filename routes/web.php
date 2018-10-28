@@ -32,5 +32,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('zones','ZoneController');
     Route::resource('collectors','CollectorController');
     Route::resource('cities','CityController');
+    Route::resource('clients','ClientController');
 //    Route::resource('products','ProductController');
 });

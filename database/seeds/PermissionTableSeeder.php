@@ -45,6 +45,10 @@ class PermissionTableSeeder extends Seeder
         Permission::create(['name' => 'city.create']);
         Permission::create(['name' => 'city.edit']);
         Permission::create(['name' => 'city.delete']);
+        Permission::create(['name' => 'client.list']);
+        Permission::create(['name' => 'client.create']);
+        Permission::create(['name' => 'client.edit']);
+        Permission::create(['name' => 'client.delete']);
 
         //Roles
         $adminRole = Role::create(['name' => 'Admin']);
@@ -71,6 +75,9 @@ class PermissionTableSeeder extends Seeder
             'city.create',
             'city.edit',
             'city.delete',
+            'client.list',
+            'client.create',
+            'client.edit',
         ]);
 
         //$admin->givePermissionTo('products.index');

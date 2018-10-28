@@ -12,10 +12,17 @@ class Client extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'lastname', 'phone', 'address', 'city', 'phone', 'status'
+        'name', 'lastname', 'phone', 'address', 'city_id', 'phone', 'status',
     ];
 
     protected $attributes = [
         'status' => true
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function city(){
+        return $this->belongsTo(City::class);
+    }
 }

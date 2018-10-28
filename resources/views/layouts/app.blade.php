@@ -119,6 +119,21 @@
                         {{--<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>--}}
                     @else
                         <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Reportes
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {{--<li><a class="nav-link" href="{{ route('clients.index') }}">ABM Clientes</a></li>--}}
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Procesos
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="{{ route('clients.index') }}">ABM Clientes</a></li>
+                                {{--<li><a class="nav-link" href="{{ route('clients.index') }}">Prestamos</a></li>--}}
+                            </ul>
+                        </div>
+                        <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Configuración
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
