@@ -24,12 +24,14 @@
     @endif
 
 
-    <table class="table table-bordered">
+    <table id="zones-table" class="hover compact">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
             <th>Nombre</th>
             <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($zones as $key => $zone)
             <tr>
                 <td>{{ $zone->id }}</td>
@@ -48,9 +50,11 @@
             </tr>
         @endforeach
     </table>
-
-
-    {!! $zones->render() !!}
+    <script>
+        $(document).ready( function () {
+            $('#zones-table').DataTable();
+        } );
+    </script>
 
 
 @endsection

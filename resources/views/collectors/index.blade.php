@@ -24,13 +24,15 @@
     @endif
 
 
-    <table class="table table-bordered">
+    <table id="collectors-table" class="hover compact">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
             <th>Nombre</th>
             <th>Zona</th>
             <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($collectors as $key => $collector)
             <tr>
                 <td>{{ $collector->id }}</td>
@@ -50,9 +52,10 @@
             </tr>
         @endforeach
     </table>
-
-
-    {!! $collectors->render() !!}
-
+    <script>
+        $(document).ready( function () {
+            $('#collectors-table').DataTable();
+        } );
+    </script>
 
 @endsection

@@ -24,12 +24,14 @@
     @endif
 
 
-    <table class="table table-bordered">
+    <table id="roles-table" class="hover compact">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
             <th>Nombre</th>
             <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($roles as $key => $role)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -48,9 +50,10 @@
             </tr>
         @endforeach
     </table>
-
-
-    {!! $roles->render() !!}
-
+    <script>
+        $(document).ready( function () {
+            $('#roles-table').DataTable();
+        } );
+    </script>
 
 @endsection

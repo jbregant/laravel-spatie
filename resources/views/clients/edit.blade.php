@@ -55,7 +55,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Zonas:</strong>
+                <strong>Localidad:</strong>
                 {!! Form::select('city_id', $cities, $cityId, array('class' => 'form-control', 'placeholder' => 'Seleccione una localidad...')) !!}
             </div>
         </div>

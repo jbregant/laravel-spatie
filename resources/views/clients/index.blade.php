@@ -23,20 +23,21 @@
         </div>
     @endif
 
-
-    <table class="table table-bordered">
+    <table id="clients-table" class="hover compact">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
-            <th>Nombre</th>
+            <th scope="col">Nombre</th>
             <th>Direccion</th>
             <th>Localidad</th>
-            <th>Telefono</th>
-            <th>Fecha Creacion</th>
+            <th>Teléfono</th>
+            <th>Fecha de Creacion</th>
             <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($clients as $key => $client)
             <tr>
-                <td>{{ $client->id }}</td>
+                <th scope="row">{{ $client->id }}</th>
                 <td>{{ $client->name }} {{ $client->lastname }}</td>
                 <td>{{ $client->address }}</td>
                 <td>{{ $client->city->name }}</td>
@@ -56,9 +57,10 @@
             </tr>
         @endforeach
     </table>
-
-
-    {!! $clients->render() !!}
-
+    <script>
+        $(document).ready( function () {
+            $('#clients-table').DataTable();
+        } );
+    </script>
 
 @endsection

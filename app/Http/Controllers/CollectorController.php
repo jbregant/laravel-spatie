@@ -71,7 +71,7 @@ class CollectorController extends Controller
         $collector = Collector::create($input);
 
         return redirect()->route('collectors.index')
-            ->with('success','Zona creada correctamente');
+            ->with('success','Cobrador creado correctamente');
     }
 
 
@@ -144,6 +144,6 @@ class CollectorController extends Controller
     {
         Collector::find($id)->delete();
         return redirect()->route('collectors.index')
-            ->with('success','Zona borrada correctamente');
+            ->with('success','Cobrador borrado correctamente');
     }
 }

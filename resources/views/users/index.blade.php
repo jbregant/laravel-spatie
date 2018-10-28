@@ -22,7 +22,8 @@
 
     <br>
 
-    <table class="table table-bordered">
+    <table id="users-table" class="hover compact">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
             <th>Name</th>
@@ -30,6 +31,7 @@
             <th>Roles</th>
             <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($data as $key => $user)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -52,9 +54,10 @@
             </tr>
         @endforeach
     </table>
-
-
-    {{--{!! $data->render() !!}--}}
-
+    <script>
+        $(document).ready( function () {
+            $('#users-table').DataTable();
+        } );
+    </script>
 
 @endsection

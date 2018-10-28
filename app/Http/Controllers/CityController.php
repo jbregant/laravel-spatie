@@ -27,7 +27,8 @@ class CityController extends Controller
      */
     public function index(Request $request)
     {
-        $cities = City::orderBy('id','ASC')->paginate(10);
+        $cities = City::get();
+//        $cities = City::orderBy('id','ASC');
         return view('cities.index',compact('cities'));
 //            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -80,7 +81,7 @@ class CityController extends Controller
     public function show($id)
     {
         $city = City::find($id);
-        return view('cities.show',compact('zone'));
+        return view('cities.show',compact('city'));
     }
 
 

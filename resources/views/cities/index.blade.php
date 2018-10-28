@@ -24,15 +24,17 @@
     @endif
 
 
-    <table class="table table-bordered">
+    <table id="cities-table" class="hover compact ">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
             <th>Nombre</th>
             <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($cities as $key => $city)
             <tr>
-                <td>{{ $city->id }}</td>
+                <td scope="row">{{ $city->id }}</td>
                 <td>{{ $city->name }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ route('cities.show',$city->id) }}">Ver</a>
@@ -48,9 +50,10 @@
             </tr>
         @endforeach
     </table>
-
-
-    {!! $cities->render() !!}
-
+    <script>
+        $(document).ready( function () {
+            $('#cities-table').DataTable();
+        } );
+    </script>
 
 @endsection
