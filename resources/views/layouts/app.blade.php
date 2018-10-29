@@ -55,7 +55,7 @@
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ route('clients.index') }}">ABM Clientes</a></li>
-                                {{--<li><a class="nav-link" href="{{ route('clients.index') }}">Prestamos</a></li>--}}
+                                <li><a class="nav-link" href="{{ route('loans.index') }}">Prestamos</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -67,6 +67,7 @@
                                 <li><a class="nav-link" href="{{ route('zones.index') }}">Zonas</a></li>
                                 <li><a class="nav-link" href="{{ route('collectors.index') }}">Cobradores</a></li>
                                 <li><a class="nav-link" href="{{ route('cities.index') }}">Localidades</a></li>
+                                <li><a class="nav-link" href="{{ route('loanstype.index') }}">Tipos de Creditos</a></li>
                             </ul>
                         </div>
 

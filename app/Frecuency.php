@@ -16,10 +16,11 @@ class Frecuency extends Model
         'name',
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function frecuency(){
-        return $this->belongsTo(Frecuency::class);
-    }
+//    /**
+//     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+//     */
+//    public function loanType(){
+//        return $this->belongsTo(LoanType::class);
+//    }
+
 }

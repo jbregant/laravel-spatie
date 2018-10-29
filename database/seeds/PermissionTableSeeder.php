@@ -49,6 +49,14 @@ class PermissionTableSeeder extends Seeder
         Permission::create(['name' => 'client.create']);
         Permission::create(['name' => 'client.edit']);
         Permission::create(['name' => 'client.delete']);
+        Permission::create(['name' => 'loan.list']);
+        Permission::create(['name' => 'loan.create']);
+        Permission::create(['name' => 'loan.edit']);
+        Permission::create(['name' => 'loan.delete']);
+        Permission::create(['name' => 'loanstype.list']);
+        Permission::create(['name' => 'loanstype.create']);
+        Permission::create(['name' => 'loanstype.edit']);
+        Permission::create(['name' => 'loanstype.delete']);
 
         //Roles
         $adminRole = Role::create(['name' => 'Admin']);
@@ -78,6 +86,11 @@ class PermissionTableSeeder extends Seeder
             'client.list',
             'client.create',
             'client.edit',
+            'loan.list',
+            'loan.create',
+            'loan.edit',
+            'loanstype.list',
+            'loanstype.edit',
         ]);
 
         //$admin->givePermissionTo('products.index');

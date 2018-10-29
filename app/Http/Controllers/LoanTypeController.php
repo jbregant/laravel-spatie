@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
 use App\LoanType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class LoanController extends Controller
+class LoanTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +14,10 @@ class LoanController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:loan.list');
-        $this->middleware('permission:loan.create', ['only' => ['create','store']]);
-        $this->middleware('permission:loan.edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:loan.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:loanstype.list');
+        $this->middleware('permission:loanstype.create', ['only' => ['create','store']]);
+        $this->middleware('permission:loanstype.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:loanstype.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -29,16 +27,9 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-//        $clients = Client::orderBy('id','ASC')->paginate(10);
-//        $clients = Client::pluck('name','id')->all();
-        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
-
-        $clients = [];
-        foreach ($clientAux as $client) {
-            $clients[$client->id] = $client->id.' - '. $client->name . ' ' . $client->lastname;
-        }
-        $loansType = LoanType::pluck('name','id')->all();
-        return view('loans.index',compact('clients', 'loansType'));
+        $loansType = LoanType::all();
+//        dd($loansType);
+        return view('loanstype.index',compact('loansType'));
     }
 
 
@@ -49,8 +40,8 @@ class LoanController extends Controller
      */
     public function create()
     {
-        $cities = City::pluck('name','id')->all();
-        return view('clients.create',compact('cities'));
+        $loansType = LoanType::pluck('name','id')->all();
+        return view('loanstype.create',compact('loansType'));
     }
 
 
@@ -94,8 +85,8 @@ class LoanController extends Controller
      */
     public function show($id)
     {
-        $client = Client::find($id);
-        return view('clients.show',compact('client'));
+        $loansType = LoanType::find($id);
+        return view('loanstype.show',compact('loansType'));
     }
 
 
@@ -107,10 +98,8 @@ class LoanController extends Controller
      */
     public function edit($id)
     {
-        $cities = City::pluck('name','id')->all();
-        $client = Client::find($id);
-        $cityId = $client->city->id;
-        return view('clients.edit',compact('client', 'cities', 'cityId'));
+        $loanType = LoanType::find($id);
+        return view('loanstype.edit',compact('loanType'));
     }
 
 

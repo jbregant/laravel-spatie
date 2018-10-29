@@ -16,8 +16,8 @@ class CreateLoanTypesTable extends Migration
         Schema::create('loan_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('min_loan payments');
-            $table->string('max_loan payments');
+            $table->string('min_loan_payments');
+            $table->string('max_loan_payments');
             $table->string('loan_fee');
             $table->unsignedInteger('frecuency_type_id');
             $table->foreign('frecuency_type_id')->references('id')->on('frecuency_types');

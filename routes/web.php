@@ -33,5 +33,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('collectors','CollectorController');
     Route::resource('cities','CityController');
     Route::resource('clients','ClientController');
-//    Route::resource('products','ProductController');
+    Route::resource('loans','LoanController');
+    Route::resource('loanstype','LoanTypeController');
 });

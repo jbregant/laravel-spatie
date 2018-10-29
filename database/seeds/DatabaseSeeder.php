@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
          $this->call(CollectorTableSeeder::class);
          $this->call(CityTableSeeder::class);
          $this->call(FrecuencyTableSeeder::class);
+         $this->call(LoanTypeTableSeeder::class);
     }
 }
