@@ -28,6 +28,7 @@
         <tr>
             <th>No</th>
             <th scope="col">Nombre</th>
+            <th>Dni</th>
             <th>Direccion</th>
             <th>Localidad</th>
             <th>Teléfono</th>
@@ -39,6 +40,7 @@
             <tr>
                 <th scope="row">{{ $client->id }}</th>
                 <td>{{ $client->name }} {{ $client->lastname }}</td>
+                <td>{{ $client->dni }}</td>
                 <td>{{ $client->address }}</td>
                 <td>{{ $client->city->name }}</td>
                 <td>{{ $client->phone }}</td>

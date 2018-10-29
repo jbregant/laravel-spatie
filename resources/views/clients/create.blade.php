@@ -44,6 +44,12 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
+                <strong>Dni:</strong>
+                {!! Form::text('dni', null, array('placeholder' => 'Dni...','class' => 'form-control')) !!}
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
                 <strong>Direccion:</strong>
                 {!! Form::text('address', null, array('placeholder' => 'Direccion...','class' => 'form-control')) !!}
             </div>

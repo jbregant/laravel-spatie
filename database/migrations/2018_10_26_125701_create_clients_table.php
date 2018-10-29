@@ -17,6 +17,7 @@ class CreateClientsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('lastname');
+            $table->string('dni');
             $table->string('address');
             $table->unsignedInteger('city_id');
             $table->foreign('city_id')->references('id')->on('cities');

@@ -31,19 +31,19 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Cliente:</strong>
-                        {!! Form::select('id', $clients,[], array('class' => 'form-control', 'placeholder' => 'Seleccione un Cliente...')) !!}
+                        {!! Form::select('client_id', $clients,[], array('class' => 'form-control', 'placeholder' => 'Seleccione un Cliente...')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Tipo de Credito:</strong>
-                        {!! Form::select('id', $loansType,[], array('class' => 'form-control', 'placeholder' => 'Seleccione un Tipo de Prestamo...')) !!}
+                        {!! Form::select('loan_type_id', $loansType,[], array('id' => 'loanTypeCombo', 'class' => 'form-control', 'placeholder' => 'Seleccione un Tipo de Prestamo...')) !!}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
-                        <strong>Apellido:</strong>
-                        {!! Form::text('lastname', null, array('placeholder' => 'Apellido...','class' => 'form-control')) !!}
+                        <strong>Interes:</strong>
+                        {!! Form::text('loan_fee', null, array('placeholder' => '%','class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">

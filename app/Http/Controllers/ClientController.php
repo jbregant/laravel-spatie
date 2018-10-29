@@ -58,12 +58,14 @@ class ClientController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'lastname' => 'required',
+            'dni' => 'required',
             'address' => 'required',
             'city_id' => 'required',
         ],
             [
                 'name.required' => 'Nombre es un campo obligatorio',
                 'lastname.required' => 'Apellido es un campo obligatorio',
+                'dni.required' => 'Dni es un campo obligatorio',
                 'address.required' => 'Direccion es un campo obligatorio',
                 'city_id.required' => 'Localidad es un campo obligatorio',
             ]
@@ -118,12 +120,14 @@ class ClientController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'lastname' => 'required',
+            'dni' => 'required',
             'address' => 'required',
             'city_id' => 'required',
         ],
             [
                 'name.required' => 'Nombre es un campo obligatorio',
                 'lastname.required' => 'Nombre es un campo obligatorio',
+                'dni.required' => 'Dni es un campo obligatorio',
                 'address.required' => 'Direccion es un campo obligatorio',
                 'city_id.required' => 'Localidad es un campo obligatorio',
             ]
