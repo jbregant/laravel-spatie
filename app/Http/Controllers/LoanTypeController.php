@@ -114,25 +114,25 @@ class LoanTypeController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'lastname' => 'required',
-            'address' => 'required',
-            'city_id' => 'required',
+            'min_loan_payments' => 'required',
+            'max_loan_payments' => 'required',
+            'loan_fee' => 'required',
         ],
             [
                 'name.required' => 'Nombre es un campo obligatorio',
-                'lastname.required' => 'Nombre es un campo obligatorio',
-                'address.required' => 'Direccion es un campo obligatorio',
-                'city_id.required' => 'Localidad es un campo obligatorio',
+                'min_loan_payments.required' => 'Minimo de Cuotas es un campo obligatorio',
+                'max_loan_payments.required' => 'Maximo de Cuotas es un campo obligatorio',
+                'loan_fee.required' => 'Interes es un campo obligatorio',
             ]
         );
 
         $input = $request->all();
 
-        $client = Client::find($id);
+        $client = LoanType::find($id);
         $client->update($input);
 
-        return redirect()->route('clients.index')
-            ->with('success','Cliente actualizado correctamente');
+        return redirect()->route('loanstype.index')
+            ->with('success','Tipo de Credito actualizado correctamente');
     }
 
 

@@ -8,9 +8,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('js/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css') }}">
+
     <!-- Scripts -->
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery-3.3.1.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/datatables.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>

@@ -26,38 +26,57 @@
     <br>
     <div class="row">
         <div class="col-lg-6">
-            {!! Form::open(array('route' => 'loans.store','method'=>'POST')) !!}
+            {!! Form::open(array('route' => 'loans.store','method'=>'POST', 'id' => 'loanForm')) !!}
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Cliente:</strong>
-                        {!! Form::select('client_id', $clients,[], array('class' => 'form-control', 'placeholder' => 'Seleccione un Cliente...')) !!}
+                        {!! Form::select('client_id', $clients,[], array('id' => 'clientCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Cliente...')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>Tipo de Credito:</strong>
-                        {!! Form::select('loan_type_id', $loansType,[], array('id' => 'loanTypeCombo', 'class' => 'form-control', 'placeholder' => 'Seleccione un Tipo de Prestamo...')) !!}
+                        {!! Form::select('loan_type_id', $loansType,[], array('id' => 'loanTypeCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Tipo de Prestamo...')) !!}
                     </div>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-xs-2 col-sm-2 col-md-2">
                     <div class="form-group">
                         <strong>Interes:</strong>
-                        {!! Form::text('loan_fee', null, array('placeholder' => '%','class' => 'form-control')) !!}
+                        {!! Form::text('loan_fee', null, array('id' => 'loanFee', 'placeholder' => '%','class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Monto:</strong>
+                        {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'placeholder' => '$','class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4">
+                    <div class="form-group">
+                        <strong>Cuotas:</strong>
+                        {!! Form::select('payments', [], [], array('id' => 'paymentsCombo', 'placeholder' => '0','class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Direccion:</strong>
-                        {!! Form::text('address', null, array('placeholder' => 'Direccion...','class' => 'form-control')) !!}
+                        <button id="simulatePayments" type="submit" class="btn btn-primary">Calcular Cuotas</button>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Telefono:</strong>
-                        {!! Form::text('phone', null, array('placeholder' => 'Telefono...','class' => 'form-control')) !!}
-                    </div>
-                </div>
+
+                {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
+                {{--<div class="form-group">--}}
+                {{--<strong>Direccion:</strong>--}}
+                {{--{!! Form::text('address', null, array('placeholder' => 'Direccion...','class' => 'form-control')) !!}--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
+                {{--<div class="form-group">--}}
+                {{--<strong>Telefono:</strong>--}}
+                {{--{!! Form::text('phone', null, array('placeholder' => 'Telefono...','class' => 'form-control')) !!}--}}
+                {{--</div>--}}
+                {{--</div>--}}
+
 
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                     <button type="submit" class="btn btn-primary">Enviar</button>
@@ -66,105 +85,28 @@
             {!! Form::close() !!}
         </div>
         <div class="col-lg-6">
-            {!! Form::open(array('route' => 'loans.store','method'=>'POST')) !!}
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Cliente:</strong>
-                        {!! Form::select('id', $clients,[], array('class' => 'form-control', 'placeholder' => 'Seleccione un Cliente...')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Nombre:</strong>
-                        {!! Form::text('name', null, array('placeholder' => 'Nombre...','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Apellido:</strong>
-                        {!! Form::text('lastname', null, array('placeholder' => 'Apellido...','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Direccion:</strong>
-                        {!! Form::text('address', null, array('placeholder' => 'Direccion...','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Telefono:</strong>
-                        {!! Form::text('phone', null, array('placeholder' => 'Telefono...','class' => 'form-control')) !!}
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </div>
+                <table class="table">
+                    <thead>
+                        <th>Nro Cuota</th>
+                        <th>Monto</th>
+                        <th>Fecha de Vencimiento</th>
+                    </thead>
+                    <tfoot id="tableFooterTotalPaymentsAmount" hidden>
+                    <tr>
+                        <th align="center">Total<span class="totalStars"></span></th>
+                        <td id="tableTotalPaymentsAmountTxt" align="center"></td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                    <tbody id="tbodyPayments">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    {{--<div class="row">--}}
-    {{--<div class="col-lg-12 margin-tb">--}}
-    {{--<div class="pull-left">--}}
-    {{--<h2>Administracion de Clientes</h2>--}}
-    {{--</div>--}}
-    {{--<div class="pull-right">--}}
-    {{--@can('zone.create')--}}
-    {{--<a class="btn btn-success" href="{{ route('clients.create') }}">Crear un nuevo cliente</a>--}}
-    {{--@endcan--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-
-    {{--<br>--}}
-
-    {{--@if ($message = Session::get('success'))--}}
-    {{--<div class="alert alert-success">--}}
-    {{--<p>{{ $message }}</p>--}}
-    {{--</div>--}}
-    {{--@endif--}}
-
-    {{--<table id="clients-table" class="hover compact">--}}
-    {{--<thead class="thead-light">--}}
-    {{--<tr>--}}
-    {{--<th>No</th>--}}
-    {{--<th scope="col">Nombre</th>--}}
-    {{--<th>Direccion</th>--}}
-    {{--<th>Localidad</th>--}}
-    {{--<th>Teléfono</th>--}}
-    {{--<th>Fecha de Creacion</th>--}}
-    {{--<th width="280px">Acciones</th>--}}
-    {{--</tr>--}}
-    {{--</thead>--}}
-    {{--@foreach ($clients as $key => $client)--}}
-    {{--<tr>--}}
-    {{--<th scope="row">{{ $client->id }}</th>--}}
-    {{--<td>{{ $client->name }} {{ $client->lastname }}</td>--}}
-    {{--<td>{{ $client->address }}</td>--}}
-    {{--<td>{{ $client->city->name }}</td>--}}
-    {{--<td>{{ $client->phone }}</td>--}}
-    {{--<td>{{ $client->created_at }}</td>--}}
-    {{--<td>--}}
-    {{--<a class="btn btn-info" href="{{ route('clients.show',$client->id) }}">Ver</a>--}}
-    {{--@can('client.edit')--}}
-    {{--<a class="btn btn-primary" href="{{ route('clients.edit',$client->id) }}">Editar</a>--}}
-    {{--@endcan--}}
-    {{--@can('client.delete')--}}
-    {{--{!! Form::open(['method' => 'DELETE','route' => ['clients.destroy', $client->id],'style'=>'display:inline']) !!}--}}
-    {{--{!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}--}}
-    {{--{!! Form::close() !!}--}}
-    {{--@endcan--}}
-    {{--</td>--}}
-    {{--</tr>--}}
-    {{--@endforeach--}}
-    {{--</table>--}}
-    {{--<script>--}}
-    {{--$(document).ready( function () {--}}
-    {{--$('#clients-table').DataTable();--}}
-    {{--} );--}}
-    {{--</script>--}}
-
+    <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/loan.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 @endsection

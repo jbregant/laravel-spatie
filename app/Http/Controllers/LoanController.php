@@ -159,4 +159,18 @@ class LoanController extends Controller
         return redirect()->route('clients.index')
             ->with('success','Cliente borrado correctamente');
     }
+
+    /**
+     * Return the fee rate for the selected loan type
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function feecheck($id)
+    {
+        dd('GG');
+//        Client::find($id)->delete();
+//        return redirect()->route('clients.index')
+//            ->with('success','Cliente borrado correctamente');
+    }
 }
