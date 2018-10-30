@@ -46,16 +46,16 @@
                         {!! Form::text('loan_fee', null, array('id' => 'loanFee', 'placeholder' => '%','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                        <strong>Monto:</strong>
-                        {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'placeholder' => '$','class' => 'form-control')) !!}
-                    </div>
-                </div>
                 <div class="col-xs-4 col-sm-4 col-md-4">
                     <div class="form-group">
                         <strong>Cuotas:</strong>
                         {!! Form::select('payments', [], [], array('id' => 'paymentsCombo', 'placeholder' => '0','class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <strong>Monto:</strong>
+                        {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'placeholder' => '$','class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">

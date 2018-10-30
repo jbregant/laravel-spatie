@@ -70,9 +70,9 @@ $(document).ready(function () {
             for (let i = 1; i <= payments; i++){
                 paymentDate.setDate(paymentDate.getDate() + (7*i));
                 paymentsTable += '<tr>' +
-                    '<td align="center">' + i + '</td>' +
-                    '<td align="center">$ ' + parseInt(payment) + '</td>' +
-                    '<td><input type="text" class="datepicker" value="' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '"></input</td>' +
+                    '<td>' + i + '</td>' +
+                    '<td>$ ' + parseInt(payment) + '</td>' +
+                    '<td><input type="text" class="datepicker date-picker-payments" value="' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '"></input</td>' +
                     '</tr>';
             }
             // ' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '

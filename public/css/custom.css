@@ -24,3 +24,6 @@
     background-color: #f8fafc;
     border: none;
 }
+.date-picker-payments:focus {
+    outline-offset: 0px !important;
+}
