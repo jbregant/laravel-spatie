@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\LoansGranted;
 use App\LoanType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,16 +30,9 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-//        $clients = Client::orderBy('id','ASC')->paginate(10);
-//        $clients = Client::pluck('name','id')->all();
-        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
-
-        $clients = [];
-        foreach ($clientAux as $client) {
-            $clients[$client->id] = $client->id.' - '. $client->name . ' ' . $client->lastname;
-        }
-        $loansType = LoanType::pluck('name','id')->all();
-        return view('loans.index',compact('clients', 'loansType'));
+        $loansGranted = LoansGranted::get();
+//        dd($loansGranted);
+        return view('loans.index',compact('clients', 'loansType', 'loansGranted'));
     }
 
 
@@ -49,8 +43,15 @@ class LoanController extends Controller
      */
     public function create()
     {
-        $cities = City::pluck('name','id')->all();
-        return view('clients.create',compact('cities'));
+        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
+
+        $clients = [];
+        foreach ($clientAux as $client) {
+            $clients[$client->id] = $client->id.' - '. $client->name . ' ' . $client->lastname;
+        }
+        $loansType = LoanType::pluck('name','id')->all();
+        $loansGranted = LoansGranted::all();
+        return view('loans.create',compact('clients', 'loansType', 'loansGranted'));
     }
 
 
@@ -62,24 +63,34 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
-            'name' => 'required',
-            'lastname' => 'required',
-            'address' => 'required',
-            'city_id' => 'required',
+            'client_id' => 'required',
+            'loan_type_id' => 'required',
+            'loan_fee' => 'required',
+            'payments' => 'required',
+            'total_amount' => 'required',
+            'dueDates' => 'required',
         ],
             [
-                'name.required' => 'Nombre es un campo obligatorio',
-                'lastname.required' => 'Apellido es un campo obligatorio',
-                'address.required' => 'Direccion es un campo obligatorio',
-                'city_id.required' => 'Localidad es un campo obligatorio',
+                'client_id.required' => 'Cliente es un campo obligatorio',
+                'loan_type_id.required' => 'Tipo de Credito es un campo obligatorio',
+                'loan_fee.required' => 'Interes es un campo obligatorio',
+                'payments.required' => 'Cantidad de Cuotas es un campo obligatorio',
+                'total_amount.required' => 'Monto del credito es un campo obligatorio',
+                'dueDates.required' => 'Fechas de vencimiento es un campo obligatorio',
             ]
         );
-
+//client_id: 1
+//loan_type_id: 1
+//loan_fee: 26
+//payments: 4
+//total_amount: 221
+//dueDates:
         $input = $request->all();
+        $dueDates = explode(',', $input['dueDates']);
 
-        $client = Client::create($input);
+        $loanGranted = LoansGranted::create($input);
+        dd($input);
 
         return redirect()->route('clients.index')
             ->with('success','Cliente creado correctamente');

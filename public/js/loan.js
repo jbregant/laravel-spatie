@@ -27,10 +27,11 @@ $(document).ready(function () {
         });
     })
 
-    $('#simulatePayments').on('click', function (e) {
+    $('#paymentsSimulatorBtn').on('click', function (e) {
         e.preventDefault();
         let loanForm = $('#loanForm');
 
+        //form settings
         loanForm.validate({
             highlight: function(element) {
                 jQuery(element).closest('.form-group').addClass('has-error');
@@ -42,27 +43,28 @@ $(document).ready(function () {
                 client_id: "required",
                 loan_type_id: "required",
                 loan_fee: "required",
-                total_amount: "required",
+                amount: "required",
                 payments: "required"
             },
             messages: {
                 client_id: "Este campo es requerido",
                 loan_type_id: "Este campo es requerido",
                 loan_fee: "Este campo es requerido",
-                total_amount: "Este campo es requerido",
+                amount: "Este campo es requerido",
                 payments: "Este campo es requerido"
             },
         });
 
+        //form validation
         if(loanForm.valid()){
             let loanFee = parseInt($('#loanFee').val());
-            let totalAmount = parseInt($('#totalAmount').val());
+            let amount = parseInt($('#amount').val());
             let payments = $('#paymentsCombo option:selected').val();
             let paymentsTable;
 
             // let totalFinalAmount = Math.floor(totalAmount*loanFee)/100;
-            let totalFinalAmount = (totalAmount / 100 * loanFee) + totalAmount;
-            let payment = (totalFinalAmount/payments);
+            let totalAmount = (amount  / 100 * loanFee) + amount ;
+            let payment = totalAmount/payments;
 
             // let today = new Date();
             let paymentDate = new Date();
@@ -70,36 +72,41 @@ $(document).ready(function () {
             for (let i = 1; i <= payments; i++){
                 paymentDate.setDate(paymentDate.getDate() + (7*i));
                 paymentsTable += '<tr>' +
-                    '<td>' + i + '</td>' +
-                    '<td>$ ' + parseInt(payment) + '</td>' +
+                    '<td align="center">' + i + '</td>' +
+                    '<td>$ ' + payment.toFixed(2) + '</td>' +
                     '<td><input type="text" class="datepicker date-picker-payments" value="' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '"></input</td>' +
                     '</tr>';
             }
-            // ' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '
 
             $('#tbodyPayments').html(paymentsTable);
+            $('#totalAmount').val(totalAmount.toFixed(2));
             $('#tableFooterTotalPaymentsAmount').attr('hidden', false);
-            $('#tableTotalPaymentsAmountTxt').text('$ '+totalFinalAmount);
-            $('#tableTotalPaymentsAmountTxt').datepicker();
+            $('#tableTotalPaymentsAmountTxt').text('$ '+totalAmount.toFixed(2)).datepicker();
             $('.datepicker').datepicker();
-            // $.datepicker.regional['es'] = {
-            //     closeText: 'Cerrar',
-            //     prevText: '< Ant',
-            //     nextText: 'Sig >',
-            //     currentText: 'Hoy',
-            //     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            //     monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-            //     dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-            //     dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-            //     dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-            //     weekHeader: 'Sm',
-            //     dateFormat: 'dd-mm-yy',
-            //     firstDay: 1,
-            //     isRTL: false,
-            //     showMonthAfterYear: false,
-            //     yearSuffix: ''
-            // };
-            // $.datepicker.setDefaults($.datepicker.regional['es']);
+            $('#dateConfirmation').attr('disabled', false);
         }
     });
+
+    //checkbox for confirm due dates
+    $('#dateConfirmation').change(function () {
+        if($(this).prop('checked')){
+             $('#addLoanBtn').prop('disabled', false);
+        } else {
+            $('#addLoanBtn').prop('disabled', true);
+        }
+    });
+
+    //button to send data to server
+    $('#addLoanBtn').on('click', function (e) {
+        e.preventDefault();
+        let dueDates = [];
+        $('#paymentsSimulatorTable .date-picker-payments').each(function () {
+            dueDates.push($(this).val());
+        });
+
+        $('#loanForm').append('<input type="hidden" name="dueDates" value="' + JSON.parse(JSON.stringify(dueDates)) + '" />');
+        $('#loanForm').submit();
+        // console.log(JSON.parse(JSON.stringify(dueDates)));
+    })
+
 });

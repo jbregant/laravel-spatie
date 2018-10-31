@@ -7,6 +7,11 @@
             <div class="pull-left">
                 <h2>Crear un nuevo Prestamo</h2>
             </div>
+            <div class="pull-right">
+                @can('loan.create')
+                    <a class="btn btn-success" href="{{ route('loans.create') }}">Crear un nuevo credito</a>
+                @endcan
+            </div>
         </div>
     </div>
 
@@ -24,89 +29,39 @@
     @endif
 
     <br>
+
     <div class="row">
-        <div class="col-lg-6">
-            {!! Form::open(array('route' => 'loans.store','method'=>'POST', 'id' => 'loanForm')) !!}
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Cliente:</strong>
-                        {!! Form::select('client_id', $clients,[], array('id' => 'clientCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Cliente...')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Tipo de Credito:</strong>
-                        {!! Form::select('loan_type_id', $loansType,[], array('id' => 'loanTypeCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Tipo de Prestamo...')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-2 col-sm-2 col-md-2">
-                    <div class="form-group">
-                        <strong>Interes:</strong>
-                        {!! Form::text('loan_fee', null, array('id' => 'loanFee', 'placeholder' => '%','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4">
-                    <div class="form-group">
-                        <strong>Cuotas:</strong>
-                        {!! Form::select('payments', [], [], array('id' => 'paymentsCombo', 'placeholder' => '0','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <div class="form-group">
-                        <strong>Monto:</strong>
-                        {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'placeholder' => '$','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <button id="simulatePayments" type="submit" class="btn btn-primary">Calcular Cuotas</button>
-                    </div>
-                </div>
-
-                {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
-                {{--<div class="form-group">--}}
-                {{--<strong>Direccion:</strong>--}}
-                {{--{!! Form::text('address', null, array('placeholder' => 'Direccion...','class' => 'form-control')) !!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
-                {{--<div class="form-group">--}}
-                {{--<strong>Telefono:</strong>--}}
-                {{--{!! Form::text('phone', null, array('placeholder' => 'Telefono...','class' => 'form-control')) !!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
-
-
-                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </div>
-            </div>
-            {!! Form::close() !!}
-        </div>
-        <div class="col-lg-6">
-            <div class="row">
-                <table class="table">
-                    <thead>
-                        <th>Nro Cuota</th>
-                        <th>Monto</th>
-                        <th>Fecha de Vencimiento</th>
-                    </thead>
-                    <tfoot id="tableFooterTotalPaymentsAmount" hidden>
-                    <tr>
-                        <th align="center">Total<span class="totalStars"></span></th>
-                        <td id="tableTotalPaymentsAmountTxt" align="center"></td>
-                        <td></td>
-                    </tr>
-                    </tfoot>
-                    <tbody id="tbodyPayments">
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table id="loans-table" class="hover compact">
+            <thead class="thead-light">
+            <tr>
+                <th>No Credito</th>
+                <th>No Cliente</th>
+                <th>Nombre</th>
+                <th>Tipo de Credito</th>
+                <th>Cant Cuotas</th>
+                <th>Interes</th>
+                <th width="280px">Acciones</th>
+            </tr>
+            </thead>
+            @foreach ($loansGranted as $key => $loan)
+                <tr>
+                    <td>{{ $loan->id }}</td>
+                    <td>{{ $loan->name }}</td>
+                    <td>{{ $loan->zone->name }}</td>
+                    <td>
+                        <a class="btn btn-info" href="{{ route('collectors.show',$loan->id) }}">Ver</a>
+                        @can('collector.edit')
+                            <a class="btn btn-primary" href="{{ route('collectors.edit',$loan->id) }}">Editar</a>
+                        @endcan
+                        @can('collector.delete')
+                            {!! Form::open(['method' => 'DELETE','route' => ['collectors.destroy', $loan->id],'style'=>'display:inline']) !!}
+                            {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        @endcan
+                    </td>
+                </tr>
+            @endforeach
+        </table>
     </div>
-    <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/loan.js') }}"></script>
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+
 @endsection
