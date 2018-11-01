@@ -8,8 +8,12 @@ class LoansGranted extends Model
 {
     protected $table = 'loans_granted';
 
+    protected $attributes = [
+        'status' => 'activo'
+    ];
+
     protected $fillable = [
-        'client_id', 'loan_type_id', 'payments', 'loan_fee', 'amount', 'updated_amount', 'description',
+        'client_id', 'loan_type_id', 'payments', 'loan_fee', 'amount', 'updated_amount', 'description', 'status','payment_amount','total_amount'
     ];
 
     /**
@@ -17,6 +21,13 @@ class LoansGranted extends Model
      */
     public function client(){
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function loanType(){
+        return $this->belongsTo(LoanType::class);
     }
 
 }

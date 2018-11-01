@@ -58,7 +58,7 @@
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ route('clients.index') }}">ABM Clientes</a></li>
-                                <li><a class="nav-link" href="{{ route('loans.index') }}">Prestamos</a></li>
+                                <li><a class="nav-link" href="{{ route('loans.index') }}">Creditos</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -102,7 +102,16 @@
 
     <main class="py-4">
         <div class="container">
-            @yield('content')
+        @yield('content')
+
+        <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <p id="modal-msg">ea</p>
+                </div>
+            </div>
         </div>
     </main>
 </div>

@@ -56,16 +56,22 @@
                         {!! Form::select('payments', [], [], array('id' => 'paymentsCombo', 'placeholder' => '0','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-xs-6 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <strong>Monto:</strong>
+                        <strong>Monto a Financiar:</strong>
                         {!! Form::number('amount', null, array('id' => 'amount', 'placeholder' => '$','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-xs-5 col-sm-5 col-md-5">
                     <div class="form-group">
-                        <strong>Monto Total:</strong>
+                        <strong>Monto Total a Reintegrar:</strong>
                         {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="col-xs- col-sm-3 col-md-3">
+                    <div class="form-group">
+                        <strong>Valor Cuota:</strong>
+                        {!! Form::number('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">

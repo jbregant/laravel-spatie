@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Crear un nuevo Prestamo</h2>
+                <h2>Crear un nuevo Credito</h2>
             </div>
             <div class="pull-right">
                 @can('loan.create')
@@ -17,14 +17,9 @@
 
     <br>
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> Hubo algunos problemas con la creacion.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
         </div>
     @endif
 
@@ -39,22 +34,43 @@
                 <th>Nombre</th>
                 <th>Tipo de Credito</th>
                 <th>Cant Cuotas</th>
+                <th>Valor Cuota</th>
                 <th>Interes</th>
+                <th>Monto Financiado</th>
+                <th>Deuda Actualizada</th>
+                <th>Fecha de Otorgamiento</th>
                 <th width="280px">Acciones</th>
             </tr>
             </thead>
+            {{--"id" => 1--}}
+            {{--"client_id" => 1--}}
+            {{--"loan_type_id" => 1--}}
+            {{--"payments" => 3--}}
+            {{--"loan_fee" => 26--}}
+            {{--"amount" => 1221--}}
+            {{--"updated_amount" => null--}}
+            {{--"description" => null--}}
+            {{--"created_at" => "2018-10-31 04:07:32"--}}
+            {{--"updated_at" => "2018-10-31 04:07:32"--}}
             @foreach ($loansGranted as $key => $loan)
                 <tr>
                     <td>{{ $loan->id }}</td>
-                    <td>{{ $loan->name }}</td>
-                    <td>{{ $loan->zone->name }}</td>
+                    <td>{{ $loan->client_id }}</td>
+                    <td>{{ $loan->client->name }} {{ $loan->client->lastname }}</td>
+                    <td>{{ $loan->loanType->name }}</td>
+                    <td>{{ $loan->payments }}</td>
+                    <td>{{ $loan->payment_amount }}</td>
+                    <td>{{ $loan->loan_fee }}</td>
+                    <td>{{ $loan->total_amount }}</td>
+                    <td>{{ $loan->updated_amount }}</td>
+                    <td>{{ Carbon\Carbon::parse($loan->created_at)->format('d-m-Y') }}</td>
                     <td>
-                        <a class="btn btn-info" href="{{ route('collectors.show',$loan->id) }}">Ver</a>
-                        @can('collector.edit')
-                            <a class="btn btn-primary" href="{{ route('collectors.edit',$loan->id) }}">Editar</a>
-                        @endcan
-                        @can('collector.delete')
-                            {!! Form::open(['method' => 'DELETE','route' => ['collectors.destroy', $loan->id],'style'=>'display:inline']) !!}
+                        <a class="btn btn-info" href="{{ route('loans.show',$loan->id) }}">Ver</a>
+                        {{--@can('collector.edit')--}}
+                            {{--<a class="btn btn-primary" href="{{ route('loans.edit',$loan->id) }}">Editar</a>--}}
+                        {{--@endcan--}}
+                        @can('loan.delete')
+                            {!! Form::open(['method' => 'DELETE','route' => ['loans.destroy', $loan->id],'style'=>'display:inline']) !!}
                             {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                         @endcan
@@ -63,5 +79,11 @@
             @endforeach
         </table>
     </div>
+
+    <script>
+        $(document).ready( function () {
+            $('#loans-table').DataTable();
+        } );
+    </script>
 
 @endsection

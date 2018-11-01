@@ -73,7 +73,7 @@ $(document).ready(function () {
                 paymentDate.setDate(paymentDate.getDate() + (7*i));
                 paymentsTable += '<tr>' +
                     '<td align="center">' + i + '</td>' +
-                    '<td>$ ' + payment.toFixed(2) + '</td>' +
+                    '<td class="payment_amount">$ ' + payment.toFixed(2) + '</td>' +
                     '<td><input type="text" class="datepicker date-picker-payments" value="' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '"></input</td>' +
                     '</tr>';
             }
@@ -82,6 +82,7 @@ $(document).ready(function () {
             $('#totalAmount').val(totalAmount.toFixed(2));
             $('#tableFooterTotalPaymentsAmount').attr('hidden', false);
             $('#tableTotalPaymentsAmountTxt').text('$ '+totalAmount.toFixed(2)).datepicker();
+            $('#paymentAmount').val(payment.toFixed(2));
             $('.datepicker').datepicker();
             $('#dateConfirmation').attr('disabled', false);
         }
@@ -100,13 +101,19 @@ $(document).ready(function () {
     $('#addLoanBtn').on('click', function (e) {
         e.preventDefault();
         let dueDates = [];
+        let paymentsAmount = $('#paymentsCombo option:selected').val();
         $('#paymentsSimulatorTable .date-picker-payments').each(function () {
             dueDates.push($(this).val());
         });
 
-        $('#loanForm').append('<input type="hidden" name="dueDates" value="' + JSON.parse(JSON.stringify(dueDates)) + '" />');
+        if(!(paymentsAmount == dueDates.length)){
+            $('#modal-msg').text('Vuelva a calcular el importe de las cuotas');
+            toggleModal();
+            return false;
+        }
+        console.log($('.payment_amount').val());
+        $('#loanForm').append('<input type="hidden" name="due_dates" value="' + JSON.parse(JSON.stringify(dueDates)) + '" />');
         $('#loanForm').submit();
-        // console.log(JSON.parse(JSON.stringify(dueDates)));
     })
 
 });

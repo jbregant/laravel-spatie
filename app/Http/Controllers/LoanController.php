@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\LoansGranted;
+use App\LoansGrantedPayments;
 use App\LoanType;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,9 +32,10 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-        $loansGranted = LoansGranted::get();
+//        $loansGranted = LoansGranted::get();
+        $loansGranted = LoansGranted::where('status', 'activo')->get();
 //        dd($loansGranted);
-        return view('loans.index',compact('clients', 'loansType', 'loansGranted'));
+        return view('loans.index',compact('loansGranted'));
     }
 
 
@@ -68,32 +71,45 @@ class LoanController extends Controller
             'loan_type_id' => 'required',
             'loan_fee' => 'required',
             'payments' => 'required',
+            'payment_amount' => 'required',
             'total_amount' => 'required',
-            'dueDates' => 'required',
+            'due_dates' => 'required',
         ],
             [
                 'client_id.required' => 'Cliente es un campo obligatorio',
                 'loan_type_id.required' => 'Tipo de Credito es un campo obligatorio',
                 'loan_fee.required' => 'Interes es un campo obligatorio',
                 'payments.required' => 'Cantidad de Cuotas es un campo obligatorio',
+                'payment_amount.required' => 'El Valor de las Cuotas es un campo obligatorio',
                 'total_amount.required' => 'Monto del credito es un campo obligatorio',
                 'dueDates.required' => 'Fechas de vencimiento es un campo obligatorio',
             ]
         );
-//client_id: 1
-//loan_type_id: 1
-//loan_fee: 26
-//payments: 4
-//total_amount: 221
-//dueDates:
+
         $input = $request->all();
-        $dueDates = explode(',', $input['dueDates']);
-
+        //set the new loan
         $loanGranted = LoansGranted::create($input);
-        dd($input);
 
-        return redirect()->route('clients.index')
-            ->with('success','Cliente creado correctamente');
+        //set the payments
+        $dueDates = explode(',', $input['due_dates']);
+
+        $paymentNumber = 1;
+        for($i = 0; $i < count($dueDates); $i++){
+            $dueDateFormat = DateTime::createFromFormat('d-m-Y',$dueDates[$i]);
+            $dueDate = $dueDateFormat->format('Y-m-d');
+            $data = [
+                'loan_granted_id' => $loanGranted->id,
+                'payment_number' => $paymentNumber,
+                'payment_amount' => $input['payment_amount'],
+                'due_date' => $dueDate,
+                'status' => 'pendiente'
+            ];
+            LoansGrantedPayments::create($data);
+            $paymentNumber += 1;
+        }
+
+        return redirect()->route('loans.index')
+            ->with('success','Credito creado correctamente');
     }
 
 
@@ -105,58 +121,59 @@ class LoanController extends Controller
      */
     public function show($id)
     {
-        $client = Client::find($id);
-        return view('clients.show',compact('client'));
+        $loanGranted = LoansGranted::find($id);
+        $loanGrantedPayments = LoansGrantedPayments::where('loan_granted_id', $id)->get();
+//        dd($loanGrantedPayments);
+        return view('loans.show',compact('loanGranted', 'loanGrantedPayments'));
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $cities = City::pluck('name','id')->all();
-        $client = Client::find($id);
-        $cityId = $client->city->id;
-        return view('clients.edit',compact('client', 'cities', 'cityId'));
-    }
+//    /**
+//     * Show the form for editing the specified resource.
+//     *
+//     * @param  int  $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function edit($id)
+//    {
+//        $cities = City::pluck('name','id')->all();
+//        $client = Client::find($id);
+//        $cityId = $client->city->id;
+//        return view('clients.edit',compact('client', 'cities', 'cityId'));
+//    }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'lastname' => 'required',
-            'address' => 'required',
-            'city_id' => 'required',
-        ],
-            [
-                'name.required' => 'Nombre es un campo obligatorio',
-                'lastname.required' => 'Nombre es un campo obligatorio',
-                'address.required' => 'Direccion es un campo obligatorio',
-                'city_id.required' => 'Localidad es un campo obligatorio',
-            ]
-        );
-
-        $input = $request->all();
-
-        $client = Client::find($id);
-        $client->update($input);
-
-        return redirect()->route('clients.index')
-            ->with('success','Cliente actualizado correctamente');
-    }
-
+//    /**
+//     * Update the specified resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @param  int  $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function update(Request $request, $id)
+//    {
+//        $this->validate($request, [
+//            'name' => 'required',
+//            'lastname' => 'required',
+//            'address' => 'required',
+//            'city_id' => 'required',
+//        ],
+//            [
+//                'name.required' => 'Nombre es un campo obligatorio',
+//                'lastname.required' => 'Nombre es un campo obligatorio',
+//                'address.required' => 'Direccion es un campo obligatorio',
+//                'city_id.required' => 'Localidad es un campo obligatorio',
+//            ]
+//        );
+//
+//        $input = $request->all();
+//
+//        $client = Client::find($id);
+//        $client->update($input);
+//
+//        return redirect()->route('clients.index')
+//            ->with('success','Cliente actualizado correctamente');
+//    }
 
     /**
      * Remove the specified resource from storage.
@@ -166,22 +183,10 @@ class LoanController extends Controller
      */
     public function destroy($id)
     {
-        Client::find($id)->delete();
-        return redirect()->route('clients.index')
-            ->with('success','Cliente borrado correctamente');
-    }
+        LoansGrantedPayments::where('loan_granted_id',$id)->delete();
+        LoansGranted::find($id)->delete();
 
-    /**
-     * Return the fee rate for the selected loan type
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function feecheck($id)
-    {
-        dd('GG');
-//        Client::find($id)->delete();
-//        return redirect()->route('clients.index')
-//            ->with('success','Cliente borrado correctamente');
+        return redirect()->route('loans.index')
+            ->with('success','Credito borrado correctamente');
     }
 }
