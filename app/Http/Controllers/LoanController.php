@@ -38,7 +38,6 @@ class LoanController extends Controller
         return view('loans.index',compact('loansGranted'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -56,7 +55,6 @@ class LoanController extends Controller
         $loansGranted = LoansGranted::all();
         return view('loans.create',compact('clients', 'loansType', 'loansGranted'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -92,7 +90,6 @@ class LoanController extends Controller
 
         //set the payments
         $dueDates = explode(',', $input['due_dates']);
-
         $paymentNumber = 1;
         for($i = 0; $i < count($dueDates); $i++){
             $dueDateFormat = DateTime::createFromFormat('d-m-Y',$dueDates[$i]);

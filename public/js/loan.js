@@ -58,6 +58,7 @@ $(document).ready(function () {
         //form validation
         if(loanForm.valid()){
             let loanFee = parseInt($('#loanFee').val());
+            let loanType = $('#loanTypeCombo option:selected').val();
             let amount = parseInt($('#amount').val());
             let payments = $('#paymentsCombo option:selected').val();
             let paymentsTable;
@@ -70,7 +71,11 @@ $(document).ready(function () {
             let paymentDate = new Date();
             paymentsTable = '';
             for (let i = 1; i <= payments; i++){
-                paymentDate.setDate(paymentDate.getDate() + (7*i));
+                if(loanType === '1'){
+                    paymentDate.setDate(paymentDate.getDate() + (7*i));
+                } else {
+                    paymentDate.setDate(paymentDate.getDate() + 28);
+                }
                 paymentsTable += '<tr>' +
                     '<td align="center">' + i + '</td>' +
                     '<td class="payment_amount">$ ' + payment.toFixed(2) + '</td>' +

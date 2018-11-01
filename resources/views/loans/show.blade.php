@@ -96,7 +96,7 @@
                         <tr>
                             <td>{{ $payment->payment_number }}</td>
                             <td>${{ $payment->payment_amount }}</td>
-                            <td>{{ $payment->due_date }}</td>
+                            <td>{{ Carbon\Carbon::parse($payment->due_date)->format('d-m-Y') }}</td>
                         </tr>
                     @endforeach
                     </tbody>
