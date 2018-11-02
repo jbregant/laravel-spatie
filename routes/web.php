@@ -23,10 +23,11 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/feecheck/{id}', 'ApiController@feecheck');
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::get('/incomes/getclientinfo/{id}', 'ApiController@getclientinfo');
+    Route::get('/feecheck/{id}', 'ApiController@feecheck');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
     Route::resource('zones','ZoneController');
@@ -35,5 +36,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('clients','ClientController');
     Route::resource('loans','LoanController');
     Route::resource('loanstype','LoanTypeController');
+    Route::resource('incomes','IncomeController');
 //    Route::post('feecheck','LoanTypeController');
 });

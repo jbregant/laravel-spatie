@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Client;
 use App\LoansGranted;
 use App\LoansGrantedPayments;
-use App\LoanType;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class LoanController extends Controller
+class IncomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,10 +15,10 @@ class LoanController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:loan.list');
-        $this->middleware('permission:loan.create', ['only' => ['create','store']]);
-        $this->middleware('permission:loan.edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:loan.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:income.list');
+        $this->middleware('permission:income.create', ['only' => ['create','store']]);
+        $this->middleware('permission:income.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:income.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -32,8 +28,17 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
+
         $loansGranted = LoansGranted::where('status', 'activo')->get();
-        return view('loans.index',compact('loansGranted'));
+
+//        $loansGrantedPaymens = [];
+//
+//        foreach ($loansGranted as $loanGranted) {
+//            $loansGrantedPaymens[$loanGranted->id] = LoansGrantedPayments::where('loan_granted_id', '1')->where('status', 'pendiente')->get();
+//        }
+//
+//        dd($loansGrantedPaymens);
+        return view('incomes.index',compact('loansGranted'));
     }
 
     /**
@@ -184,4 +189,6 @@ class LoanController extends Controller
         return redirect()->route('loans.index')
             ->with('success','Credito borrado correctamente');
     }
+
+
 }

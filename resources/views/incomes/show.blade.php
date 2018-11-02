@@ -74,12 +74,6 @@
                         {{ Carbon\Carbon::parse($loanGranted->created_at)->format('d-m-Y H:i:s') }}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Observaciones:</strong>
-                        {{ $loanGranted->description }}
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-lg-6">

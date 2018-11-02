@@ -42,16 +42,6 @@
                 <th width="280px">Acciones</th>
             </tr>
             </thead>
-            {{--"id" => 1--}}
-            {{--"client_id" => 1--}}
-            {{--"loan_type_id" => 1--}}
-            {{--"payments" => 3--}}
-            {{--"loan_fee" => 26--}}
-            {{--"amount" => 1221--}}
-            {{--"updated_amount" => null--}}
-            {{--"description" => null--}}
-            {{--"created_at" => "2018-10-31 04:07:32"--}}
-            {{--"updated_at" => "2018-10-31 04:07:32"--}}
             @foreach ($loansGranted as $key => $loan)
                 <tr>
                     <td>{{ $loan->id }}</td>

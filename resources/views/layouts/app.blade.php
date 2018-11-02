@@ -59,6 +59,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ route('clients.index') }}">ABM Clientes</a></li>
                                 <li><a class="nav-link" href="{{ route('loans.index') }}">Creditos</a></li>
+                                <li><a class="nav-link" href="{{ route('incomes.index') }}">Ingresos</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">

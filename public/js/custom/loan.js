@@ -25,7 +25,7 @@ $(document).ready(function () {
         }).fail(function() {
             alert( "error" );
         });
-    })
+    });
 
     $('#paymentsSimulatorBtn').on('click', function (e) {
         e.preventDefault();
@@ -97,6 +97,9 @@ $(document).ready(function () {
     $('#dateConfirmation').change(function () {
         if($(this).prop('checked')){
              $('#addLoanBtn').prop('disabled', false);
+            $('#paymentsSimulatorTable .date-picker-payments').each(function () {
+                $(this).prop('disabled', true);
+            });
         } else {
             $('#addLoanBtn').prop('disabled', true);
         }

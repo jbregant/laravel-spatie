@@ -68,7 +68,7 @@
                         {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-xs- col-sm-3 col-md-3">
                     <div class="form-group">
                         <strong>Valor Cuota:</strong>
                         {!! Form::number('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}
@@ -78,13 +78,6 @@
                     <div class="form-group">
                         <button id="paymentsSimulatorBtn" type="submit" class="btn btn-primary">Calcular Cuotas</button>
                         <input type="checkbox" class="offset-1" id="dateConfirmation" disabled>Confirma Fechas de Vencimiento?</input>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                    <div class="form-group">
-                        <strong>Observaciones:</strong>
-                        {!! Form::textarea('description', null, ['id' => 'descripcionText', 'rows' => 4, 'cols' => 54, 'style' => 'resize:none; width:100%;']) !!}
-{{--                        {!! Form::text('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}--}}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -133,7 +126,7 @@
         </div>
     </div>
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/loan.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 @endsection
