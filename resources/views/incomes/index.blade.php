@@ -87,6 +87,10 @@
                 <th>Nro Cuota</th>
                 <th>Cantidad Cuotas</th>
                 <th>Fecha de Vencimiento</th>
+                <th>Monto del Credito</th>
+                <th>Deuda Actual</th>
+                <th>Monto de la Cuota</th>
+                <th>Monto Abonado</th>
                 <th>Acciones</th>
                 </thead>
                 <tfoot id="tableFooterTotalPaymentsAmount" hidden>
