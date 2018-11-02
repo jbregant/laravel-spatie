@@ -46,33 +46,33 @@
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
                         <strong>Codigo de Cliente:</strong>
-                        <input type="text" class="form-control" id="" >
+                        <input type="text" class="form-control" id="clientIdTxt" >
                         {{--{!! Form::text('loan_fee', null, array('id' => 'loanFee', 'placeholder' => '%','class' => 'form-control')) !!}--}}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
                         <strong>DNI:</strong>
-                        <input type="text" class="form-control" id="" >
+                        <input type="text" class="form-control" id="dniTxt" >
                         {{--{!! Form::text('loan_fee', null, array('id' => 'loanFee', 'placeholder' => '%','class' => 'form-control')) !!}--}}
                     </div>
                 </div>
                 <div class="col-xs-1 col-sm-1 col-md-1">
                     <div class="form-group">
-                        <button id="searchClientTxt" type="submit" class="btn btn-primary" style="margin-top:65%;">Buscar</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top:65%;"  id="searchClientBtn">Buscar</button>
                     </div>
                 </div>
                 {{--<div class="col-xs-6 col-sm-6 col-md-6">--}}
-                    {{--<div class="form-group">--}}
-                        {{--<strong>Monto a Financiar:</strong>--}}
-                        {{--{!! Form::number('amount', null, array('id' => 'amount', 'placeholder' => '$','class' => 'form-control')) !!}--}}
-                    {{--</div>--}}
+                {{--<div class="form-group">--}}
+                {{--<strong>Monto a Financiar:</strong>--}}
+                {{--{!! Form::number('amount', null, array('id' => 'amount', 'placeholder' => '$','class' => 'form-control')) !!}--}}
+                {{--</div>--}}
                 {{--</div>--}}
                 {{--<div class="col-xs-3 col-sm-3 col-md-3">--}}
-                    {{--<div class="form-group">--}}
-                        {{--<strong>Valor Cuota:</strong>--}}
-                        {{--{!! Form::number('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}--}}
-                    {{--</div>--}}
+                {{--<div class="form-group">--}}
+                {{--<strong>Valor Cuota:</strong>--}}
+                {{--{!! Form::number('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}--}}
+                {{--</div>--}}
                 {{--</div>--}}
             </div>
         </div>
@@ -82,9 +82,12 @@
         <div class="col-lg-12">
             <table id="paymentsSimulatorTable" class="table">
                 <thead>
+                <th>Nro Credito</th>
+                <th>Tipo Credito</th>
                 <th>Nro Cuota</th>
-                <th>Monto</th>
+                <th>Cantidad Cuotas</th>
                 <th>Fecha de Vencimiento</th>
+                <th>Acciones</th>
                 </thead>
                 <tfoot id="tableFooterTotalPaymentsAmount" hidden>
                 <tr>
@@ -99,7 +102,7 @@
         </div>
     </div>
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/loan.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/income.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 @endsection

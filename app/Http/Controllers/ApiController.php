@@ -32,24 +32,24 @@ class ApiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getclientinfo(Request $request, $id = null)
+    public function getclientinfo(Request $request, $id)
     {
         if(!Auth::check()){
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        $loansGranted = LoansGranted::where('status', 'activo')->get();
+        $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $id)->get();
 
-        $loansGrantedPaymens = [];
+        $loansGranted = [];
 
-        foreach ($loansGranted as $loanGranted) {
-            $loansGrantedPaymens[] = [
+        foreach ($loansGrantedObj as $loanGranted) {
+            $loansGranted[] = [
                 'loan' => $loanGranted,
                 'payments' => LoansGrantedPayments::where('loan_granted_id', '1')->where('status', 'pendiente')->get()
             ];
         }
-
-        return response()->json($loansGrantedPaymens);
-//        return view('incomes.index',compact('loansGranted'));
+//        dd($loansGranted);
+//        return response()->json($loansGrantedPaymens);
+        return view('incomes.table',compact('loansGranted'));
     }
 }

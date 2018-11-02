@@ -113,19 +113,19 @@ class IncomeController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $loanGranted = LoansGranted::find($id);
-        $loanGrantedPayments = LoansGrantedPayments::where('loan_granted_id', $id)->get();
-//        dd($loanGrantedPayments);
-        return view('loans.show',compact('loanGranted', 'loanGrantedPayments'));
-    }
+//    /**
+//     * Display the specified resource.
+//     *
+//     * @param  int  $id
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function show($id)
+//    {
+//        $loanGranted = LoansGranted::find($id);
+//        $loanGrantedPayments = LoansGrantedPayments::where('loan_granted_id', $id)->get();
+////        dd($loanGrantedPayments);
+//        return view('loans.show',compact('loanGranted', 'loanGrantedPayments'));
+//    }
 
 
 //    /**
