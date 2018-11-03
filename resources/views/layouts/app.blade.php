@@ -9,13 +9,20 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <!-- iziModal -->
+    <link href="{{ asset('css/iziModal.min.css') }}" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{{ asset('js/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css') }}">
+
 
     <!-- Scripts -->
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
+    {{--    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/bootstrap-modal.js') }}"></script>--}}
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery-3.3.1.min.js') }}"></script>
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/datatables.min.js') }}"></script>
+    <!-- iziModal -->
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/iziModal/iziModal.min.js') }}"></script>
+    {{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/datatables.min.js') }}"></script>--}}
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
     <!-- Fonts -->
@@ -104,17 +111,12 @@
     <main class="py-4">
         <div class="container">
         @yield('content')
-
-        <!-- The Modal -->
-            <div id="myModal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <span class="close-modal">&times;</span>
-                    <p id="modal-msg">ea</p>
-                </div>
-            </div>
         </div>
     </main>
+    <div id="test" style="display: none; position: fixed; opacity: 1; z-index: 11000; left: 50%; margin-left: -330px; top: 200px;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum libero purus, convallis nec vestibulum eget, luctus vitae purus. Vestibulum non mauris et sem vulputate pellentesque ac a turpis. Ut vel lacus vitae justo vestibulum lobortis. Nunc ipsum ipsum, laoreet id dictum nec, fermentum vel purus. Maecenas nisl felis, faucibus non rutrum eu, sollicitudin sed ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent dignissim lacinia tempus. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nulla accumsan pellentesque velit, a malesuada diam tristique a. Fusce eleifend magna erat, et imperdiet orci. Quisque sapien mauris, malesuada eu tristique pulvinar, placerat id ligula. Vivamus vitae viverra nulla. Donec eget turpis vel erat malesuada sodales.</p>
+    </div>
+    <div id="lean_overlay" style="display: none; opacity: 0.5;"></div>
 </div>
 </body>
 </html>

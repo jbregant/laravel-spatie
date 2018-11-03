@@ -1,5 +1,7 @@
 $(document).ready(function () {
     $('#searchClientBtn').on('click', function () {
+        // $("#test").leanModal()();
+        $("#test").modal();
         let clientId = $('#clientIdTxt').val();
 
         $.ajax({
@@ -16,7 +18,7 @@ $(document).ready(function () {
                     //mostrar mensaje de que no se encontraron datos
 
             }
-            console.log(response.data);
+            // console.log(response.data);
             // let maxPayments = response.max_loan_payments;
             // let paymentsCombo;
             //

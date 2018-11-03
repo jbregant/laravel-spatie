@@ -7,26 +7,23 @@
             <div class="pull-left">
                 <h2>Ingreso de Pagos</h2>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('loans.index') }}"> Volver</a>
-            </div>
         </div>
     </div>
 
     <br>
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> Hubo algunos problemas con la creacion.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    {{--@if (count($errors) > 0)--}}
+        {{--<div class="alert alert-danger">--}}
+            {{--<strong>Whoops!</strong> Hubo algunos problemas con la creacion.<br><br>--}}
+            {{--<ul>--}}
+                {{--@foreach ($errors->all() as $error)--}}
+                    {{--<li>{{ $error }}</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+        {{--</div>--}}
+    {{--@endif--}}
 
-    <br>
+    {{--<br>--}}
 
     <div class="row">
         <div class="col-lg-8">
@@ -105,8 +102,16 @@
             </table>
         </div>
     </div>
-    <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
+
+    <!-- Modal structure -->
+    <div id="modal"> <!-- data-iziModal-fullscreen="true"  data-iziModal-title="Welcome"  data-iziModal-subtitle="Subtitle"  data-iziModal-icon="icon-home" -->
+        <!-- Modal content -->
+        <h1>EEAAA</h1>
+    </div>
+    {{--<link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">--}}
+    <!-- iziModal -->
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.leanModal.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/income.js') }}"></script>
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    {{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>--}}
+    {{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>--}}
 @endsection
