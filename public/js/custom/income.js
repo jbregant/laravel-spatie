@@ -1,8 +1,13 @@
 $(document).ready(function () {
     $('#searchClientBtn').on('click', function () {
-        // $("#test").leanModal()();
-        $("#test").modal();
+
         let clientId = $('#clientIdTxt').val();
+        let dni = $('#dniTxt').val();
+        if( !clientId ) {
+            $('#modalMsg').text(response.message);
+            $("#myModal").modal('show');
+
+        }
 
         $.ajax({
             // url: "/incomes/getclientinfo/" + clientId,
@@ -15,20 +20,12 @@ $(document).ready(function () {
                     $('#tbodyPayments').html(response.data);
                     break;
                 case 201:
-                    //mostrar mensaje de que no se encontraron datos
-
+                    $('#modalMsg').text(response.message);
+                    $("#myModal").modal('show');
+                    break;
+                default:
+                    break;
             }
-            // console.log(response.data);
-            // let maxPayments = response.max_loan_payments;
-            // let paymentsCombo;
-            //
-            // for (let i = 0; i <= maxPayments; i++){
-            //     if(i === 0)
-            //         paymentsCombo = '<option value="' + i + '" disabled>' + i + '</option>';
-            //     else
-            //         paymentsCombo += '<option value="' + i + '">' + i + '</option>';
-            // }
-
         }).fail(function(response) {
             console.log(response);
             alert('ERROR');

@@ -77,7 +77,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <button id="paymentsSimulatorBtn" type="submit" class="btn btn-primary">Calcular Cuotas</button>
-                        <input type="checkbox" class="offset-1" id="dateConfirmation" disabled>Confirma Fechas de Vencimiento?</input>
+                        <input type="checkbox" class="offset-1" id="dateConfirmation" style="cursor: not-allowed;" disabled>Confirma Fechas de Vencimiento?</input>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                        <button id="addLoanBtn" type="submit" class="btn btn-primary offset-8" disabled>Crear Credito</button>
+                        <button id="addLoanBtn" type="submit" class="btn btn-primary offset-8" style="cursor: not-allowed;" disabled>Crear Credito</button>
                 </div>
                 {{--<div class="form-group">--}}
                     {{--<div class="col-xs-12 col-sm-12 col-md-12 text-center">--}}

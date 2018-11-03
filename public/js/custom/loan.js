@@ -89,19 +89,19 @@ $(document).ready(function () {
             $('#tableTotalPaymentsAmountTxt').text('$ '+totalAmount.toFixed(2)).datepicker();
             $('#paymentAmount').val(payment.toFixed(2));
             $('.datepicker').datepicker();
-            $('#dateConfirmation').attr('disabled', false);
+            $('#dateConfirmation').css('cursor', 'pointer').prop('disabled', false);
         }
     });
 
     //checkbox for confirm due dates
     $('#dateConfirmation').change(function () {
         if($(this).prop('checked')){
-             $('#addLoanBtn').prop('disabled', false);
+            $('#addLoanBtn').css('cursor', 'pointer').prop('disabled', false);
             $('#paymentsSimulatorTable .date-picker-payments').each(function () {
                 $(this).prop('disabled', true);
             });
         } else {
-            $('#addLoanBtn').prop('disabled', true);
+            $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true);
         }
     });
 
