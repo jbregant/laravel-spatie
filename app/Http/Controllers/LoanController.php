@@ -83,6 +83,7 @@ class LoanController extends Controller
         );
 
         $input = $request->all();
+
         //set the new loan
         $loanGranted = LoansGranted::create($input);
 

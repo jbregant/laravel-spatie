@@ -27,8 +27,14 @@ $(document).ready(function () {
         });
     });
 
+    $('#paymentsCombo, #loanTypeCombo').change(function () {
+        $('#dateConfirmation').css('cursor', 'not-allowed').prop('disabled', true).prop('checked', false);
+        $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');
+    });
+
     $('#paymentsSimulatorBtn').on('click', function (e) {
         e.preventDefault();
+        $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');
         let loanForm = $('#loanForm');
 
         //form settings
@@ -65,12 +71,12 @@ $(document).ready(function () {
 
             // let totalFinalAmount = Math.floor(totalAmount*loanFee)/100;
             let totalAmount = (amount  / 100 * loanFee) + amount ;
-            let payment = totalAmount/payments;
+            let payment = (totalAmount/payments);
 
             // let today = new Date();
-            let paymentDate = new Date();
             paymentsTable = '';
             for (let i = 1; i <= payments; i++){
+                let paymentDate = new Date();
                 if(loanType === '1'){
                     paymentDate.setDate(paymentDate.getDate() + (7*i));
                 } else {
@@ -89,19 +95,28 @@ $(document).ready(function () {
             $('#tableTotalPaymentsAmountTxt').text('$ '+totalAmount.toFixed(2)).datepicker();
             $('#paymentAmount').val(payment.toFixed(2));
             $('.datepicker').datepicker();
-            $('#dateConfirmation').css('cursor', 'pointer').prop('disabled', false);
+            let dateConfirmation = $('#dateConfirmation');
+            dateConfirmation.css('cursor', 'pointer').prop('disabled', false);
+            if(dateConfirmation.is(':checked')){
+                console.log('eaaaaaaaaa');
+                dateConfirmation.prop('checked', false);
+            }
+
         }
     });
 
     //checkbox for confirm due dates
     $('#dateConfirmation').change(function () {
         if($(this).prop('checked')){
-            $('#addLoanBtn').css('cursor', 'pointer').prop('disabled', false);
+            $('#addLoanBtn').css('cursor', 'pointer').prop('disabled', false).addClass('btn-primary').removeClass('btn-outline-primary');
             $('#paymentsSimulatorTable .date-picker-payments').each(function () {
                 $(this).prop('disabled', true);
             });
         } else {
-            $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true);
+            $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');;
+            $('#paymentsSimulatorTable .date-picker-payments').each(function () {
+                $(this).prop('disabled', false);
+            });
         }
     });
 

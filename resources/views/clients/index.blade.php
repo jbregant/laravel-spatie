@@ -46,9 +46,9 @@
                 <td>{{ $client->phone }}</td>
                 <td>{{ $client->created_at }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('clients.show',$client->id) }}">Ver</a>
+                    <a class="btn btn-outline-info" href="{{ route('clients.show',$client->id) }}">Ver</a>
                     @can('client.edit')
-                        <a class="btn btn-primary" href="{{ route('clients.edit',$client->id) }}">Editar</a>
+                        <a class="btn btn-outline-primary" href="{{ route('clients.edit',$client->id) }}">Editar</a>
                     @endcan
                     @can('client.delete')
                         {!! Form::open(['method' => 'DELETE','route' => ['clients.destroy', $client->id],'style'=>'display:inline']) !!}

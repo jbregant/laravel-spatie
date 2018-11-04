@@ -8,8 +8,8 @@
                 <h2>Detalles del Credito</h2>
             </div>
             <div class="pull-left">
-                <a class="btn btn-primary" href="{{ route('loans.index') }}"> Volver</a>
-                <a id="printBtn" class="btn btn-primary" href=""> Imprimir</a>
+                <a class="btn btn-outline-primary" href="{{ route('loans.index') }}"> Volver</a>
+                <a id="printBtn" class="btn btn-outline-primary" href=""> Imprimir</a>
             </div>
         </div>
         <div class="col-lg-12 margin-tb">

@@ -46,9 +46,9 @@
                 {{--<td>{{ $loanType->frecuency }}</td>--}}
                 <td>{{ $loanType->created_at }}</td>
                 <td>
-                    {{--<a class="btn btn-info" href="{{ route('loanstype.show',$loanType->id) }}">Ver</a>--}}
+                    {{--<a class="btn btn-outline-info" href="{{ route('loanstype.show',$loanType->id) }}">Ver</a>--}}
                     @can('loanstype.edit')
-                        <a class="btn btn-primary" href="{{ route('loanstype.edit',$loanType->id) }}">Editar</a>
+                        <a class="btn btn-outline-primary" href="{{ route('loanstype.edit',$loanType->id) }}">Editar</a>
                     @endcan
                     {{--@can('loanstype.delete')--}}
                         {{--{!! Form::open(['method' => 'DELETE','route' => ['loanstype.destroy', $loanType->id],'style'=>'display:inline']) !!}--}}

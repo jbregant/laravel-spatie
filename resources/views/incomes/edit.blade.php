@@ -8,7 +8,7 @@
                 <h2>Editar Cliente</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('clients.index') }}"> Volver</a>
+                <a class="btn btn-outline-primary" href="{{ route('clients.index') }}"> Volver</a>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" class="btn btn-outline-primary">Enviar</button>
         </div>
     </div>
     {!! Form::close() !!}

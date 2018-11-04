@@ -8,7 +8,7 @@
                 <h2>Editar Localidad</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('cities.index') }}"> Volver</a>
+                <a class="btn btn-outline-primary" href="{{ route('cities.index') }}"> Volver</a>
             </div>
         </div>
     </div>

@@ -39,9 +39,9 @@
                 <td>{{ $collector->name }}</td>
                 <td>{{ $collector->zone->name }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('collectors.show',$collector->id) }}">Ver</a>
+                    <a class="btn btn-outline-info" href="{{ route('collectors.show',$collector->id) }}">Ver</a>
                     @can('collector.edit')
-                        <a class="btn btn-primary" href="{{ route('collectors.edit',$collector->id) }}">Editar</a>
+                        <a class="btn btn-outline-primary" href="{{ route('collectors.edit',$collector->id) }}">Editar</a>
                     @endcan
                     @can('collector.delete')
                         {!! Form::open(['method' => 'DELETE','route' => ['collectors.destroy', $collector->id],'style'=>'display:inline']) !!}

@@ -8,7 +8,7 @@
                 <h2>Crear un nuevo credito</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('loans.index') }}"> Volver</a>
+                <a class="btn btn-outline-primary" href="{{ route('loans.index') }}"> Volver</a>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <button id="paymentsSimulatorBtn" type="submit" class="btn btn-primary">Calcular Cuotas</button>
+                        <button id="paymentsSimulatorBtn" type="submit" class="btn btn-outline-primary">Calcular Cuotas</button>
                         <input type="checkbox" class="offset-1" id="dateConfirmation" style="cursor: not-allowed;" disabled>Confirma Fechas de Vencimiento?</input>
                     </div>
                 </div>
@@ -88,11 +88,11 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                        <button id="addLoanBtn" type="submit" class="btn btn-primary offset-8" style="cursor: not-allowed;" disabled>Crear Credito</button>
+                        <button id="addLoanBtn" type="submit" class="btn btn-outline-primary offset-8" style="cursor: not-allowed;" disabled>Crear Credito</button>
                 </div>
                 {{--<div class="form-group">--}}
                     {{--<div class="col-xs-12 col-sm-12 col-md-12 text-center">--}}
-                        {{--<button type="submit" class="btn btn-primary">Enviar</button>--}}
+                        {{--<button type="submit" class="btn btn-outline-primary">Enviar</button>--}}
                     {{--</div>--}}
                 {{--</div>--}}
 
@@ -132,6 +132,7 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>

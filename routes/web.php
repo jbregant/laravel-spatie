@@ -26,6 +26,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::post('/incomes/dopayment', 'ApiController@dopayment');
     Route::post('/incomes/getclientinfo', 'ApiController@getclientinfo');
     Route::get('/feecheck/{id}', 'ApiController@feecheck');
     Route::resource('roles','RoleController');
@@ -37,5 +38,4 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('loans','LoanController');
     Route::resource('loanstype','LoanTypeController');
     Route::resource('incomes','IncomeController');
-//    Route::post('feecheck','LoanTypeController');
 });

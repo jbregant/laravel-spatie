@@ -9,8 +9,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    <!-- iziModal -->
-    <link href="{{ asset('css/iziModal.min.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('js/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css') }}">
 
@@ -127,7 +125,7 @@
                     <p id="modalMsg"></p>
                 </div>
                 {{--<div class="modal-footer">--}}
-                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                    {{--<button type="button" class="btn btn-outline-primary">Save changes</button>--}}
                     {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
                 {{--</div>--}}
             </div>

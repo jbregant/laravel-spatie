@@ -19,9 +19,9 @@ class CreateLoansGrantedPaymentsTable extends Migration
             $table->foreign('loan_granted_id')->references('id')->on('loans_granted');
             $table->integer('payment_number');
             $table->dateTime('due_date');
-            $table->integer('payment_amount')->nullable();
+            $table->float('payment_amount')->nullable();
             $table->dateTime('payment_date')->nullable();
-            $table->integer('payment_amount_paid')->nullable();
+            $table->float('payment_amount_paid')->nullable();
             $table->string('description')->nullable();
             $table->string('status');
             $table->timestamps();

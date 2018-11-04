@@ -36,6 +36,7 @@
                 <th>Cant Cuotas</th>
                 <th>Valor Cuota</th>
                 <th>Interes</th>
+                <th>Monto Solicitado</th>
                 <th>Monto Financiado</th>
                 <th>Deuda Actualizada</th>
                 <th>Fecha de Otorgamiento</th>
@@ -51,13 +52,14 @@
                     <td>{{ $loan->payments }}</td>
                     <td>{{ $loan->payment_amount }}</td>
                     <td>{{ $loan->loan_fee }}</td>
+                    <td>{{ $loan->amount }}</td>
                     <td>{{ $loan->total_amount }}</td>
                     <td>{{ $loan->updated_amount }}</td>
                     <td>{{ Carbon\Carbon::parse($loan->created_at)->format('d-m-Y') }}</td>
                     <td>
-                        <a class="btn btn-info" href="{{ route('loans.show',$loan->id) }}">Ver</a>
+                        <a class="btn btn-outline-info" href="{{ route('loans.show',$loan->id) }}">Ver</a>
                         {{--@can('collector.edit')--}}
-                            {{--<a class="btn btn-primary" href="{{ route('loans.edit',$loan->id) }}">Editar</a>--}}
+                            {{--<a class="btn btn-outline-primary" href="{{ route('loans.edit',$loan->id) }}">Editar</a>--}}
                         {{--@endcan--}}
                         @can('loan.delete')
                             {!! Form::open(['method' => 'DELETE','route' => ['loans.destroy', $loan->id],'style'=>'display:inline']) !!}

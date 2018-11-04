@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LoansGranted;
 use App\LoansGrantedPayments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class IncomeController extends Controller
 {
@@ -31,6 +32,12 @@ class IncomeController extends Controller
 
         $loansGranted = LoansGranted::where('status', 'activo')->get();
 
+        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
+
+        $clients = [];
+        foreach ($clientAux as $client) {
+            $clients[$client->id] = $client->id.' - '. $client->name . ' ' . $client->lastname;
+        }
 //        $loansGrantedPaymens = [];
 //
 //        foreach ($loansGranted as $loanGranted) {
@@ -38,7 +45,7 @@ class IncomeController extends Controller
 //        }
 //
 //        dd($loansGrantedPaymens);
-        return view('incomes.index',compact('loansGranted'));
+        return view('incomes.index',compact('loansGranted', 'clients'));
     }
 
     /**
@@ -59,58 +66,58 @@ class IncomeController extends Controller
         return view('loans.create',compact('clients', 'loansType', 'loansGranted'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'client_id' => 'required',
-            'loan_type_id' => 'required',
-            'loan_fee' => 'required',
-            'payments' => 'required',
-            'payment_amount' => 'required',
-            'total_amount' => 'required',
-            'due_dates' => 'required',
-        ],
-            [
-                'client_id.required' => 'Cliente es un campo obligatorio',
-                'loan_type_id.required' => 'Tipo de Credito es un campo obligatorio',
-                'loan_fee.required' => 'Interes es un campo obligatorio',
-                'payments.required' => 'Cantidad de Cuotas es un campo obligatorio',
-                'payment_amount.required' => 'El Valor de las Cuotas es un campo obligatorio',
-                'total_amount.required' => 'Monto del credito es un campo obligatorio',
-                'dueDates.required' => 'Fechas de vencimiento es un campo obligatorio',
-            ]
-        );
-
-        $input = $request->all();
-        //set the new loan
-        $loanGranted = LoansGranted::create($input);
-
-        //set the payments
-        $dueDates = explode(',', $input['due_dates']);
-        $paymentNumber = 1;
-        for($i = 0; $i < count($dueDates); $i++){
-            $dueDateFormat = DateTime::createFromFormat('d-m-Y',$dueDates[$i]);
-            $dueDate = $dueDateFormat->format('Y-m-d');
-            $data = [
-                'loan_granted_id' => $loanGranted->id,
-                'payment_number' => $paymentNumber,
-                'payment_amount' => $input['payment_amount'],
-                'due_date' => $dueDate,
-                'status' => 'pendiente'
-            ];
-            LoansGrantedPayments::create($data);
-            $paymentNumber += 1;
-        }
-
-        return redirect()->route('loans.index')
-            ->with('success','Credito creado correctamente');
-    }
+//    /**
+//     * Store a newly created resource in storage.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function store(Request $request)
+//    {
+//        $this->validate($request, [
+//            'client_id' => 'required',
+//            'loan_type_id' => 'required',
+//            'loan_fee' => 'required',
+//            'payments' => 'required',
+//            'payment_amount' => 'required',
+//            'total_amount' => 'required',
+//            'due_dates' => 'required',
+//        ],
+//            [
+//                'client_id.required' => 'Cliente es un campo obligatorio',
+//                'loan_type_id.required' => 'Tipo de Credito es un campo obligatorio',
+//                'loan_fee.required' => 'Interes es un campo obligatorio',
+//                'payments.required' => 'Cantidad de Cuotas es un campo obligatorio',
+//                'payment_amount.required' => 'El Valor de las Cuotas es un campo obligatorio',
+//                'total_amount.required' => 'Monto del credito es un campo obligatorio',
+//                'dueDates.required' => 'Fechas de vencimiento es un campo obligatorio',
+//            ]
+//        );
+//
+//        $input = $request->all();
+//        //set the new loan
+//        $loanGranted = LoansGranted::create($input);
+//
+//        //set the payments
+//        $dueDates = explode(',', $input['due_dates']);
+//        $paymentNumber = 1;
+//        for($i = 0; $i < count($dueDates); $i++){
+//            $dueDateFormat = DateTime::createFromFormat('d-m-Y',$dueDates[$i]);
+//            $dueDate = $dueDateFormat->format('Y-m-d');
+//            $data = [
+//                'loan_granted_id' => $loanGranted->id,
+//                'payment_number' => $paymentNumber,
+//                'payment_amount' => $input['payment_amount'],
+//                'due_date' => $dueDate,
+//                'status' => 'pendiente'
+//            ];
+//            LoansGrantedPayments::create($data);
+//            $paymentNumber += 1;
+//        }
+//
+//        return redirect()->route('loans.index')
+//            ->with('success','Credito creado correctamente');
+//    }
 
 
 //    /**

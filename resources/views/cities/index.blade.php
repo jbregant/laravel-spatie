@@ -37,9 +37,9 @@
                 <td scope="row">{{ $city->id }}</td>
                 <td>{{ $city->name }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('cities.show',$city->id) }}">Ver</a>
+                    <a class="btn btn-outline-info" href="{{ route('cities.show',$city->id) }}">Ver</a>
                     @can('city.edit')
-                        <a class="btn btn-primary" href="{{ route('cities.edit',$city->id) }}">Editar</a>
+                        <a class="btn btn-outline-primary" href="{{ route('cities.edit',$city->id) }}">Editar</a>
                     @endcan
                     @can('city.delete')
                         {!! Form::open(['method' => 'DELETE','route' => ['cities.destroy', $city->id],'style'=>'display:inline']) !!}

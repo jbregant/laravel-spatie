@@ -38,6 +38,9 @@ function minTwoDigits(n) {
     return (n < 10 ? '0' : '') + n;
 }
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 // function toggleModal() {
 //     var modal = document.querySelector("#myModal");
 //     modal.style.display = "block";

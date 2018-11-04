@@ -46,24 +46,70 @@ class ApiController extends Controller
 
         $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
 
-        if(!$loansGrantedObj->isEmpty()){
-            $loansGranted = [];
+        $loansGranted = [];
+        if(!$loansGrantedObj->isEmpty()) {
 
             foreach ($loansGrantedObj as $loanGranted) {
                 $loansGranted[] = [
                     'loan' => $loanGranted,
-                    'payments' => LoansGrantedPayments::where('loan_granted_id', '1')->where('status', 'pendiente')->get()
+                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', 'pendiente')->orWhere('status', 'parcial')->get()
                 ];
             }
-
-            return response()->json([
-                'status' => 200,
-                'message'=> '',
-                'data' =>view('incomes.table',compact('loansGranted'))->render()
-            ]);
-        } else {
-//            return redirect()->back()->withErrors(['token' => 'This is the error message.']);
-            return response()->json(['status' => 201, 'message' => 'No se encontraron datos para el codigo de cliente']);
         }
+//        } else {
+////            return redirect()->back()->withErrors(['token' => 'This is the error message.']);
+////            return response()->json(['status' => 201, 'message' => 'No se encontraron datos para el codigo de cliente']);
+//            $data = '';
+//        }
+        return response()->json([
+            'status' => 200,
+            'message'=> '',
+            'data' => view('incomes.table',compact('loansGranted'))->render()
+        ]);
+    }
+
+    /**
+     * Display update the payment.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function dopayment(Request $request)
+    {
+        dd('GG');
+
+//        if(!Auth::check()){
+//            return response()->json(['error' => 'Unauthenticated.'], 401);
+//        }
+//        $request = $request->request->all();
+//
+////        if(!isset($request['clientId']) && empty($request['clientId'])){
+////            return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
+////        }
+//
+//
+//
+//        $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
+//
+//        $loansGranted = [];
+//        if(!$loansGrantedObj->isEmpty()) {
+//
+//            foreach ($loansGrantedObj as $loanGranted) {
+//                $loansGranted[] = [
+//                    'loan' => $loanGranted,
+//                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', 'pendiente')->orWhere('status', 'parcial')->get()
+//                ];
+//            }
+//        }
+////        } else {
+//////            return redirect()->back()->withErrors(['token' => 'This is the error message.']);
+//////            return response()->json(['status' => 201, 'message' => 'No se encontraron datos para el codigo de cliente']);
+////            $data = '';
+////        }
+//        return response()->json([
+//            'status' => 200,
+//            'message'=> '',
+//            'data' => view('incomes.table',compact('loansGranted'))->render()
+//        ]);
     }
 }
