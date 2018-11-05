@@ -86,6 +86,8 @@ class LoanController extends Controller
 
         //set the new loan
         $loanGranted = LoansGranted::create($input);
+        $loanGranted->updated_amount =  $loanGranted->total_amount;
+        $loanGranted->save();
 
         //set the payments
         $dueDates = explode(',', $input['due_dates']);

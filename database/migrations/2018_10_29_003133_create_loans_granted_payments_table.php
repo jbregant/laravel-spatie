@@ -20,6 +20,7 @@ class CreateLoansGrantedPaymentsTable extends Migration
             $table->integer('payment_number');
             $table->dateTime('due_date');
             $table->float('payment_amount')->nullable();
+            $table->float('payment_partial')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->float('payment_amount_paid')->nullable();
             $table->string('description')->nullable();

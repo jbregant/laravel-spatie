@@ -54,8 +54,7 @@ $(document).ready(function () {
                 $('#dueDateTxt').val(data.due_date);
                 $('#paymentAmountPaidTxt').val('');
                 $('#paymentData').attr('data', $(this).closest('tr').attr('data'));
-
-
+                $('#paymentAmountPaidTxt').focus();
             }).tooltip();
 
 
@@ -107,8 +106,8 @@ $(document).ready(function () {
         // updated_amount: null
         let data = {
             paymentId: paymentData.payment_id,
-            paymentAmountPaid: $('#paymentAmountPaidTxt').val()
-        }
+            paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
+        };
 
         // if ()
         $.ajax({
