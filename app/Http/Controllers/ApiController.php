@@ -19,8 +19,8 @@ class ApiController extends Controller
      */
     public function feecheck(Request $request, $id)
     {
-        if (!$request->ajax()){
-            return response(null,403);
+        if (!$request->ajax()) {
+            return response(null, 403);
         }
 
         $loanType = LoanType::find($id);
@@ -36,19 +36,19 @@ class ApiController extends Controller
     public function getclientinfo(Request $request)
     {
 
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
         $request = $request->request->all();
 
-        if(!isset($request['clientId']) && empty($request['clientId'])){
+        if (!isset($request['clientId']) && empty($request['clientId'])) {
             return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
         }
 
         $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
 
         $loansGranted = [];
-        if(!$loansGrantedObj->isEmpty()) {
+        if (!$loansGrantedObj->isEmpty()) {
 
             foreach ($loansGrantedObj as $loanGranted) {
                 $loansGranted[] = [
@@ -64,8 +64,8 @@ class ApiController extends Controller
 //        }
         return response()->json([
             'status' => 200,
-            'message'=> '',
-            'data' => view('incomes.table',compact('loansGranted'))->render()
+            'message' => '',
+            'data' => view('incomes.table', compact('loansGranted'))->render()
         ]);
     }
 
@@ -78,12 +78,11 @@ class ApiController extends Controller
     public function dopayment(Request $request)
     {
 
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
         $httpCode = 200;
         $request = $request->request->all();
-//        dd($request);
 
 //        if(!isset($request['clientId']) && empty($request['clientId'])){
 //            return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
@@ -92,31 +91,30 @@ class ApiController extends Controller
         $payment = LoansGrantedPayments::find($request['paymentId']);
         $loanGranted = LoansGranted::find($payment->loan_granted_id);
 
-//        dd($loanGranted);
         $paymentAmount = $request['paymentAmountPaid'];
         $message = '';
-        if ($payment->status == 'pendiente'){
-            //check if payment amount is partial or total
-            if($paymentAmount < $payment->payment_amount){ // partial payment
+        if ($payment->status == 'pendiente') { //check if payment amount is partial or total
+            if ($paymentAmount < $payment->payment_amount) { // partial payment
                 //new partial payment
                 $message = $this->partialPayment($payment, $paymentAmount, $loanGranted);
             } else { // normal payment
                 $message = $this->normalPayment($request, $payment, $loanGranted);
             }
-        } elseif ($payment->status == 'parcial'){
+        } elseif ($payment->status == 'parcial') {
             //obtener los parciales, sumarlos y ver si completa la cuota
             $paymentPartial = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->get();
             $paymentPartialSum = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->where('status', 'activo')->sum('amount_paid');
             $paymentPartialUpdated = $paymentPartialSum + $paymentAmount;
 
-            if($paymentPartialUpdated < $payment->payment_amount){//update - generate a new partial
+            if ($paymentPartialUpdated < $payment->payment_amount) {//update - generate a new partial
                 //new partial payment
                 $message = $this->partialPayment($payment, $paymentAmount, $loanGranted, $paymentPartialUpdated);
             } else {
                 $message = $this->normalPayment($request, $payment, $loanGranted);
                 foreach ($paymentPartial as $item) {
-}                   $item->status = 'pago';
+                    $item->status = 'completo';
                     $item->save();
+                }
             }
         } else {
             //error
@@ -142,7 +140,7 @@ class ApiController extends Controller
 //        }
         return response()->json([
             'status' => $httpCode,
-            'message'=> $message,
+            'message' => $message,
         ]);
     }
 
@@ -161,11 +159,11 @@ class ApiController extends Controller
         $paymentPartial->amount_paid = $paymentAmount;
         $paymentPartial->save();
         //set payment to partial - update the payment_amount_paid
-        $loanGranted->updated_amount = $loanGranted->updated_amount - $payment->payment_amount_paid;
         $payment->payment_amount_paid = ($paymentPartialUpdated) ? $paymentPartialUpdated : $paymentAmount;
         $payment->payment_date = $today->format('Y-m-d');
         $payment->status = 'parcial';
         $payment->save();
+        $loanGranted->updated_amount = $loanGranted->updated_amount - $paymentAmount;
         $loanGranted->save();
         $message = 'Pago parcial realizado correctamente.';
         return $message;
@@ -183,12 +181,12 @@ class ApiController extends Controller
         $today = new \DateTime();
         $payment->payment_amount_paid = $request['paymentAmountPaid'];
         $payment->payment_date = $today->format('Y-m-d');
-        $payment->status = "pago";
+        $payment->status = "completo";
         $loanGranted->updated_amount = $loanGranted->updated_amount - $payment->payment_amount_paid;
 
         //si es la ultima cuota marco el credito como completado
         if ($payment->payment_number == $loanGranted->payments) {
-            $loanGranted->status = 'completado';
+            $loanGranted->status = 'completo';
         }
         $loanGranted->save();
         $payment->save();

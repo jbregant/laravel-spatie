@@ -28,6 +28,7 @@
             'payment_id' => $payment->id,
             'payment_number' => $payment->payment_number,
             'payment_amount' => $payment->payment_amount,
+            'payment_amount_paid' => $payment->payment_amount_paid,
             'payments' => $loanGranted["loan"]->payments,
             'due_date' => Carbon\Carbon::parse($payment->due_date)->format('d-m-Y'),
             'total_amount' => $loanGranted["loan"]->total_amount,

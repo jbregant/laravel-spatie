@@ -71,10 +71,16 @@
                         {!! Form::text('due_date', null, array('id' => 'dueDateTxt', 'class' => 'form-control', 'readonly' => true)) !!}
                     </div>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="col-xs-2 col-sm-2 col-md-2">
                     <div class="form-group">
                         <strong>Pago Parcial:</strong>
-                        {!! Form::text('due_date', null, array('id' => 'partialPaymentTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        {!! Form::text('partial_payment', null, array('id' => 'partialPaymentTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3" id="remainingDebtDiv" style="display: none;">
+                    <div class="form-group">
+                        <strong>Monto Restante:</strong>
+                        {!! Form::text('ramining_debt', null, array('id' => 'remainingDebtTxt', 'class' => 'form-control', 'readonly' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">

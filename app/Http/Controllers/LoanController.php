@@ -20,8 +20,8 @@ class LoanController extends Controller
     function __construct()
     {
         $this->middleware('permission:loan.list');
-        $this->middleware('permission:loan.create', ['only' => ['create','store']]);
-        $this->middleware('permission:loan.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:loan.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:loan.edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:loan.delete', ['only' => ['destroy']]);
     }
 
@@ -33,7 +33,7 @@ class LoanController extends Controller
     public function index(Request $request)
     {
         $loansGranted = LoansGranted::where('status', 'activo')->get();
-        return view('loans.index',compact('loansGranted'));
+        return view('loans.index', compact('loansGranted'));
     }
 
     /**
@@ -47,17 +47,17 @@ class LoanController extends Controller
 
         $clients = [];
         foreach ($clientAux as $client) {
-            $clients[$client->id] = $client->id.' - '. $client->name . ' ' . $client->lastname;
+            $clients[$client->id] = $client->id . ' - ' . $client->name . ' ' . $client->lastname;
         }
-        $loansType = LoanType::pluck('name','id')->all();
+        $loansType = LoanType::pluck('name', 'id')->all();
         $loansGranted = LoansGranted::all();
-        return view('loans.create',compact('clients', 'loansType', 'loansGranted'));
+        return view('loans.create', compact('clients', 'loansType', 'loansGranted'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -86,14 +86,14 @@ class LoanController extends Controller
 
         //set the new loan
         $loanGranted = LoansGranted::create($input);
-        $loanGranted->updated_amount =  $loanGranted->total_amount;
+        $loanGranted->updated_amount = $loanGranted->total_amount;
         $loanGranted->save();
 
         //set the payments
         $dueDates = explode(',', $input['due_dates']);
         $paymentNumber = 1;
-        for($i = 0; $i < count($dueDates); $i++){
-            $dueDateFormat = DateTime::createFromFormat('d-m-Y',$dueDates[$i]);
+        for ($i = 0; $i < count($dueDates); $i++) {
+            $dueDateFormat = DateTime::createFromFormat('d-m-Y', $dueDates[$i]);
             $dueDate = $dueDateFormat->format('Y-m-d');
             $data = [
                 'loan_granted_id' => $loanGranted->id,
@@ -107,14 +107,14 @@ class LoanController extends Controller
         }
 
         return redirect()->route('loans.index')
-            ->with('success','Credito creado correctamente');
+            ->with('success', 'Credito creado correctamente');
     }
 
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -122,7 +122,7 @@ class LoanController extends Controller
         $loanGranted = LoansGranted::find($id);
         $loanGrantedPayments = LoansGrantedPayments::where('loan_granted_id', $id)->get();
 //        dd($loanGrantedPayments);
-        return view('loans.show',compact('loanGranted', 'loanGrantedPayments'));
+        return view('loans.show', compact('loanGranted', 'loanGrantedPayments'));
     }
 
 
@@ -176,15 +176,15 @@ class LoanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        LoansGrantedPayments::where('loan_granted_id',$id)->delete();
+        LoansGrantedPayments::where('loan_granted_id', $id)->delete();
         LoansGranted::find($id)->delete();
 
         return redirect()->route('loans.index')
-            ->with('success','Credito borrado correctamente');
+            ->with('success', 'Credito borrado correctamente');
     }
 }

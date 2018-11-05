@@ -52,8 +52,15 @@ $(document).ready(function () {
                 $('#paymentNumberTxt').val(data.payment_number);
                 $('#paymentAmountTxt').val(data.payment_amount);
                 $('#dueDateTxt').val(data.due_date);
-                $('#paymentAmountPaidTxt').val('');
+                $('#partialPaymentTxt').val(data.payment_amount_paid);
                 $('#paymentData').attr('data', $(this).closest('tr').attr('data'));
+                if (data.payment_amount_paid != null){
+                    let paymentPartialAmount = data.payment_amount - data.payment_amount_paid;
+                    $('#remainingDebtTxt').val(paymentPartialAmount);
+                    $('#remainingDebtDiv').show();
+                    $('#paymentAmountPaidTxt').prop('placeholder', paymentPartialAmount);
+                }
+
                 $('#paymentAmountPaidTxt').focus();
             }).tooltip();
 
@@ -117,7 +124,7 @@ $(document).ready(function () {
         }).done(function(response) {
             $('#div-table-payments').html(response.data);
             $('#paymentsTable').dataTable();
-
+            searchClientBtn
             $('.paymentActionBtn').on('click', function () {
                 $('#paymentAmountPaidTxt').prop('disabled', false);
                 $('#doPaymentBtn').prop('disabled', false).css('cursor', 'pointer');
@@ -139,3 +146,4 @@ $(document).ready(function () {
     })
 
 });
+
