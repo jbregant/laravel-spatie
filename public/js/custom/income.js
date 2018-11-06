@@ -40,7 +40,7 @@ $(document).ready(function () {
             data: {clientId}
         }).done(function(response) {
             $('#div-table-payments').html(response.data);
-            $('#paymentsTable').dataTable();
+            // $('#paymentsTable').dataTable();
 
             $('.paymentActionBtn').on('click', function () {
                 $('#paymentAmountPaidTxt').prop('disabled', false);
@@ -52,19 +52,18 @@ $(document).ready(function () {
                 $('#paymentNumberTxt').val(data.payment_number);
                 $('#paymentAmountTxt').val(data.payment_amount);
                 $('#dueDateTxt').val(data.due_date);
-                $('#partialPaymentTxt').val(data.payment_amount_paid);
                 $('#paymentData').attr('data', $(this).closest('tr').attr('data'));
                 if (data.payment_amount_paid != null){
                     let paymentPartialAmount = data.payment_amount - data.payment_amount_paid;
                     $('#remainingDebtTxt').val(paymentPartialAmount);
+                    $('#paymentPartialDiv').show();
+                    $('#paymentPartialTxt').val(data.payment_amount_paid);
                     $('#remainingDebtDiv').show();
                     $('#paymentAmountPaidTxt').prop('placeholder', paymentPartialAmount);
                 }
 
                 $('#paymentAmountPaidTxt').focus();
             }).tooltip();
-
-
         }).fail(function(response) {
             console.log(response);
             alert('ERROR');
@@ -79,7 +78,7 @@ $(document).ready(function () {
         let paymentPartial = $('#partialPaymentTxt').val();
         let paymentForm = $('#paymentForm');
         let paymentData = JSON.parse($('#paymentData').attr('data'));
-        console.log(paymentData);
+
         //form settings
         paymentForm.validate({
             highlight: function(element) {
@@ -101,43 +100,28 @@ $(document).ready(function () {
         if (!paymentForm.valid())
             return false;
 
-        // due_date: "11-11-2018"
-        // loan_id: 6
-        // loan_type: "Semanal"
-        // payment_amount: 3818.43
-        // payment_id: 17
-        // payment_number: 1
-        // payments: 4
-        // status: "pendiente"
-        // total_amount: 15274
-        // updated_amount: null
+        // if (paymentAmountPaid > paymentAmount){
+        //     $('#modalMsg').text('El importe ingresado supera el importe de la cuota');
+        //     $('#myModal').modal('toggle');
+        //     return false;
+        // }
+
+
         let data = {
             paymentId: paymentData.payment_id,
             paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
         };
 
-        // if ()
         $.ajax({
             url: "/incomes/dopayment",
             type: "POST",
             data: data
         }).done(function(response) {
-            $('#div-table-payments').html(response.data);
-            $('#paymentsTable').dataTable();
-            searchClientBtn
-            $('.paymentActionBtn').on('click', function () {
-                $('#paymentAmountPaidTxt').prop('disabled', false);
-                $('#doPaymentBtn').prop('disabled', false).css('cursor', 'pointer');
-                let data = JSON.parse($(this).closest('tr').attr('data'));
-                $('#loanGrantedIdTxt').val(data.loan_id);
-                $('#loanTypeIdTxt').val(data.loan_type);
-                $('#paymentNumberTxt').val(data.payment_number);
-                $('#paymentAmountTxt').val(data.payment_amount);
-                $('#dueDateTxt').val(data.due_date);
-                $('#paymentData').attr('data', $(this).closest('tr').attr('data'));
-            }).tooltip();
-
-
+            $('#paymentForm')[0].reset();
+            $('#paymentPartialDiv').hide();
+            $('#remainingDebtDiv').hide();
+            $('#modalMsg').text(response.message);
+            $('#myModal').modal('toggle');
         }).fail(function(response) {
             console.log(response);
             alert('ERROR');
@@ -146,4 +130,3 @@ $(document).ready(function () {
     })
 
 });
-
