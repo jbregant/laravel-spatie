@@ -84,30 +84,11 @@
                     <div class="form-group">
                         <strong>Observaciones:</strong>
                         {!! Form::textarea('description', null, ['id' => 'descripcionText', 'rows' => 4, 'cols' => 54, 'style' => 'resize:none; width:100%;']) !!}
-{{--                        {!! Form::text('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}--}}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                         <button id="addLoanBtn" type="submit" class="btn btn-outline-primary offset-8" style="cursor: not-allowed;" disabled>Crear Credito</button>
                 </div>
-                {{--<div class="form-group">--}}
-                    {{--<div class="col-xs-12 col-sm-12 col-md-12 text-center">--}}
-                        {{--<button type="submit" class="btn btn-outline-primary">Enviar</button>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-                {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
-                {{--<div class="form-group">--}}
-                {{--<strong>Direccion:</strong>--}}
-                {{--{!! Form::text('address', null, array('placeholder' => 'Direccion...','class' => 'form-control')) !!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
-                {{--<div class="form-group">--}}
-                {{--<strong>Telefono:</strong>--}}
-                {{--{!! Form::text('phone', null, array('placeholder' => 'Telefono...','class' => 'form-control')) !!}--}}
-                {{--</div>--}}
-                {{--</div>--}}
             </div>
             {!! Form::close() !!}
         </div>
@@ -116,7 +97,6 @@
                 <table id="paymentsSimulatorTable" class="table">
                     <thead>
                     <th>Nro Cuota</th>
-                    <th>Monto</th>
                     <th>Fecha de Vencimiento</th>
                     </thead>
                     <tfoot id="tableFooterTotalPaymentsAmount" hidden>

@@ -68,23 +68,37 @@ $(document).ready(function () {
             let amount = parseInt($('#amount').val());
             let payments = $('#paymentsCombo option:selected').val();
             let paymentsTable;
-
-            // let totalFinalAmount = Math.floor(totalAmount*loanFee)/100;
             let totalAmount = (amount  / 100 * loanFee) + amount ;
             let payment = (totalAmount/payments);
 
             // let today = new Date();
             paymentsTable = '';
+            paymentsCounter = 0;
             for (let i = 1; i <= payments; i++){
                 let paymentDate = new Date();
-                if(loanType === '1'){
-                    paymentDate.setDate(paymentDate.getDate() + (7*i));
-                } else {
-                    paymentDate.setDate(paymentDate.getDate() + 28);
+                let paymentDateAux = new Date();
+                switch (loanType) {
+                    case '1':
+                    case '2':
+                        if (paymentDate.getDay(paymentDate.setDate(paymentDate.getDate() + i)) === 0)
+                            continue;
+                        break;
+                    case '3'://semanal
+                        paymentDate.setDate(paymentDate.getDate() + (7*i));
+                        break;
+                    case '4'://quincenal
+                        paymentDate.setDate(paymentDate.getDate() + (14*i));
+                        break;
+                    case '5'://quincenal
+                        paymentDate.setDate(paymentDate.getDate() + 28);
+                        break;
+                    default:
+                        break;
                 }
+
                 paymentsTable += '<tr>' +
                     '<td align="center">' + i + '</td>' +
-                    '<td class="payment_amount">$ ' + payment.toFixed(2) + '</td>' +
+                    // '<td class="payment_amount">$ ' + payment.toFixed(2) + '</td>' +
                     '<td><input type="text" class="datepicker date-picker-payments" value="' + minTwoDigits(paymentDate.getDate()) + '-' + minTwoDigits((paymentDate.getMonth()+1)) + '-'  + paymentDate.getFullYear() + '"></input</td>' +
                     '</tr>';
             }

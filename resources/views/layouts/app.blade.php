@@ -124,6 +124,9 @@
                 <div class="modal-body">
                     <p id="modalMsg"></p>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
                 {{--<div class="modal-footer">--}}
                     {{--<button type="button" class="btn btn-outline-primary">Save changes</button>--}}
                     {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}

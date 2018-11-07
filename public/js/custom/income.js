@@ -60,6 +60,8 @@ $(document).ready(function () {
                     $('#paymentPartialTxt').val(data.payment_amount_paid);
                     $('#remainingDebtDiv').show();
                     $('#paymentAmountPaidTxt').prop('placeholder', paymentPartialAmount);
+                } else {
+                    $('#paymentAmountPaidTxt').prop('placeholder', data.payment_amount);
                 }
                 $('#paymentAmountPaidTxt').focus();
             }).tooltip();
@@ -120,7 +122,10 @@ $(document).ready(function () {
             $('#paymentPartialDiv').hide();
             $('#remainingDebtDiv').hide();
             $('#modalMsg').text(response.message);
-            $('#myModal').modal('toggle');
+            $('#myModal').modal({
+                keyboard: true,
+                fadeDuration: 100
+            });
             $('#searchClientBtn').click();
         }).fail(function(response) {
             console.log(response);

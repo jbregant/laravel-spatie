@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\LoansGranted;
 use App\LoansGrantedPayments;
+use App\LoansGrantedPaymentsPartials;
 use App\LoanType;
 use DateTime;
 use Illuminate\Http\Request;
@@ -181,6 +182,7 @@ class LoanController extends Controller
      */
     public function destroy($id)
     {
+        LoansGrantedPaymentsPartials::where('loan_granted_id', $id)->delete();
         LoansGrantedPayments::where('loan_granted_id', $id)->delete();
         LoansGranted::find($id)->delete();
 

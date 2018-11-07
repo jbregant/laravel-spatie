@@ -22,9 +22,30 @@ class LoanTypeTableSeeder extends Seeder
 
         $loansType = [
             [
+                'name' => 'Diario26',
+                'min_loan_payments' => '1',
+                'max_loan_payments' => '26',
+                'loan_fee' => '26',
+                'frecuency_type_id' => '1',
+            ],
+            [
+                'name' => 'Diario28',
+                'min_loan_payments' => '1',
+                'max_loan_payments' => '28',
+                'loan_fee' => '26',
+                'frecuency_type_id' => '2',
+            ],
+            [
                 'name' => 'Semanal',
                 'min_loan_payments' => '1',
                 'max_loan_payments' => '4',
+                'loan_fee' => '26',
+                'frecuency_type_id' => '1',
+            ],
+            [
+                'name' => 'Quincenal',
+                'min_loan_payments' => '1',
+                'max_loan_payments' => '2',
                 'loan_fee' => '26',
                 'frecuency_type_id' => '1',
             ],

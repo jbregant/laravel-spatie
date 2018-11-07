@@ -153,8 +153,10 @@ class ApiController extends Controller
     {
         $today = new \DateTime();
         $paymentPartial = new LoansGrantedPaymentsPartials();
+        $paymentPartial->loan_granted_id = $loanGranted->id;
         $paymentPartial->loan_granted_payments_id = $payment->id;
-        $paymentPartial->amount_paid = $paymentAmount;
+        $paymentPartial->payment_amount_paid = $paymentAmount;
+        $paymentPartial->payment_date = $today->format('Y-m-d');
         $paymentPartial->save();
         //set payment to partial - update the payment_amount_paid
         $payment->payment_amount_paid = ($paymentPartialUpdated) ? $paymentPartialUpdated : $paymentAmount;
