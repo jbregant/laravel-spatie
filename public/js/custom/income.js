@@ -40,7 +40,7 @@ $(document).ready(function () {
             data: {clientId}
         }).done(function(response) {
             $('#div-table-payments').html(response.data);
-            // $('#paymentsTable').dataTable();
+            $('#paymentsTable').dataTable({"pageLength": 100});
 
             $('.paymentActionBtn').on('click', function () {
                 $('#paymentAmountPaidTxt').prop('disabled', false);
@@ -61,7 +61,6 @@ $(document).ready(function () {
                     $('#remainingDebtDiv').show();
                     $('#paymentAmountPaidTxt').prop('placeholder', paymentPartialAmount);
                 }
-
                 $('#paymentAmountPaidTxt').focus();
             }).tooltip();
         }).fail(function(response) {
@@ -122,6 +121,7 @@ $(document).ready(function () {
             $('#remainingDebtDiv').hide();
             $('#modalMsg').text(response.message);
             $('#myModal').modal('toggle');
+            $('#searchClientBtn').click();
         }).fail(function(response) {
             console.log(response);
             alert('ERROR');

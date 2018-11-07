@@ -46,14 +46,12 @@ class ApiController extends Controller
         }
 
         $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
-
         $loansGranted = [];
         if (!$loansGrantedObj->isEmpty()) {
-
-            foreach ($loansGrantedObj as $loanGranted) {
+            foreach ($loansGrantedObj as $key => $loanGranted) {
                 $loansGranted[] = [
                     'loan' => $loanGranted,
-                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', 'pendiente')->orWhere('status', 'parcial')->get()
+                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', '!=', 'completo')->get()
                 ];
             }
         }
