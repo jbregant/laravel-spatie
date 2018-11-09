@@ -101,7 +101,7 @@ class ApiController extends Controller
         } elseif ($payment->status == 'parcial') {
             //obtener los parciales, sumarlos y ver si completa la cuota
             $paymentPartial = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->get();
-            $paymentPartialSum = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->where('status', 'activo')->sum('amount_paid');
+            $paymentPartialSum = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->where('status', 'activo')->sum('payment_amount_paid');
             $paymentPartialUpdated = $paymentPartialSum + $paymentAmount;
 
             if ($paymentPartialUpdated < $payment->payment_amount) {//update - generate a new partial

@@ -62,8 +62,8 @@
                             {{--<a class="btn btn-outline-primary" href="{{ route('loans.edit',$loan->id) }}">Editar</a>--}}
                         {{--@endcan--}}
                         @can('loan.delete')
-                            {!! Form::open(['method' => 'DELETE','route' => ['loans.destroy', $loan->id],'style'=>'display:inline']) !!}
-                            {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::open(['method' => 'DELETE','route' => ['loans.destroy', $loan->id],'style'=>'display:inline', 'id' => 'form-delete']) !!}
+                            {!! Form::submit('Borrar', ['class' => 'btn btn-danger btn-table-delete']) !!}
                             {!! Form::close() !!}
                         @endcan
                     </td>

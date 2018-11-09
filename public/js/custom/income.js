@@ -121,6 +121,7 @@ $(document).ready(function () {
             $('#paymentForm')[0].reset();
             $('#paymentPartialDiv').hide();
             $('#remainingDebtDiv').hide();
+            $('#paymentAmountPaidTxt').prop('placeholder', '');
             $('#modalMsg').text(response.message);
             $('#myModal').modal({
                 keyboard: true,
