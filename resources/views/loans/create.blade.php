@@ -10,6 +10,14 @@
             <div class="pull-right">
                 <a class="btn btn-outline-primary" href="{{ route('loans.index') }}"> Volver</a>
             </div>
+            <div class="pull-right" style="margin-right: 1%;">
+                @can('loan.create')
+                    <a class="btn btn-success" href="{{ route('loans.create') }}">Crear un nuevo credito</a>
+                @endcan
+            </div>
+            <div id="printBtnDiv" class="pull-right" style="margin-right: 1%; display: none;">
+                    <a id="printBtn" loanid="" class="btn btn-success" href="#">Imprimir</a>
+            </div>
         </div>
     </div>
 
@@ -27,7 +35,9 @@
     @endif
 
     <br>
-
+    <div id="alertDiv" class="alert alert-success" role="alert" style="display: none;">
+        Credito creado correctamente.
+    </div>
     <div class="row">
         <div class="col-lg-6">
             {!! Form::open(array('route' => 'loans.store','method'=>'POST', 'id' => 'loanForm')) !!}
@@ -112,8 +122,10 @@
             </div>
         </div>
     </div>
+    <div id="printTable" style="display: none;"></div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/printThis.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>

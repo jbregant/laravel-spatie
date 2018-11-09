@@ -134,7 +134,7 @@ $(document).ready(function () {
                 $(this).prop('disabled', true);
             });
         } else {
-            $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');;
+            $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');
             $('#paymentsSimulatorTable .date-picker-payments').each(function () {
                 $(this).prop('disabled', false);
             });
@@ -157,7 +157,61 @@ $(document).ready(function () {
         }
         console.log($('.payment_amount').val());
         $('#loanForm').append('<input type="hidden" name="due_dates" value="' + JSON.parse(JSON.stringify(dueDates)) + '" />');
-        $('#loanForm').submit();
+
+        let formData = $('#loanForm').serialize();
+        $.ajax({
+            url: "/loans",
+            type: "POST",
+            data: formData
+        }).done(function(response) {
+            $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');
+            $('#printBtn').attr('loanid', response.loanGrantedId);
+            $('#printBtnDiv').show();
+            $('#alertDiv').show();
+        }).fail(function(response) {
+            console.log(response);
+            alert('ERROR');
+        });
+        // $('#loanForm').submit();
+    })
+
+    //button to print the loan
+    $('#printBtn').on('click', function (e) {
+        // e.preventDefault();
+        // let dueDates = [];
+        // let paymentsAmount = $('#paymentsCombo option:selected').val();
+        // $('#paymentsSimulatorTable .date-picker-payments').each(function () {
+        //     dueDates.push($(this).val());
+        // });
+        //
+        // if(!(paymentsAmount == dueDates.length)){
+        //     $('#modal-msg').text('Vuelva a calcular el importe de las cuotas');
+        //     toggleModal();
+        //     return false;
+        // }
+        // console.log($('.payment_amount').val());
+        // $('#loanForm').append('<input type="hidden" name="due_dates" value="' + JSON.parse(JSON.stringify(dueDates)) + '" />');
+        //
+        // let formData = $('#loanForm').serialize();
+        let data = {
+            id: $(this).attr('loanid')
+        }
+        $.ajax({
+            url: "/loans/loanPrinter",
+            type: "POST",
+            data: data
+        }).done(function(response) {
+            $('#printTable').html(response);
+            $('#loan-detail').printThis();
+            // $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');
+            // $('#printBtn').attr('loanid', response.loanGrantedId);
+            // $('#printBtnDiv').show();
+            // $('#alertDiv').show();
+        }).fail(function(response) {
+            console.log(response);
+            alert('ERROR');
+        });
+        // $('#loanForm').submit();
     })
 
 });

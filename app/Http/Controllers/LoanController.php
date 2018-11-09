@@ -63,52 +63,63 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'client_id' => 'required',
-            'loan_type_id' => 'required',
-            'loan_fee' => 'required',
-            'payments' => 'required',
-            'payment_amount' => 'required',
-            'total_amount' => 'required',
-            'due_dates' => 'required',
-        ],
-            [
-                'client_id.required' => 'Cliente es un campo obligatorio',
-                'loan_type_id.required' => 'Tipo de Credito es un campo obligatorio',
-                'loan_fee.required' => 'Interes es un campo obligatorio',
-                'payments.required' => 'Cantidad de Cuotas es un campo obligatorio',
-                'payment_amount.required' => 'El Valor de las Cuotas es un campo obligatorio',
-                'total_amount.required' => 'Monto del credito es un campo obligatorio',
-                'dueDates.required' => 'Fechas de vencimiento es un campo obligatorio',
-            ]
-        );
+        try{
+            $input = $request->all();
 
-        $input = $request->all();
+            //set the new loan
+            $loanGranted = LoansGranted::create($input);
+            $loanGranted->updated_amount = $loanGranted->total_amount;
+            $loanGranted->save();
 
-        //set the new loan
-        $loanGranted = LoansGranted::create($input);
-        $loanGranted->updated_amount = $loanGranted->total_amount;
-        $loanGranted->save();
-
-        //set the payments
-        $dueDates = explode(',', $input['due_dates']);
-        $paymentNumber = 1;
-        for ($i = 0; $i < count($dueDates); $i++) {
-            $dueDateFormat = DateTime::createFromFormat('d-m-Y', $dueDates[$i]);
-            $dueDate = $dueDateFormat->format('Y-m-d');
-            $data = [
-                'loan_granted_id' => $loanGranted->id,
-                'payment_number' => $paymentNumber,
-                'payment_amount' => $input['payment_amount'],
-                'due_date' => $dueDate,
-                'status' => 'pendiente'
-            ];
-            LoansGrantedPayments::create($data);
-            $paymentNumber += 1;
+            //set the payments
+            $dueDates = explode(',', $input['due_dates']);
+            $paymentNumber = 1;
+            for ($i = 0; $i < count($dueDates); $i++) {
+                $dueDateFormat = DateTime::createFromFormat('d-m-Y', $dueDates[$i]);
+                $dueDate = $dueDateFormat->format('Y-m-d');
+                $data = [
+                    'loan_granted_id' => $loanGranted->id,
+                    'payment_number' => $paymentNumber,
+                    'payment_amount' => $input['payment_amount'],
+                    'due_date' => $dueDate,
+                    'status' => 'pendiente'
+                ];
+                LoansGrantedPayments::create($data);
+                $paymentNumber += 1;
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'OK',
+                    'loanGrantedId' => $loanGranted->id
+                ]);
+            }
+        }catch (\Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+            ]);
         }
+//        $this->validate($request, [
+//            'client_id' => 'required',
+//            'loan_type_id' => 'required',
+//            'loan_fee' => 'required',
+//            'payments' => 'required',
+//            'payment_amount' => 'required',
+//            'total_amount' => 'required',
+//            'due_dates' => 'required',
+//        ],
+//            [
+//                'client_id.required' => 'Cliente es un campo obligatorio',
+//                'loan_type_id.required' => 'Tipo de Credito es un campo obligatorio',
+//                'loan_fee.required' => 'Interes es un campo obligatorio',
+//                'payments.required' => 'Cantidad de Cuotas es un campo obligatorio',
+//                'payment_amount.required' => 'El Valor de las Cuotas es un campo obligatorio',
+//                'total_amount.required' => 'Monto del credito es un campo obligatorio',
+//                'dueDates.required' => 'Fechas de vencimiento es un campo obligatorio',
+//            ]
+//        );
 
-        return redirect()->route('loans.index')
-            ->with('success', 'Credito creado correctamente');
+//        return redirect()->route('loans.index')
+//            ->with('success', 'Credito creado correctamente');
     }
 
 

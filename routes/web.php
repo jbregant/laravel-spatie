@@ -26,6 +26,7 @@ Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::post('/loans/loanPrinter', 'ApiController@loanPrinter');
     Route::post('/incomes/dopayment', 'ApiController@dopayment');
     Route::post('/incomes/getclientinfo', 'ApiController@getclientinfo');
     Route::get('/feecheck/{id}', 'ApiController@feecheck');

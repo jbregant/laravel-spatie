@@ -118,24 +118,6 @@ class ApiController extends Controller
             //error
             $httpCode = 500;
         }
-
-//        $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
-//
-//        $loansGranted = [];
-//        if(!$loansGrantedObj->isEmpty()) {
-//
-//            foreach ($loansGrantedObj as $loanGranted) {
-//                $loansGranted[] = [
-//                    'loan' => $loanGranted,
-//                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', 'pendiente')->orWhere('status', 'parcial')->get()
-//                ];
-//            }
-//        }
-//        } else {
-////            return redirect()->back()->withErrors(['token' => 'This is the error message.']);
-////            return response()->json(['status' => 201, 'message' => 'No se encontraron datos para el codigo de cliente']);
-//            $data = '';
-//        }
         return response()->json([
             'status' => $httpCode,
             'message' => $message,
@@ -192,5 +174,18 @@ class ApiController extends Controller
         $payment->save();
         $message = 'Pago realizado correctamente.';
         return $message;
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function loanPrinter(Request $request)
+    {
+        $input = $request->all();
+        $loanGranted = LoansGranted::find($input['id']);
+        $loanGrantedPayments = LoansGrantedPayments::where('loan_granted_id', $input['id'])->get();
+        return view('loans.table-print', compact('loanGranted', 'loanGrantedPayments'));
     }
 }
