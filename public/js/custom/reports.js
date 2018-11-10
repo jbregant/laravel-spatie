@@ -21,12 +21,24 @@ $(document).ready(function () {
             },
         });
 
+        let url;
+        switch (window.location.pathname) {
+            case '/reports/daily':
+                url = '/reports/daily/report';
+                break;
+            case '/reports/dailyz':
+                url = '/reports/dailyz/report';
+                break;
+            default:
+                break;
+
+        }
         if (dateInput.valid()){
             let data = {
                 date: $('#daily-date').val()
             };
             $.ajax({
-                url: "/reports/daily/report",
+                url: url,
                 type: "POST",
                 data: data
             }).done(function(response) {

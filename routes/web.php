@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/incomes/getclientinfo', 'ApiController@getclientinfo');
     Route::get('/reports/daily', 'ReportController@daily')->name('report.daily');
     Route::post('/reports/daily/report', 'ReportController@dailyreport')->name('report.dailyreport');
+    Route::get('/reports/dailyz', 'ReportController@dailyz')->name('report.dailyz');
+    Route::post('/reports/dailyz/report', 'ReportController@dailyzreport')->name('report.dailyzreport');
     Route::get('/feecheck/{id}', 'ApiController@feecheck');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');

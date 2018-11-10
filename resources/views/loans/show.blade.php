@@ -18,16 +18,7 @@
     </div>
 
     <br>
-    {{--<div class="col-xs-12 col-sm-12 col-md-12">--}}
-    {{--<div class="form-group">--}}
-    {{--<strong>Roles:</strong>--}}
-    {{--@if(!empty($user->getRoleNames()))--}}
-    {{--@foreach($user->getRoleNames() as $v)--}}
-    {{--<label class="badge badge-success">{{ $v }}</label>--}}
-    {{--@endforeach--}}
-    {{--@endif--}}
-    {{--</div>--}}
-    {{--</div>--}}
+
     <div id="loan-detail" class="row">
         <div class="col-lg-6">
             {!! Form::open(array('route' => 'loans.store','method'=>'POST', 'id' => 'loanForm')) !!}
@@ -87,7 +78,6 @@
                 <table id="paymentsSimulatorTable" class="table">
                     <thead>
                     <th>Nro Cuota</th>
-                    <th>Monto</th>
                     <th>Fecha de Vencimiento</th>
                     </thead>
                     <tfoot id="tableFooterTotalPaymentsAmount" hidden>
@@ -101,7 +91,6 @@
                     @foreach($loanGrantedPayments as $payment)
                         <tr>
                             <td>{{ $payment->payment_number }}</td>
-                            <td>${{ $payment->payment_amount }}</td>
                             <td>{{ Carbon\Carbon::parse($payment->due_date)->format('d-m-Y') }}</td>
                         </tr>
                     @endforeach

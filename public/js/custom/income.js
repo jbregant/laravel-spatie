@@ -98,14 +98,16 @@ $(document).ready(function () {
             },
         });
 
+
+
         if (!paymentForm.valid())
             return false;
 
-        // if (paymentAmountPaid > paymentAmount){
-        //     $('#modalMsg').text('El importe ingresado supera el importe de la cuota');
-        //     $('#myModal').modal('toggle');
-        //     return false;
-        // }
+        if (paymentAmountPaid > paymentAmount){
+            $('#modalMsg').text('El importe ingresado supera el importe de la cuota');
+            $('#myModal').modal('toggle');
+            return false;
+        }
 
 
         let data = {

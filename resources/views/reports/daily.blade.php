@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Reporte Diario de Vencimientos</h2>
+                <h2>{{ $title }}</h2>
             </div>
             <div id="printBtnDiv" class="pull-right">
                 <a id="printBtn" class="btn btn-success" href="#">Imprimir</a>
