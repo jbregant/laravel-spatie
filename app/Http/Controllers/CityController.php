@@ -134,7 +134,7 @@ class CityController extends Controller
     public function destroy($id)
     {
         City::find($id)->delete();
-        return redirect()->route('zones.index')
+        return redirect()->route('cities.index')
             ->with('success','Localidad borrada correctamente');
     }
 }

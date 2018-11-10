@@ -26,6 +26,7 @@ class CreateLoansGrantedTable extends Migration
             $table->float('total_amount');
             $table->float('updated_amount')->nullable();
             $table->string('description')->nullable();
+            $table->dateTime('loan_created_date')->nullable();
             $table->string('status');
             $table->timestamps();
         });

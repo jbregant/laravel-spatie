@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Setting;
 use Illuminate\Http\Request;
 
 class AppSettingController extends Controller
@@ -13,10 +14,10 @@ class AppSettingController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:city.list');
-        $this->middleware('permission:city.create', ['only' => ['create','store']]);
-        $this->middleware('permission:city.edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:city.delete', ['only' => ['destroy']]);
+        $this->middleware('permission:setting.list');
+        $this->middleware('permission:setting.create', ['only' => ['create','store']]);
+        $this->middleware('permission:setting.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:setting.delete', ['only' => ['destroy']]);
     }
 
     /**
@@ -26,9 +27,9 @@ class AppSettingController extends Controller
      */
     public function index(Request $request)
     {
-        $cities = City::get();
+        $settings = Setting::get();
 //        $cities = City::orderBy('id','ASC');
-        return view('cities.index',compact('cities'));
+        return view('settings.index',compact('settings'));
 //            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
@@ -40,8 +41,8 @@ class AppSettingController extends Controller
      */
     public function create()
     {
-        $cities = City::pluck('name','name')->all();
-        return view('cities.create',compact('cities'));
+        $settings = Setting::pluck('name','name')->all();
+        return view('settings.create',compact('settings'));
     }
 
 
@@ -56,18 +57,22 @@ class AppSettingController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
+            'value' => 'required',
+            'description' => 'required',
         ],
             [
                 'name.required' => 'Nombre es un campo obligatorio',
+                'value.required' => 'Valor es un campo obligatorio',
+                'description.required' => 'Descripcion es un campo obligatorio',
             ]
         );
 
         $input = $request->all();
 
-        $city = City::create($input);
+        $setting = Setting::create($input);
 
-        return redirect()->route('cities.index')
-            ->with('success','Localidad creada correctamente');
+        return redirect()->route('settings.index')
+            ->with('success','Configuracion creada correctamente');
     }
 
 
@@ -79,8 +84,8 @@ class AppSettingController extends Controller
      */
     public function show($id)
     {
-        $city = City::find($id);
-        return view('cities.show',compact('city'));
+        $setting = Setting::find($id);
+        return view('settings.show',compact('setting'));
     }
 
 
@@ -92,8 +97,8 @@ class AppSettingController extends Controller
      */
     public function edit($id)
     {
-        $city = City::find($id);
-        return view('cities.edit',compact('city'));
+        $setting = Setting::find($id);
+        return view('settings.edit',compact('setting'));
     }
 
 
@@ -116,11 +121,11 @@ class AppSettingController extends Controller
 
         $input = $request->all();
 
-        $zone = City::find($id);
+        $zone = Setting::find($id);
         $zone->update($input);
 
-        return redirect()->route('cities.index')
-            ->with('success','Localidad actualizada correctamente');
+        return redirect()->route('settings.index')
+            ->with('success','Configuracion actualizada correctamente');
     }
 
 
@@ -132,8 +137,8 @@ class AppSettingController extends Controller
      */
     public function destroy($id)
     {
-        City::find($id)->delete();
-        return redirect()->route('zones.index')
-            ->with('success','Localidad borrada correctamente');
+        Setting::find($id)->delete();
+        return redirect()->route('settings.index')
+            ->with('success','Configuracion borrada correctamente');
     }
 }

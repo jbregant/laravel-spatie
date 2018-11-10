@@ -7,6 +7,7 @@ use App\LoansGranted;
 use App\LoansGrantedPayments;
 use App\LoansGrantedPaymentsPartials;
 use App\LoanType;
+use App\Setting;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,12 +45,17 @@ class LoanController extends Controller
      */
     public function create()
     {
-        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
+//        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
+        $maxLoansSettings = Setting::where('name', 'max_loan_per_client')->get();
+        $maxLoansPerUser = $maxLoansSettings[0]->value;
+        $clientAux = DB::select("select * from clients where (select count(*) from loans_granted where client_id = 1) < $maxLoansPerUser");
 
         $clients = [];
+
         foreach ($clientAux as $client) {
             $clients[$client->id] = $client->id . ' - ' . $client->name . ' ' . $client->lastname;
         }
+
         $loansType = LoanType::pluck('name', 'id')->all();
         $loansGranted = LoansGranted::all();
         return view('loans.create', compact('clients', 'loansType', 'loansGranted'));
@@ -86,12 +92,12 @@ class LoanController extends Controller
                 ];
                 LoansGrantedPayments::create($data);
                 $paymentNumber += 1;
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'OK',
-                    'loanGrantedId' => $loanGranted->id
-                ]);
             }
+            return response()->json([
+                'status' => 200,
+                'message' => 'OK',
+                'loanGrantedId' => $loanGranted->id
+            ]);
         }catch (\Exception $e){
             return response()->json([
                 'status' => 500,

@@ -158,7 +158,13 @@ $(document).ready(function () {
             type: "POST",
             data: formData
         }).done(function(response) {
+            $('#dateConfirmation').css('cursor', 'not-allowed').prop('disabled', true).prop('checked', false);
             $('#addLoanBtn').css('cursor', 'not-allowed').prop('disabled', true).addClass('btn-outline-primary').removeClass('btn-primary');
+            $('#clientCombo').css('cursor', 'not-allowed').prop('disabled', true);
+            $('#loanTypeCombo').css('cursor', 'not-allowed').prop('disabled', true);
+            $('#loanFee').css('cursor', 'not-allowed').prop('disabled', true);
+            $('#paymentsCombo').css('cursor', 'not-allowed').prop('disabled', true);
+            $('#amount').css('cursor', 'not-allowed').prop('disabled', true);
             $('#printBtn').attr('loanid', response.loanGrantedId);
             $('#printBtnDiv').show();
             $('#alertDiv').show();
@@ -182,6 +188,29 @@ $(document).ready(function () {
             $('#loan-detail').printThis();
         }).fail(function(response) {
             alert('ERROR');
+        });
+    });
+
+    $('.btn-table-delete').on('click', function (e) {
+        e.preventDefault();
+        let dis = $(this);
+        $.confirm({
+            title: '',
+            content: 'Confirma la eliminacion del credito?',
+            buttons: {
+                Si: {
+                    text: 'Si',
+                    action: function () {
+                        dis.parent('form').submit();
+                    }
+                },
+                No: {
+                    text: 'No', // With spaces and symbols
+                    action: function () {
+                        //
+                    }
+                }
+            }
         });
     })
 

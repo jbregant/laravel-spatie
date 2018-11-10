@@ -22,5 +22,6 @@ class VerifyCsrfToken extends Middleware
         '/incomes/getclientinfo',
         '/incomes/dopayment',
         '/loans/loanPrinter',
+        '/reports/daily/report',
     ];
 }

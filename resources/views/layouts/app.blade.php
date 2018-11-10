@@ -55,7 +55,7 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Reportes
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                {{--<li><a class="nav-link" href="{{ route('clients.index') }}">ABM Clientes</a></li>--}}
+                                <li><a class="nav-link" href="{{ route('report.daily') }}">Diario</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
@@ -77,6 +77,7 @@
                                 <li><a class="nav-link" href="{{ route('collectors.index') }}">Cobradores</a></li>
                                 <li><a class="nav-link" href="{{ route('cities.index') }}">Localidades</a></li>
                                 <li><a class="nav-link" href="{{ route('loanstype.index') }}">Tipos de Creditos</a></li>
+                                <li><a class="nav-link" href="{{ route('settings.index') }}">Configuraciones Grales</a></li>
                             </ul>
                         </div>
 

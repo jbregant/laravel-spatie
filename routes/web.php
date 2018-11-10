@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/loans/loanPrinter', 'ApiController@loanPrinter');
     Route::post('/incomes/dopayment', 'ApiController@dopayment');
     Route::post('/incomes/getclientinfo', 'ApiController@getclientinfo');
+    Route::get('/reports/daily', 'ReportController@daily')->name('report.daily');
+    Route::post('/reports/daily/report', 'ReportController@dailyreport')->name('report.dailyreport');
     Route::get('/feecheck/{id}', 'ApiController@feecheck');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
@@ -39,4 +41,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('loans','LoanController');
     Route::resource('loanstype','LoanTypeController');
     Route::resource('incomes','IncomeController');
+    Route::resource('settings','AppSettingController');
 });

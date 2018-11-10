@@ -20,7 +20,8 @@ class SettingsTableFeeder extends Seeder
         Schema::enableForeignKeyConstraints();
 
         \App\Setting::create([
-            'name' => 'Cantidad maxima de creditos por cliente',
+            'name' => 'max_loan_per_client',
+            'description' => 'Cantidad maxima de creditos por cliente',
             'value' => '3',
         ]);
     }
