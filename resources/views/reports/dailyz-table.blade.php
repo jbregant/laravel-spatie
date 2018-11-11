@@ -1,10 +1,8 @@
 
-<table id="paymentsTable" class="table table-sm">
+<table id="paymentsTable" class="table table-sm table-bordered">
     <thead>
     <th>Nro Cliente</th>
     <th>Nro Credito</th>
-    <th>Nombre</th>
-    <th>Direccion</th>
     <th>Nro Cta</th>
     <th>Monto Cuota</th>
     <th>Fecha de Vencimiento</th>
@@ -15,8 +13,8 @@
     </thead>
     <tfoot id="tableFooterTotalPaymentsAmount" >
     <tr>
-        <td colspan="6"></td>
-        <th align="center">Total</th>
+        <td colspan="4"></td>
+        <th align="center">Total Recaudado:</th>
         <td id="tableTotalPaymentsAmountTxt" colspan="4"><b>{{ $totalAmountPaid }}</b></td>
         <td></td>
     </tr>
@@ -26,8 +24,6 @@
         <tr>
             <th>{{ $data->client_id }}<span></span></th>
             <td>{{ $data->loan_id }}</td>
-            <td>{{ $data->name }} {{ $data->lastname }}</td>
-            <td>{{ $data->address }}</td>
             <td>{{ $data->payment_number }}/{{ $data->payments }}</td>
             <td>{{ $data->payment_amount }}</td>
             <td>{{ Carbon\Carbon::parse($data->due_date)->format('d-m-Y') }}</td>

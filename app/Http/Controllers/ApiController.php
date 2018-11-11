@@ -142,7 +142,7 @@ class ApiController extends Controller
         $paymentPartial->save();
         //set payment to partial - update the payment_amount_paid
         $payment->payment_amount_paid = ($paymentPartialUpdated) ? $paymentPartialUpdated : $paymentAmount;
-        $payment->payment_date = $today->format('Y-m-d');
+//        $payment->payment_date = $today->format('Y-m-d');
         $payment->status = 'parcial';
         $payment->save();
         $loanGranted->updated_amount = $loanGranted->updated_amount - $paymentAmount;

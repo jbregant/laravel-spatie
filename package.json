@@ -24,6 +24,7 @@
         "jquery-confirm": "^3.3.2",
         "jquery-validation": "^1.18.0",
         "npm": "^6.4.1",
-        "popper": "^1.0.1"
+        "popper": "^1.0.1",
+        "print-this": "^1.14.1"
     }
 }

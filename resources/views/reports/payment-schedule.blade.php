@@ -21,8 +21,8 @@
             <div class="row">
                 <div class="col-xs-9 col-sm-9 col-md-9">
                     <div class="form-group">
-                        <strong>Fecha:</strong>
-                        <input name="input_report" type="text" class="form-control datepickeR" placeholder="01-01-2018" id="input-report">
+                        <strong>Numero de Credito:</strong>
+                        <input name="input_report" type="text" class="form-control" id="input-report">
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">

@@ -57,6 +57,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ route('report.daily') }}">Vencimientos Diarios</a></li>
                                 <li><a class="nav-link" href="{{ route('report.dailyz') }}">Pagos Diarios</a></li>
+                                <li><a class="nav-link" href="{{ route('report.paymentschedule') }}">Cronograma de Pagos (CC)</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">

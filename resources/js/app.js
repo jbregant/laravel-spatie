@@ -8,6 +8,8 @@
 require('./bootstrap');
 require('jquery-confirm');
 require('jquery-validation');
+require('print-this');
+
 
 
 window.Vue = require('vue');
