@@ -55,7 +55,7 @@
                     <td>{{ $loan->amount }}</td>
                     <td>{{ $loan->total_amount }}</td>
                     <td>{{ $loan->updated_amount }}</td>
-                    <td>{{ Carbon\Carbon::parse($loan->created_at)->format('d-m-Y') }}</td>
+                    <td>{{ Carbon\Carbon::parse($loan->loan_created_date)->format('d-m-Y') }}</td>
                     <td>
                         <a class="btn btn-outline-info" href="{{ route('loans.show',$loan->id) }}">Ver</a>
                         {{--@can('collector.edit')--}}
@@ -71,7 +71,7 @@
             @endforeach
         </table>
     </div>
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.index.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('#loans-table').DataTable();

@@ -41,7 +41,6 @@
                 <td>{{ $setting->value }}</td>
                 <td>{{ $setting->description }}</td>
                 <td>
-                    <a class="btn btn-outline-info" href="{{ route('settings.show',$setting->id) }}">Ver</a>
                     @can('setting.edit')
                         <a class="btn btn-outline-primary" href="{{ route('settings.edit',$setting->id) }}">Editar</a>
                     @endcan

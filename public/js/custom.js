@@ -34,6 +34,14 @@ jQuery(function($) {
     });
 });
 
+function compareDate(str1){
+// str1 format should be dd/mm/yyyy. Separator can be anything e.g. / or -. It wont effect
+    var dt1   = parseInt(str1.substring(0,2));
+    var mon1  = parseInt(str1.substring(3,5));
+    var yr1   = parseInt(str1.substring(6,10));
+    return new Date(yr1, mon1-1, dt1);
+}
+
 function minTwoDigits(n) {
     return (n < 10 ? '0' : '') + n;
 }

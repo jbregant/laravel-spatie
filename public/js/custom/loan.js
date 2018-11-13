@@ -1,4 +1,10 @@
+
+
 $(document).ready(function () {
+    let today = new Date();
+    $('.datepicker').datepicker();
+    $("#loan-date").datepicker("setDate", today);
+
     //disable the first option of the comboboxs
     $('#clientCombo option:first').attr('disabled', true);
     $('#loanTypeCombo option:first').attr('disabled', true);
@@ -50,14 +56,16 @@ $(document).ready(function () {
                 loan_type_id: "required",
                 loan_fee: "required",
                 amount: "required",
-                payments: "required"
+                payments: "required",
+                loan_created_date: "required"
             },
             messages: {
                 client_id: "Este campo es requerido",
                 loan_type_id: "Este campo es requerido",
                 loan_fee: "Este campo es requerido",
                 amount: "Este campo es requerido",
-                payments: "Este campo es requerido"
+                payments: "Este campo es requerido",
+                loan_created_date: "Este campo es requerido"
             },
         });
 
@@ -75,7 +83,12 @@ $(document).ready(function () {
             let dueDates = [];
             let paymentsLength = $('#paymentsCombo option:selected').val();
             for (let i = 1; i <= paymentsLength; i++){
-                let paymentDate = new Date();
+                let date = $('#loan-date').val();
+                let newDate = compareDate(date);
+                // let newDate = date.split("-").reverse().join("-");
+                let paymentDate = new Date(newDate);
+                console.log(newDate);
+                console.log(paymentDate);
                 let paymentDateAux = new Date();
                 switch (loanType) {
                     case '1':
@@ -190,28 +203,5 @@ $(document).ready(function () {
             alert('ERROR');
         });
     });
-
-    $('.btn-table-delete').on('click', function (e) {
-        e.preventDefault();
-        let dis = $(this);
-        $.confirm({
-            title: '',
-            content: 'Confirma la eliminacion del credito?',
-            buttons: {
-                Si: {
-                    text: 'Si',
-                    action: function () {
-                        dis.parent('form').submit();
-                    }
-                },
-                No: {
-                    text: 'No', // With spaces and symbols
-                    action: function () {
-                        //
-                    }
-                }
-            }
-        });
-    })
-
 });
+

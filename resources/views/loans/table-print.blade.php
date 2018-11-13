@@ -40,7 +40,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Fecha de Otorgamiento:</strong>
-                    {{ Carbon\Carbon::parse($loanGranted->created_at)->format('d-m-Y H:i:s') }}
+                    {{ Carbon\Carbon::parse($loanGranted->created_at)->format('d-m-Y') }}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">

@@ -72,6 +72,12 @@
                         {!! Form::number('amount', null, array('id' => 'amount', 'placeholder' => '$','class' => 'form-control')) !!}
                     </div>
                 </div>
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="form-group">
+                        <strong>Fecha:</strong>
+                        {!! Form::text('loan_created_date', null, array('id' => 'loan-date', 'class' => 'form-control datepicker')) !!}
+                    </div>
+                </div>
                 <div class="col-xs-5 col-sm-5 col-md-5">
                     <div class="form-group">
                         <strong>Monto Total a Reintegrar:</strong>
