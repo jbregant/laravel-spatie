@@ -9,7 +9,7 @@ require('./bootstrap');
 require('jquery-confirm');
 require('jquery-validation');
 require('print-this');
-
+require('jquery-datepicker');
 
 
 window.Vue = require('vue');

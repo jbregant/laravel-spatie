@@ -45,11 +45,15 @@ class LoanController extends Controller
      */
     public function create()
     {
-//        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
+        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
         $maxLoansSettings = Setting::where('name', 'max_loan_per_client')->get();
         $maxLoansPerUser = $maxLoansSettings[0]->value;
-        $clientAux = DB::select("select * from clients where (select count(*) from loans_granted where client_id = 1) < $maxLoansPerUser");
 
+        $clientAux = DB::select("select * from clients where id in(select client_id
+                                  from loans_granted
+                                  group by client_id
+                                  having count(*) < $maxLoansPerUser
+                                  order by created_at desc)");
         $clients = [];
 
         foreach ($clientAux as $client) {
@@ -72,9 +76,12 @@ class LoanController extends Controller
         try{
             $input = $request->all();
 
+            $createdDateFormat = DateTime::createFromFormat('d-m-Y', $input['loan_created_date']);
+            $createdDate = $createdDateFormat->format('Y-m-d');
             //set the new loan
             $loanGranted = LoansGranted::create($input);
             $loanGranted->updated_amount = $loanGranted->total_amount;
+            $loanGranted->loan_created_date = $createdDate;
             $loanGranted->save();
 
             //set the payments
