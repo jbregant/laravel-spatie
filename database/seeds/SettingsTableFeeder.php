@@ -3,9 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use \Spatie\Permission\Models\Role;
 
-class RoleTableSeeder extends Seeder
+class SettingsTableFeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,18 +15,14 @@ class RoleTableSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        DB::table('roles')->truncate();
+        DB::table('app_settings')->truncate();
 
         Schema::enableForeignKeyConstraints();
 
-        Role::create([
-            'name' => 'Administrador',
-            'guard_name' => 'admin_panel'
-        ]);
-
-        Role::create([
-            'name' => 'Usuario',
-            'guard_name' => 'web'
+        \App\Setting::create([
+            'name' => 'max_loan_per_client',
+            'description' => 'Cantidad maxima de creditos por cliente',
+            'value' => '3',
         ]);
     }
 }

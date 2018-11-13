@@ -22,12 +22,28 @@
 
 Auth::routes();
 
-
 Route::get('/', 'HomeController@index')->name('home');
 
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::post('/loans/loanPrinter', 'ApiController@loanPrinter');
+    Route::post('/incomes/dopayment', 'ApiController@dopayment');
+    Route::post('/incomes/getclientinfo', 'ApiController@getclientinfo');
+    Route::get('/reports/daily', 'ReportController@daily')->name('report.daily');
+    Route::post('/reports/daily/report', 'ReportController@dailyreport')->name('report.dailyreport');
+    Route::get('/reports/dailyz', 'ReportController@dailyz')->name('report.dailyz');
+    Route::post('/reports/dailyz/report', 'ReportController@dailyzreport')->name('report.dailyzreport');
+    Route::get('/reports/payment_schedule', 'ReportController@paymentschedule')->name('report.paymentschedule');
+    Route::post('/reports/payment_schedule/report', 'ReportController@paymentschedulereport')->name('report.paymentschedulereport');
+    Route::get('/feecheck/{id}', 'ApiController@feecheck');
     Route::resource('roles','RoleController');
     Route::resource('users','UserController');
-//    Route::resource('products','ProductController');
+    Route::resource('zones','ZoneController');
+    Route::resource('collectors','CollectorController');
+    Route::resource('cities','CityController');
+    Route::resource('clients','ClientController');
+    Route::resource('loans','LoanController');
+    Route::resource('loanstype','LoanTypeController');
+    Route::resource('incomes','IncomeController');
+    Route::resource('settings','AppSettingController');
 });

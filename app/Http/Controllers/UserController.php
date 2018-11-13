@@ -19,10 +19,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        $this->middleware('permission:role.list');
+        $this->middleware('permission:role.create', ['only' => ['create','store']]);
+        $this->middleware('permission:role.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:role.delete', ['only' => ['destroy']]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-//        $data = User::orderBy('id','DESC')->paginate(5);
-        $data = User::all();
+        $data = User::orderBy('id','DESC')->paginate(5);
+//        $data = User::all();
 //        dd($data);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -67,7 +80,7 @@ class UserController extends Controller
         $user->assignRole($request->input('roles'));
 
         return redirect()->route('users.index')
-            ->with('success','User created successfully');
+            ->with('success','Usuario creado correctamente.');
     }
 
 
@@ -135,7 +148,7 @@ class UserController extends Controller
 
 
         return redirect()->route('users.index')
-            ->with('success','User updated successfully');
+            ->with('success','Usuario actualizado correctamente.');
     }
 
 
@@ -149,6 +162,6 @@ class UserController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('users.index')
-            ->with('success','User deleted successfully');
+            ->with('success','Usuario borrado correctamente.');
     }
 }

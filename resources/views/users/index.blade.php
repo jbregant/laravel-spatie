@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Users Management</h2>
+                <h2>Administracion de Usuarios</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+                <a class="btn btn-success" href="{{ route('users.create') }}"> Crear Nuevo Usuario</a>
             </div>
         </div>
     </div>
@@ -20,15 +20,18 @@
         </div>
     @endif
 
+    <br>
 
-    <table class="table table-bordered">
+    <table id="users-table" class="hover compact">
+        <thead class="thead-light">
         <tr>
             <th>No</th>
             <th>Name</th>
             <th>Email</th>
             <th>Roles</th>
-            <th width="280px">Action</th>
+            <th width="280px">Acciones</th>
         </tr>
+        </thead>
         @foreach ($data as $key => $user)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -42,18 +45,19 @@
                     @endif
                 </td>
                 <td>
-                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                    <a class="btn btn-outline-info" href="{{ route('users.show',$user->id) }}">Ver</a>
+                    <a class="btn btn-outline-primary" href="{{ route('users.edit',$user->id) }}">Editar</a>
                     {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}
                 </td>
             </tr>
         @endforeach
     </table>
-
-
-    {{--{!! $data->render() !!}--}}
-
+    <script>
+        $(document).ready( function () {
+            $('#users-table').DataTable();
+        } );
+    </script>
 
 @endsection
