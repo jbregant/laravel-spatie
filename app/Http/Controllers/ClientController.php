@@ -61,6 +61,7 @@ class ClientController extends Controller
             'dni' => 'required',
             'address' => 'required',
             'city_id' => 'required',
+            'phone' => 'required',
         ],
             [
                 'name.required' => 'Nombre es un campo obligatorio',
@@ -68,6 +69,7 @@ class ClientController extends Controller
                 'dni.required' => 'Dni es un campo obligatorio',
                 'address.required' => 'Direccion es un campo obligatorio',
                 'city_id.required' => 'Localidad es un campo obligatorio',
+                'phone.required' => 'Telefono es un campo obligatorio',
             ]
         );
 

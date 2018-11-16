@@ -45,7 +45,7 @@ class LoanController extends Controller
      */
     public function create()
     {
-        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
+//        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
         $maxLoansSettings = Setting::where('name', 'max_loan_per_client')->get();
         $maxLoansPerUser = $maxLoansSettings[0]->value;
 
@@ -54,6 +54,7 @@ class LoanController extends Controller
                                   group by client_id
                                   having count(*) < $maxLoansPerUser
                                   order by created_at desc)");
+        dd($clientAux);
         $clients = [];
 
         foreach ($clientAux as $client) {
