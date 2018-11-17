@@ -49,8 +49,8 @@
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Total Financiado:</strong>
-                        ${{ $loanGranted->total_amount }}
+                        <strong>Monto Solicitado:</strong>
+                        ${{ $loanGranted->amount }}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">

@@ -19,6 +19,8 @@ class CreateLoansGrantedTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->unsignedInteger('loan_type_id');
             $table->foreign('loan_type_id')->references('id')->on('loan_types');
+            $table->unsignedInteger('collector_id');
+            $table->foreign('collector_id')->references('id')->on('collectors');
             $table->integer('payments');
             $table->float('payment_amount');
             $table->integer('loan_fee');

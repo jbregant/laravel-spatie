@@ -13,7 +13,7 @@ class LoansGranted extends Model
     ];
 
     protected $fillable = [
-        'client_id', 'loan_type_id', 'payments', 'loan_fee', 'amount', 'updated_amount', 'description', 'status','payment_amount','total_amount'
+        'client_id', 'loan_type_id', 'collector_id','payments', 'loan_fee', 'amount', 'updated_amount', 'description', 'status','payment_amount','total_amount'
     ];
 
     /**

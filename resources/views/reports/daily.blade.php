@@ -25,6 +25,12 @@
                         <input name="input_report" type="text" class="form-control datepickeR" placeholder="01-01-2018" id="input-report">
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Cobrador:</strong>
+                        {!! Form::select('collector_id', $collectors,[], array('id' => 'collectorCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Cobrador...')) !!}
+                    </div>
+                </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" style="margin-top:35%;"  id="search-btn">Buscar</button>

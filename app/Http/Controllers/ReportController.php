@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Collector;
 use App\LoansGranted;
 use DateTime;
 use Illuminate\Http\Request;
@@ -15,7 +16,15 @@ class ReportController extends Controller
     public function daily()
     {
         $title = 'Reporte Diario de Vencimientos';
-        return view('reports.daily',compact('title'));
+
+        $collectorsAux = Collector::all();
+        $collectors = [];
+
+        foreach ($collectorsAux as $collector) {
+            $collectors[$collector->id] = $collector->id . ' - ' . $collector->name . ' ' . $collector->lastname;
+        }
+
+        return view('reports.daily',compact('title','collectors'));
     }
 
     /**
@@ -24,16 +33,23 @@ class ReportController extends Controller
      */
     public function dailyreport(Request $request)
     {
-        $input = $request->all();
-        $dueDateFormat = DateTime::createFromFormat('d-m-Y', $input['inputData']);
+        $date = $request->get('inputData');
+        $collector = (int) $request->get('collector');
+        $dueDateFormat = DateTime::createFromFormat('d-m-Y', $date);
         $date = $dueDateFormat->format('Y-m-d');
-        $tableData = DB::select("SELECT lgp.loan_granted_id as loan_id, lgp.payment_number as payment_number, lgp.due_date as due_date, lgp.payment_amount as payment_amount, lgp.payment_amount_paid as payment_amount_paid, lgp.status as status,
-       lg.client_id as client_id, lg.payments as payments, lg.updated_amount as debt,
-       c.name as name, c.lastname as lastname, c.address as address
+        $query = "SELECT lgp.loan_granted_id as loan_id, lgp.payment_number as payment_number, lgp.due_date as due_date, lgp.payment_amount as payment_amount, lgp.payment_amount_paid as payment_amount_paid, lgp.status as status,
+       lg.client_id as client_id, lg.payments as payments, lg.updated_amount as debt, lg.collector_id as collector,
+       c.name as name, c.lastname as lastname, c.address as address 
       FROM loans_granted_payments as lgp
              INNER JOIN loans_granted as lg ON lgp.loan_granted_id = lg.id
              INNER JOIN clients c on lg.client_id = c.id
-      WHERE lgp.due_date <= '$date' and (lgp.status = 'pendiente' or lgp.status = 'parcial')");
+      WHERE (lgp.status = 'pendiente' or lgp.status = 'parcial') and lgp.due_date <= '$date'";
+
+        if ($collector){
+            $query = $query . "and lg.collector_id = $collector" ;
+        }
+
+        $tableData = DB::select($query);
 
         return view('reports.daily-table', compact('tableData'));
     }
@@ -44,7 +60,7 @@ class ReportController extends Controller
     public function dailyz()
     {
         $title = 'Reporte Diario de Pagos';
-        return view('reports.daily',compact('title'));
+        return view('reports.daily', compact('title'));
     }
 
     /**

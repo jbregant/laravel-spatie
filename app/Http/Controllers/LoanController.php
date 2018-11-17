@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Collector;
 use App\LoansGranted;
 use App\LoansGrantedPayments;
 use App\LoansGrantedPaymentsPartials;
@@ -48,22 +49,29 @@ class LoanController extends Controller
 //        $clientAux = DB::table('clients')->select('id', 'name', 'lastname')->get();
         $maxLoansSettings = Setting::where('name', 'max_loan_per_client')->get();
         $maxLoansPerUser = $maxLoansSettings[0]->value;
+        $collectorsAux = Collector::all();
 
         $clientAux = DB::select("select * from clients where id in(select client_id
                                   from loans_granted
                                   group by client_id
                                   having count(*) < $maxLoansPerUser
                                   order by created_at desc)");
-        dd($clientAux);
+//        dd($clientAux);
         $clients = [];
+        $collectors = [];
 
         foreach ($clientAux as $client) {
             $clients[$client->id] = $client->id . ' - ' . $client->name . ' ' . $client->lastname;
         }
 
+        foreach ($collectorsAux as $collector) {
+            $collectors[$collector->id] = $collector->id . ' - ' . $collector->name . ' ' . $collector->lastname;
+        }
+
+
         $loansType = LoanType::pluck('name', 'id')->all();
         $loansGranted = LoansGranted::all();
-        return view('loans.create', compact('clients', 'loansType', 'loansGranted'));
+        return view('loans.create', compact('clients', 'loansType', 'loansGranted', 'collectors'));
     }
 
     /**
