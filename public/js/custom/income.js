@@ -4,6 +4,11 @@ $(document).ready(function () {
         console.log('dentro dela funcion');
         return this.optional(element) || /^[1-9]\d*$/.test(value);
     });
+
+    let today = new Date();
+    $('.datepicker').datepicker();
+    $("#payment-date-txt").datepicker("setDate", today);
+
     $('[data-toggle="tooltip"]').tooltip()
 
     $('#searchClientBtn').on('click', function (e) {
@@ -63,6 +68,7 @@ $(document).ready(function () {
                 } else {
                     $('#paymentAmountPaidTxt').prop('placeholder', data.payment_amount);
                 }
+                $('#payment-date-txt').attr('disabled', false);
                 $('#paymentAmountPaidTxt').focus();
             }).tooltip();
         }).fail(function(response) {
@@ -113,7 +119,8 @@ $(document).ready(function () {
         let data = {
             paymentId: paymentData.payment_id,
             paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
-        };
+            paymentDate: $('#payment-date-txt').val()
+        }
 
         $.ajax({
             url: "/incomes/dopayment",
@@ -130,6 +137,8 @@ $(document).ready(function () {
                 fadeDuration: 100
             });
             $('#searchClientBtn').click();
+            let today = new Date();
+            $("#payment-date-txt").datepicker("setDate", today);
         }).fail(function(response) {
             console.log(response);
             alert('ERROR');

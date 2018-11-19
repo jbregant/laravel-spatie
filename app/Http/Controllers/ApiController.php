@@ -82,7 +82,10 @@ class ApiController extends Controller
         $httpCode = 200;
         $request = $request->request->all();
 
-//        if(!isset($request['clientId']) && empty($request['clientId'])){
+        $paymentDateAux = strtotime($request['paymentDate']);
+        $paymentDate = date('Y-m-d',$paymentDateAux);
+
+        //        if(!isset($request['clientId']) && empty($request['clientId'])){
 //            return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
 //        }
         //busco el pago
@@ -94,9 +97,9 @@ class ApiController extends Controller
         if ($payment->status == 'pendiente') { //check if payment amount is partial or total
             if ($paymentAmount < $payment->payment_amount) { // partial payment
                 //new partial payment
-                $message = $this->partialPayment($payment, $paymentAmount, $loanGranted);
+                $message = $this->partialPayment($payment, $paymentAmount, $paymentDate, $loanGranted);
             } else { // normal payment
-                $message = $this->normalPayment($request, $payment, $loanGranted);
+                $message = $this->normalPayment($request, $payment, $paymentDate, $loanGranted);
             }
         } elseif ($payment->status == 'parcial') {
             //obtener los parciales, sumarlos y ver si completa la cuota
@@ -106,9 +109,9 @@ class ApiController extends Controller
 
             if ($paymentPartialUpdated < $payment->payment_amount) {//update - generate a new partial
                 //new partial payment
-                $message = $this->partialPayment($payment, $paymentAmount, $loanGranted, $paymentPartialUpdated);
+                $message = $this->partialPayment($payment, $paymentAmount, $paymentDate, $loanGranted, $paymentPartialUpdated);
             } else {
-                $message = $this->normalPayment($request, $payment, $loanGranted);
+                $message = $this->normalPayment($request, $payment, $paymentDate, $loanGranted);
                 foreach ($paymentPartial as $item) {
                     $item->status = 'completo';
                     $item->save();
@@ -127,18 +130,19 @@ class ApiController extends Controller
     /**
      * @param $payment
      * @param $paymentAmount
+     * @param $paymentDate
      * @param $loanGranted
      * @param $paymentPartialUpdated
      * @return string
      */
-    private function partialPayment($payment, $paymentAmount, $loanGranted, $paymentPartialUpdated = null): string
+    private function partialPayment($payment, $paymentAmount, $paymentDate,  $loanGranted, $paymentPartialUpdated = null): string
     {
         $today = new \DateTime();
         $paymentPartial = new LoansGrantedPaymentsPartials();
         $paymentPartial->loan_granted_id = $loanGranted->id;
         $paymentPartial->loan_granted_payments_id = $payment->id;
         $paymentPartial->payment_amount_paid = $paymentAmount;
-        $paymentPartial->payment_date = $today->format('Y-m-d');
+        $paymentPartial->payment_date = $paymentDate;
         $paymentPartial->save();
         //set payment to partial - update the payment_amount_paid
         $payment->payment_amount_paid = ($paymentPartialUpdated) ? $paymentPartialUpdated : $paymentAmount;
@@ -154,15 +158,16 @@ class ApiController extends Controller
     /**
      * @param $request
      * @param $payment
+     * @param $paymentDate
      * @param $loanGranted
      * @return string
      */
-    private function normalPayment($request, $payment, $loanGranted): string
+    private function normalPayment($request, $payment, $paymentDate, $loanGranted): string
     {
         //update the payment and the loan debt
-        $today = new \DateTime();
+//        $today = new \DateTime();
         $payment->payment_amount_paid = $request['paymentAmountPaid'];
-        $payment->payment_date = $today->format('Y-m-d');
+        $payment->payment_date = $paymentDate;
         $payment->status = "completo";
         $loanGranted->updated_amount = $loanGranted->updated_amount - $payment->payment_amount_paid;
 

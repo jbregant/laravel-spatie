@@ -60,7 +60,6 @@ $(document).ready(function () {
         }
         if (inputForm.valid()) {
             let collector = parseInt($('#collectorCombo option:selected').val());
-            console.log(typeof(collector));
             let data = {
                 inputData: $('#input-report').val(),
                 collector: (collector) ? collector : 0

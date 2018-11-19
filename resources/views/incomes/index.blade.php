@@ -45,13 +45,13 @@
                     <div class="form-group">
                         <strong>Nro Credito:</strong>
                         {{--<input type="text" class="form-control" id="clientIdTxt" >--}}
-                        {!! Form::text('loan_granted_id', null, array('id' => 'loanGrantedIdTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        {!! Form::text('loan_granted_id', null, array('id' => 'loanGrantedIdTxt', 'class' => 'form-control', 'disabled' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <strong>Tipo de Credito:</strong>
                     {{--<input type="text" class="form-control" id="clientIdTxt" >--}}
-                    {!! Form::text('loan_type_id', null, array('id' => 'loanTypeIdTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                    {!! Form::text('loan_type_id', null, array('id' => 'loanTypeIdTxt', 'class' => 'form-control', 'disabled' => true)) !!}
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
@@ -62,25 +62,31 @@
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
                         <strong>Monto Cuota:</strong>
-                        {!! Form::text('payment_amount', null, array('id' => 'paymentAmountTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        {!! Form::text('payment_amount', null, array('id' => 'paymentAmountTxt', 'class' => 'form-control', 'disabled' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
                         <strong>Fecha de Vencimiento:</strong>
-                        {!! Form::text('due_date', null, array('id' => 'dueDateTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        {!! Form::text('due_date', null, array('id' => 'dueDateTxt', 'class' => 'form-control', 'disabled' => true)) !!}
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="form-group">
+                        <strong>Fecha de Pago:</strong>
+                        {!! Form::text('payment_date', null, array('id' => 'payment-date-txt', 'class' => 'form-control datepicker', 'disabled' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-2 col-sm-2 col-md-2" id="paymentPartialDiv" style="display: none;">
                     <div class="form-group">
                         <strong>Pago Parcial:</strong>
-                        {!! Form::text('partial_payment', null, array('id' => 'paymentPartialTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        {!! Form::text('partial_payment', null, array('id' => 'paymentPartialTxt', 'class' => 'form-control', 'disabled' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3" id="remainingDebtDiv" style="display: none;">
                     <div class="form-group">
                         <strong>Monto Restante:</strong>
-                        {!! Form::text('ramining_debt', null, array('id' => 'remainingDebtTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        {!! Form::text('ramining_debt', null, array('id' => 'remainingDebtTxt', 'class' => 'form-control', 'disabled' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
@@ -109,6 +115,7 @@
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
-    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/income.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 @endsection
