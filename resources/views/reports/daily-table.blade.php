@@ -1,6 +1,7 @@
 <table id="paymentsTable" class="table table-sm table-bordered">
     <thead>
     <th>Cliente Nº</th>
+    <th>Nro Cta</th>
     <th>Pago</th>
     <th>Cta</th>
     <th>Nombre</th>
@@ -12,6 +13,7 @@
     @foreach($tableData as $key => $data)
         <tr>
             <th>{{ $data->client_id }}<span></span></th>
+            <td>{{ $data->payment_number }}</td>
             <td></td>
             <td>{{ $data->payment_amount }}</td>
             <td>{{ $data->name }} {{ $data->lastname }}</td>
