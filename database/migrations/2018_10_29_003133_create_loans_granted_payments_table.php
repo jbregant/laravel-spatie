@@ -17,13 +17,13 @@ class CreateLoansGrantedPaymentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('loan_granted_id');
             $table->foreign('loan_granted_id')->references('id')->on('loans_granted');
-            $table->integer('payment_number');
-            $table->dateTime('due_date');
+            $table->integer('payment_number')->nullable();
+            $table->dateTime('due_date')->nullable();
             $table->float('payment_amount')->nullable();
             $table->dateTime('payment_date')->nullable();
             $table->float('payment_amount_paid')->nullable();
             $table->string('description')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

@@ -54,9 +54,9 @@ $(document).ready(function () {
                 let data = JSON.parse($(this).closest('tr').attr('data'));
                 $('#loanGrantedIdTxt').val(data.loan_id);
                 $('#loanTypeIdTxt').val(data.loan_type);
-                $('#paymentNumberTxt').val(data.payment_number);
+                $('#paymentsTxt').val(data.payments);
                 $('#paymentAmountTxt').val(data.payment_amount);
-                $('#dueDateTxt').val(data.due_date);
+                $('#loanDateTxt').val(data.loan_created_date);
                 $('#paymentData').attr('data', $(this).closest('tr').attr('data'));
                 if (data.payment_amount_paid != null){
                     let paymentPartialAmount = data.payment_amount - data.payment_amount_paid;
@@ -119,7 +119,8 @@ $(document).ready(function () {
         let data = {
             paymentId: paymentData.payment_id,
             paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
-            paymentDate: $('#payment-date-txt').val()
+            paymentDate: $('#payment-date-txt').val(),
+            loanGrantedId: $('#loanGrantedIdTxt').val()
         }
 
         $.ajax({

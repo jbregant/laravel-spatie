@@ -55,8 +55,8 @@
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
-                        <strong>Nro Cta:</strong>
-                        {!! Form::text('payment_number', null, array('id' => 'paymentNumberTxt', 'class' => 'form-control', 'readonly' => true)) !!}
+                        <strong>Nro Cuotas:</strong>
+                        {!! Form::text('payments', null, array('id' => 'paymentsTxt', 'class' => 'form-control', 'readonly' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
@@ -67,8 +67,8 @@
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
-                        <strong>Fecha de Vencimiento:</strong>
-                        {!! Form::text('due_date', null, array('id' => 'dueDateTxt', 'class' => 'form-control', 'disabled' => true)) !!}
+                        <strong>Fecha de Otorgamiento:</strong>
+                        {!! Form::text('loan_created_date', null, array('id' => 'loanDateTxt', 'class' => 'form-control', 'disabled' => true)) !!}
                     </div>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">

@@ -45,16 +45,16 @@ class ApiController extends Controller
             return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
         }
 
-        $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
-        $loansGranted = [];
-        if (!$loansGrantedObj->isEmpty()) {
-            foreach ($loansGrantedObj as $key => $loanGranted) {
-                $loansGranted[] = [
-                    'loan' => $loanGranted,
-                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', '!=', 'completo')->get()
-                ];
-            }
-        }
+        $loansGranted = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
+//        $loansGranted = [];
+//        if (!$loansGrantedObj->isEmpty()) {
+//            foreach ($loansGrantedObj as $key => $loanGranted) {
+//                $loansGranted[] = [
+//                    'loan' => $loanGranted,
+//                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', '!=', 'completo')->get()
+//                ];
+//            }
+//        }
 //        } else {
 ////            return redirect()->back()->withErrors(['token' => 'This is the error message.']);
 ////            return response()->json(['status' => 201, 'message' => 'No se encontraron datos para el codigo de cliente']);
@@ -89,11 +89,29 @@ class ApiController extends Controller
 //            return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
 //        }
         //busco el pago
-        $payment = LoansGrantedPayments::find($request['paymentId']);
-        $loanGranted = LoansGranted::find($payment->loan_granted_id);
-
+//        $payment = LoansGrantedPayments::find($request['paymentId']);
+        $loanGranted = LoansGranted::find($request['loanGrantedId']);
         $paymentAmount = $request['paymentAmountPaid'];
+
         $message = '';
+        if($loanGranted){
+            //grabo el pago
+            $payment = new LoansGrantedPayments();
+            $payment->loan_granted_id = $request['loanGrantedId'];
+            $payment->payment_amount = $request['paymentAmountPaid'];
+            $payment->payment_date = $paymentDate;
+            //descuento del total
+            $loanGranted->updated_amount = $loanGranted->updated_amount - $request['paymentAmountPaid'];
+            //si se completo el credito lo marco como completado para que no aparezca en el listado de creditos
+            if($loanGranted->updated_amount <= 0){
+                $loanGranted->status = "completo";
+            }
+
+        } else {
+            //error
+            $httpCode = 500;
+            $message = 'Credito no encontrado';
+        }
         if ($payment->status == 'pendiente') { //check if payment amount is partial or total
             if ($paymentAmount < $payment->payment_amount) { // partial payment
                 //new partial payment
