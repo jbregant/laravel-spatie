@@ -12,6 +12,7 @@ use App\Setting;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class LoanController extends Controller
 {
@@ -216,9 +217,12 @@ class LoanController extends Controller
      */
     public function destroy($id)
     {
+        Schema::disableForeignKeyConstraints();
+
         LoansGrantedPaymentsPartials::where('loan_granted_id', $id)->delete();
         LoansGrantedPayments::where('loan_granted_id', $id)->delete();
         LoansGranted::find($id)->delete();
+        Schema::enableForeignKeyConstraints();
 
         return redirect()->route('loans.index')
             ->with('success', 'Credito borrado correctamente');
