@@ -52,10 +52,11 @@ class LoanController extends Controller
         $collectorsAux = Collector::all();
 
         $clientAux = DB::select("select * from clients where id not in(select client_id
-                                  from loans_granted
-                                  group by client_id
-                                  having count(*) > $maxLoansPerUser
-                                  order by created_at desc)");
+                                      from loans_granted
+                                      where status = 'activo'
+                                      group by client_id
+                                      having count(*) = $maxLoansPerUser
+                                      order by created_at desc)");
 
         $clients = [];
         $collectors = [];

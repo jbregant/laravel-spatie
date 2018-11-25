@@ -1,4 +1,4 @@
-<table id="paymentsTable" class="table">
+<table id="loansTable" class="table">
     <thead>
     <th>Nro Credito</th>
     <th>Tipo Credito</th>
@@ -38,10 +38,7 @@
                 <td>{{ $loanGranted->updated_amount }}</td>
                 <td>{{ $loanGranted->status }}</td>
                 <td align="center">
-                    @if ($loop->first)
                         <i class="fa fa-dollar paymentActionBtn" data-toggle="tooltip"  data-original-title="Realizar Pago" style="font-size:24px;color:green; cursor: pointer;"></i>
-                    @else
-                    @endif
                 </td>
             </tr>
     @endforeach

@@ -45,7 +45,7 @@ $(document).ready(function () {
             data: {clientId}
         }).done(function(response) {
             $('#div-table-payments').html(response.data);
-            $('#paymentsTable').dataTable({"pageLength": 100});
+            $('#loansTable').dataTable({"pageLength": 100});
 
             $('.paymentActionBtn').on('click', function () {
                 $('#paymentAmountPaidTxt').prop('disabled', false);
@@ -108,13 +108,6 @@ $(document).ready(function () {
 
         if (!paymentForm.valid())
             return false;
-
-        if (paymentAmountPaid > paymentAmount){
-            $('#modalMsg').text('El importe ingresado supera el importe de la cuota');
-            $('#myModal').modal('toggle');
-            return false;
-        }
-
 
         let data = {
             paymentId: paymentData.payment_id,
