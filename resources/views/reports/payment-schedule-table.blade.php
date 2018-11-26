@@ -40,8 +40,8 @@
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
-                <strong>Monto del Credito:</strong>
-                <input id="nameTxt" readonly="readonly" class="form-control" type="text" value="{{ $loanGranted->total_amount }}">
+                <strong>Monto solicitado:</strong>
+                <input id="nameTxt" readonly="readonly" class="form-control" type="text" value="{{ $loanGranted->amount }}">
             </div>
         </div>
     </div>
