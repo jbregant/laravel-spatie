@@ -47,7 +47,7 @@ class ReportController extends Controller
         if ($collector){
             $query = $query . "and lg.collector_id = $collector" ;
         }
-        $query = $query . 'ORDER BY client_id';
+        $query = $query . ' ORDER BY client_id';
 
         $tableData = DB::select($query);
 //        dd($tableData);
