@@ -40,8 +40,8 @@
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
-                <strong>Monto del Credito:</strong>
-                <input id="nameTxt" readonly="readonly" class="form-control" type="text" value="{{ $loanGranted->total_amount }}">
+                <strong>Monto solicitado:</strong>
+                <input id="nameTxt" readonly="readonly" class="form-control" type="text" value="{{ $loanGranted->amount }}">
             </div>
         </div>
     </div>
@@ -54,16 +54,14 @@
         <th>Fecha de Pago</th>
         </thead>
         <tbody id="tbodyPayments">
-        @foreach($tableData as $key => $data)
+        @foreach($tableData as $data)
             <tr>
-                <td>{{ $data->payment_number }}</td>
-                <td>{{ Carbon\Carbon::parse($data->due_date)->format('d-m-Y') }}</td>
-                <td>{{ $data->payment_amount }}</td>
-                <td>{{ ($data->partial_payment_amount_paid) ? $data->partial_payment_amount_paid : $data->payment_amount_paid }}</td>
-                @if(empty($data->payment_date) && !empty($data->partial_payment_date))
-                    <td>{{ Carbon\Carbon::parse($data->partial_payment_date)->format('d-m-Y') }}</td>
-                @elseif(!empty($data->payment_date) && empty($data->partial_payment_date))
-                    <td>{{ Carbon\Carbon::parse($data->payment_date)->format('d-m-Y') }}</td>
+                <td>{{ $data['payment_number'] }}</td>
+                <td>{{ Carbon\Carbon::parse($data['due_date'])->format('d-m-Y') }}</td>
+                <td>{{ $data['payment_amount'] }}</td>
+                <td>{{ ($data['payment_amount_paid']) ? $data['payment_amount_paid'] : '0' }}</td>
+                @if($data['payment_date'])
+                    <td>{{ Carbon\Carbon::parse($data['payment_date'])->format('d-m-Y') }}</td>
                 @else
                     <td></td>
                 @endif

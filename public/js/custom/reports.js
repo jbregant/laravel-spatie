@@ -59,8 +59,10 @@ $(document).ready(function () {
 
         }
         if (inputForm.valid()) {
+            let collector = parseInt($('#collectorCombo option:selected').val());
             let data = {
-                inputData: $('#input-report').val()
+                inputData: $('#input-report').val(),
+                collector: (collector) ? collector : 0
             };
             $.ajax({
                 url: url,

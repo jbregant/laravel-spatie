@@ -6,6 +6,7 @@ use App\LoansGranted;
 use App\LoansGrantedPayments;
 use App\LoansGrantedPaymentsPartials;
 use App\LoanType;
+use App\PaymentsHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,16 +46,16 @@ class ApiController extends Controller
             return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
         }
 
-        $loansGrantedObj = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
-        $loansGranted = [];
-        if (!$loansGrantedObj->isEmpty()) {
-            foreach ($loansGrantedObj as $key => $loanGranted) {
-                $loansGranted[] = [
-                    'loan' => $loanGranted,
-                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', '!=', 'completo')->get()
-                ];
-            }
-        }
+        $loansGranted = LoansGranted::where('status', 'activo')->where('client_id', $request['clientId'])->get();
+//        $loansGranted = [];
+//        if (!$loansGrantedObj->isEmpty()) {
+//            foreach ($loansGrantedObj as $key => $loanGranted) {
+//                $loansGranted[] = [
+//                    'loan' => $loanGranted,
+//                    'payments' => LoansGrantedPayments::where('loan_granted_id', $loanGranted->id)->where('status', '!=', 'completo')->get()
+//                ];
+//            }
+//        }
 //        } else {
 ////            return redirect()->back()->withErrors(['token' => 'This is the error message.']);
 ////            return response()->json(['status' => 201, 'message' => 'No se encontraron datos para el codigo de cliente']);
@@ -82,42 +83,66 @@ class ApiController extends Controller
         $httpCode = 200;
         $request = $request->request->all();
 
-//        if(!isset($request['clientId']) && empty($request['clientId'])){
+        $paymentDateAux = strtotime($request['paymentDate']);
+        $paymentDate = date('Y-m-d',$paymentDateAux);
+
+        //        if(!isset($request['clientId']) && empty($request['clientId'])){
 //            return response()->json(['status' => 'BAD', 'message' => 'Faltan datos']);
 //        }
         //busco el pago
-        $payment = LoansGrantedPayments::find($request['paymentId']);
-        $loanGranted = LoansGranted::find($payment->loan_granted_id);
-
+//        $payment = LoansGrantedPayments::find($request['paymentId']);
+        $loanGranted = LoansGranted::find($request['loanGrantedId']);
         $paymentAmount = $request['paymentAmountPaid'];
-        $message = '';
-        if ($payment->status == 'pendiente') { //check if payment amount is partial or total
-            if ($paymentAmount < $payment->payment_amount) { // partial payment
-                //new partial payment
-                $message = $this->partialPayment($payment, $paymentAmount, $loanGranted);
-            } else { // normal payment
-                $message = $this->normalPayment($request, $payment, $loanGranted);
-            }
-        } elseif ($payment->status == 'parcial') {
-            //obtener los parciales, sumarlos y ver si completa la cuota
-            $paymentPartial = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->get();
-            $paymentPartialSum = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->where('status', 'activo')->sum('payment_amount_paid');
-            $paymentPartialUpdated = $paymentPartialSum + $paymentAmount;
 
-            if ($paymentPartialUpdated < $payment->payment_amount) {//update - generate a new partial
-                //new partial payment
-                $message = $this->partialPayment($payment, $paymentAmount, $loanGranted, $paymentPartialUpdated);
-            } else {
-                $message = $this->normalPayment($request, $payment, $loanGranted);
-                foreach ($paymentPartial as $item) {
-                    $item->status = 'completo';
-                    $item->save();
-                }
+        $message = '';
+        if($loanGranted){
+            //grabo el pago
+            $payment = new PaymentsHistory();
+            $payment->loan_granted_id = $request['loanGrantedId'];
+            $payment->payment_date = $paymentDate;
+            $payment->payment_amount_paid = $request['paymentAmountPaid'];
+            $payment->collector_id = $loanGranted->collector_id;
+            //descuento del total
+            $loanGranted->updated_amount = $loanGranted->updated_amount - $request['paymentAmountPaid'];
+            //si se completo el credito lo marco como completado para que no aparezca en el listado de creditos
+            if($loanGranted->updated_amount <= 0){
+                $loanGranted->status = "completo";
             }
+            $payment->save();
+            $loanGranted->save();
+            $message = 'Pago imputado correctamente.';
         } else {
             //error
             $httpCode = 500;
+            $message = 'Credito no encontrado';
         }
+//        if ($payment->status == 'pendiente') { //check if payment amount is partial or total
+//            if ($paymentAmount < $payment->payment_amount) { // partial payment
+//                //new partial payment
+//                $message = $this->partialPayment($payment, $paymentAmount, $paymentDate, $loanGranted);
+//            } else { // normal payment
+//                $message = $this->normalPayment($request, $payment, $paymentDate, $loanGranted);
+//            }
+//        } elseif ($payment->status == 'parcial') {
+//            //obtener los parciales, sumarlos y ver si completa la cuota
+//            $paymentPartial = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->get();
+//            $paymentPartialSum = LoansGrantedPaymentsPartials::where(['loan_granted_payments_id' => $payment->id])->where('status', 'activo')->sum('payment_amount_paid');
+//            $paymentPartialUpdated = $paymentPartialSum + $paymentAmount;
+//
+//            if ($paymentPartialUpdated < $payment->payment_amount) {//update - generate a new partial
+//                //new partial payment
+//                $message = $this->partialPayment($payment, $paymentAmount, $paymentDate, $loanGranted, $paymentPartialUpdated);
+//            } else {
+//                $message = $this->normalPayment($request, $payment, $paymentDate, $loanGranted);
+//                foreach ($paymentPartial as $item) {
+//                    $item->status = 'completo';
+//                    $item->save();
+//                }
+//            }
+//        } else {
+//            //error
+//            $httpCode = 500;
+//        }
         return response()->json([
             'status' => $httpCode,
             'message' => $message,
@@ -127,18 +152,19 @@ class ApiController extends Controller
     /**
      * @param $payment
      * @param $paymentAmount
+     * @param $paymentDate
      * @param $loanGranted
      * @param $paymentPartialUpdated
      * @return string
      */
-    private function partialPayment($payment, $paymentAmount, $loanGranted, $paymentPartialUpdated = null): string
+    private function partialPayment($payment, $paymentAmount, $paymentDate,  $loanGranted, $paymentPartialUpdated = null): string
     {
         $today = new \DateTime();
         $paymentPartial = new LoansGrantedPaymentsPartials();
         $paymentPartial->loan_granted_id = $loanGranted->id;
         $paymentPartial->loan_granted_payments_id = $payment->id;
         $paymentPartial->payment_amount_paid = $paymentAmount;
-        $paymentPartial->payment_date = $today->format('Y-m-d');
+        $paymentPartial->payment_date = $paymentDate;
         $paymentPartial->save();
         //set payment to partial - update the payment_amount_paid
         $payment->payment_amount_paid = ($paymentPartialUpdated) ? $paymentPartialUpdated : $paymentAmount;
@@ -154,15 +180,16 @@ class ApiController extends Controller
     /**
      * @param $request
      * @param $payment
+     * @param $paymentDate
      * @param $loanGranted
      * @return string
      */
-    private function normalPayment($request, $payment, $loanGranted): string
+    private function normalPayment($request, $payment, $paymentDate, $loanGranted): string
     {
         //update the payment and the loan debt
-        $today = new \DateTime();
+//        $today = new \DateTime();
         $payment->payment_amount_paid = $request['paymentAmountPaid'];
-        $payment->payment_date = $today->format('Y-m-d');
+        $payment->payment_date = $paymentDate;
         $payment->status = "completo";
         $loanGranted->updated_amount = $loanGranted->updated_amount - $payment->payment_amount_paid;
 

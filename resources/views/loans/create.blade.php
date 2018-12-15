@@ -54,6 +54,12 @@
                         {!! Form::select('loan_type_id', $loansType,[], array('id' => 'loanTypeCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Tipo de Prestamo...')) !!}
                     </div>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <strong>Cobrador:</strong>
+                        {!! Form::select('collector_id', $collectors,[], array('id' => 'collectorCombo', 'class' => 'form-control combobox', 'placeholder' => 'Seleccione un Cobrador...')) !!}
+                    </div>
+                </div>
                 <div class="col-xs-3 col-sm-3 col-md-3">
                     <div class="form-group">
                         <strong>Interes:</strong>
@@ -78,16 +84,16 @@
                         {!! Form::text('loan_created_date', null, array('id' => 'loan-date', 'class' => 'form-control datepicker')) !!}
                     </div>
                 </div>
+                <div class="col-xs-3 col-sm-3 col-md-3">
+                    <div class="form-group">
+                        <strong>Valor Cuota:</strong>
+                        {!! Form::number('payment_amount', null, array('id' => 'paymentAmount', 'class' => 'form-control')) !!}
+                    </div>
+                </div>
                 <div class="col-xs-5 col-sm-5 col-md-5">
                     <div class="form-group">
                         <strong>Monto Total a Reintegrar:</strong>
                         {!! Form::number('total_amount', null, array('id' => 'totalAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                    <div class="form-group">
-                        <strong>Valor Cuota:</strong>
-                        {!! Form::number('payment_amount', null, array('id' => 'paymentAmount', 'readonly' => 'readonly','class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">

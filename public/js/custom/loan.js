@@ -57,7 +57,9 @@ $(document).ready(function () {
                 loan_fee: "required",
                 amount: "required",
                 payments: "required",
-                loan_created_date: "required"
+                loan_created_date: "required",
+                payment_amount: "required",
+                collector_id: "required"
             },
             messages: {
                 client_id: "Este campo es requerido",
@@ -65,7 +67,9 @@ $(document).ready(function () {
                 loan_fee: "Este campo es requerido",
                 amount: "Este campo es requerido",
                 payments: "Este campo es requerido",
-                loan_created_date: "Este campo es requerido"
+                loan_created_date: "Este campo es requerido",
+                payment_amount: "Este campo es requerido",
+                collector_id: "Este campo es requerido"
             },
         });
 
@@ -76,20 +80,17 @@ $(document).ready(function () {
             let amount = parseInt($('#amount').val());
             let payments = $('#paymentsCombo option:selected').val();
             let paymentsTable = '';
-            let totalAmount = (amount  / 100 * loanFee) + amount ;
-            let payment = (totalAmount/payments);
+            let payment = parseInt($('#paymentAmount').val());
+            let totalAmount = payment * payments;
+            // let totalAmount = (amount  / 100 * loanFee) + amount ;
+            // let payment = (totalAmount/payments);
 
-            paymentsCounter = 0;
             let dueDates = [];
             let paymentsLength = $('#paymentsCombo option:selected').val();
             for (let i = 1; i <= paymentsLength; i++){
                 let date = $('#loan-date').val();
                 let newDate = compareDate(date);
-                // let newDate = date.split("-").reverse().join("-");
                 let paymentDate = new Date(newDate);
-                console.log(newDate);
-                console.log(paymentDate);
-                let paymentDateAux = new Date();
                 switch (loanType) {
                     case '1':
                     case '2':
@@ -119,7 +120,6 @@ $(document).ready(function () {
             for (let i = 1; i <= payments; i++){
                 paymentsTable += '<tr>' +
                     '<td align="center">' + i + '</td>' +
-                    // '<td class="payment_amount">$ ' + payment.toFixed(2) + '</td>' +
                     '<td><input type="text" class="datepicker date-picker-payments" value="' + dueDates[dueDateIndex] + '"></input</td>' +
                     '</tr>';
                 dueDateIndex++;
@@ -203,5 +203,18 @@ $(document).ready(function () {
             alert('ERROR');
         });
     });
+
+    $('#amount').on('blur', function () {
+        if ($(this).val() === ''){
+            $('#paymentAmount').attr('placeholder', '');
+        } else {
+            let amount = parseInt($('#amount').val());
+            let loanFee = parseInt($('#loanFee').val());
+            let payments = $('#paymentsCombo option:selected').val();
+            let totalAmount = (amount  / 100 * loanFee) + amount ;
+            let payment = (totalAmount/payments);
+            $('#paymentAmount').attr('placeholder', payment);
+        }
+    })
 });
 

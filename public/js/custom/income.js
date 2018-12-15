@@ -4,6 +4,11 @@ $(document).ready(function () {
         console.log('dentro dela funcion');
         return this.optional(element) || /^[1-9]\d*$/.test(value);
     });
+
+    let today = new Date();
+    $('.datepicker').datepicker();
+    $("#payment-date-txt").datepicker("setDate", today);
+
     $('[data-toggle="tooltip"]').tooltip()
 
     $('#searchClientBtn').on('click', function (e) {
@@ -40,7 +45,7 @@ $(document).ready(function () {
             data: {clientId}
         }).done(function(response) {
             $('#div-table-payments').html(response.data);
-            $('#paymentsTable').dataTable({"pageLength": 100});
+            $('#loansTable').dataTable({"pageLength": 100});
 
             $('.paymentActionBtn').on('click', function () {
                 $('#paymentAmountPaidTxt').prop('disabled', false);
@@ -49,9 +54,9 @@ $(document).ready(function () {
                 let data = JSON.parse($(this).closest('tr').attr('data'));
                 $('#loanGrantedIdTxt').val(data.loan_id);
                 $('#loanTypeIdTxt').val(data.loan_type);
-                $('#paymentNumberTxt').val(data.payment_number);
+                $('#paymentsTxt').val(data.payments);
                 $('#paymentAmountTxt').val(data.payment_amount);
-                $('#dueDateTxt').val(data.due_date);
+                $('#loanDateTxt').val(data.loan_created_date);
                 $('#paymentData').attr('data', $(this).closest('tr').attr('data'));
                 if (data.payment_amount_paid != null){
                     let paymentPartialAmount = data.payment_amount - data.payment_amount_paid;
@@ -63,6 +68,7 @@ $(document).ready(function () {
                 } else {
                     $('#paymentAmountPaidTxt').prop('placeholder', data.payment_amount);
                 }
+                $('#payment-date-txt').attr('disabled', false);
                 $('#paymentAmountPaidTxt').focus();
             }).tooltip();
         }).fail(function(response) {
@@ -103,17 +109,12 @@ $(document).ready(function () {
         if (!paymentForm.valid())
             return false;
 
-        if (paymentAmountPaid > paymentAmount){
-            $('#modalMsg').text('El importe ingresado supera el importe de la cuota');
-            $('#myModal').modal('toggle');
-            return false;
-        }
-
-
         let data = {
             paymentId: paymentData.payment_id,
             paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
-        };
+            paymentDate: $('#payment-date-txt').val(),
+            loanGrantedId: $('#loanGrantedIdTxt').val()
+        }
 
         $.ajax({
             url: "/incomes/dopayment",
@@ -130,6 +131,8 @@ $(document).ready(function () {
                 fadeDuration: 100
             });
             $('#searchClientBtn').click();
+            let today = new Date();
+            $("#payment-date-txt").datepicker("setDate", today);
         }).fail(function(response) {
             console.log(response);
             alert('ERROR');
