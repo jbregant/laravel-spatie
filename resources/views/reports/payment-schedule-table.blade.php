@@ -67,6 +67,18 @@
                 @endif
             </tr>
         @endforeach
+        @if(!empty($tableDataOrphans))
+            @foreach($tableDataOrphans as $data)
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ $data['payment_amount_paid'] }}</td>
+                    <td>{{ Carbon\Carbon::parse($data['payment_date'])->format('d-m-Y') }}</td>
+                </tr>
+            @endforeach
+        @endif
+
         </tbody>
     </table>
 @else

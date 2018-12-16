@@ -1,4 +1,4 @@
-<table id="paymentsTable" class="table table-sm table-bordered">
+<table id="paymentsTable" class="table table-sm table-bordered" style="width: 80%;">
     <thead>
     <th>Cliente Nº</th>
     <th>Pago</th>

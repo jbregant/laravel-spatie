@@ -124,19 +124,21 @@ class ReportController extends Controller
         $loanGranted = LoansGranted::find($loanId);
 
         $paymentsHistory = DB::select("SELECT * FROM payments_history WHERE loan_granted_id = $loanId");
-//        dd($paymentsHistory);
+
         $tableDataAux = DB::select("SELECT lgp.loan_granted_id as loan_id, lgp.payment_number as payment_number, lgp.due_date as due_date, lgp.payment_date as payment_date,
        lgp.payment_amount as payment_amount, lgp.payment_amount_paid as payment_amount_paid, lgp.status as status,
        lg.client_id as client_id, lg.payments as payments, lg.updated_amount as debt,
        c.name as name, c.lastname as lastname, c.address as address,
        lgpp.payment_amount_paid as partial_payment_amount_paid, lgpp.payment_date as partial_payment_date
-FROM loans_granted_payments as lgp
-            INNER JOIN loans_granted as lg ON lgp.loan_granted_id = lg.id
-            INNER JOIN clients c on lg.client_id = c.id
-            LEFT JOIN loans_granted_payments_partial as lgpp ON lgp.id = lgpp.loan_granted_payments_id
-WHERE lg.id = '$loanId' order by payment_number");
+        FROM loans_granted_payments as lgp
+                    INNER JOIN loans_granted as lg ON lgp.loan_granted_id = lg.id
+                    INNER JOIN clients c on lg.client_id = c.id
+                    LEFT JOIN loans_granted_payments_partial as lgpp ON lgp.id = lgpp.loan_granted_payments_id
+        WHERE lg.id = '$loanId' order by payment_number");
 
         $tableData = [];
+        $tableDataOrphans = [];
+        $dueDates = [];
 
         foreach ($tableDataAux as $payment) {
             $paymentHistory = $this->findPaymentHistory($payment->due_date, $payment->loan_id, $paymentsHistory);
@@ -147,9 +149,20 @@ WHERE lg.id = '$loanId' order by payment_number");
                 'payment_amount_paid' => ($paymentHistory) ? $paymentHistory[0]['payment_amount_paid'] : '0',
                 'payment_date' => ($paymentHistory) ? $paymentHistory[0]['payment_date'] : null,
             ];
+            $dueDates[] = $payment->due_date;
         }
-//        dd($this->findOrphansPayments($paymentsHistory, $tableData));
-        return view('reports.payment-schedule-table', compact('tableData', 'loanGranted', 'paymentsHistory'));
+
+        if(!empty($dueDates)){
+            foreach ($paymentsHistory as $paymentHistory) {
+                if (!in_array($paymentHistory->payment_date, $dueDates)){
+                    $tableDataOrphans [] = [
+                        'payment_amount_paid' => $paymentHistory->payment_amount_paid,
+                        'payment_date' => $paymentHistory->payment_date,
+                    ];
+                }
+            }
+        }
+        return view('reports.payment-schedule-table', compact('tableData', 'loanGranted', 'paymentsHistory', 'tableDataOrphans'));
     }
 
     function findPaymentHistory($date, $paymentId, $paymentsHistory){
@@ -167,26 +180,18 @@ WHERE lg.id = '$loanId' order by payment_number");
         return false;
     }
 
-    function findOrphansPayments($paymentsHistory, $tableData){
-        $dataReturn =  [];
-
-        $paymentsDate = array_map(function($x){ return $x->payment_date->forma; }, $paymentsHistory);
-        dd($paymentsDate);
-
-        foreach ($paymentsHistory as $payment) {
-
-            foreach ($tableData as $tableDatum) {
-
-                if($payment->payment_date == $date){
-                    $dataReturn[] = [
-                        'payment_date' => $payment->payment_date,
-                        'payment_amount_paid' => $payment->payment_amount_paid
-                    ];
-                }
-            }
-        }
-        if(!empty($dataReturn))
-            return $dataReturn;
-        return false;
-    }
+//    function findOrphansPayments($tableDataAux, $dueDates){
+//        $dataReturn =  [];
+//        foreach ($tableDataAux as $payment) {
+//                if(in_array($payment->due)) {
+////                    $dataReturn[] = [
+////                        'payment_date' => $payment->payment_date,
+////                        'payment_amount_paid' => $payment->payment_amount_paid
+////                    ];
+//                }
+//            }
+//        if(!empty($dataReturn))
+//            return $dataReturn;
+//        return false;
+//    }
 }
