@@ -70,7 +70,7 @@
         @if(!empty($tableDataOrphans))
             @foreach($tableDataOrphans as $data)
                 <tr>
-                    <td></td>
+                    <td>Extra</td>
                     <td></td>
                     <td></td>
                     <td>{{ $data['payment_amount_paid'] }}</td>
