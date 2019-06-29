@@ -88,11 +88,13 @@ class ReportController extends Controller
                     FROM payments_history as ph
                            INNER JOIN loans_granted as lg ON lg.id = ph.loan_granted_id
                            INNER JOIN clients c on lg.client_id = c.id
-                    WHERE ph.payment_date = '$date' order by client_id ";
+                    WHERE ph.payment_date = '$date'";
 
         if ($collector){
             $query = $query . "and lg.collector_id = $collector" ;
         }
+
+        $query = $query . ' order by client_id';
 
         $tableData = DB::select($query);
         $totalAmountPaid = 0;
