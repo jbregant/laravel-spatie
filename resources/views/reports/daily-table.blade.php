@@ -5,6 +5,7 @@
     <th>Cta</th>
     <th>Nombre</th>
     <th>Direccion</th>
+    <th>Telefono</th>
     <th>Cred Nº</th>
     <th>Saldo</th>
     </thead>
@@ -16,6 +17,7 @@
             <td>{{ $data->payment_amount }}</td>
             <td>{{ $data->name }} {{ $data->lastname }}</td>
             <td>{{ $data->address }}</td>
+            <td>{{ $data->phone }}</td>
             <td>{{ $data->loan_id }}</td>
             <td>{{ $data->debt }}</td>
         </tr>

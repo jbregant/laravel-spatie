@@ -40,7 +40,7 @@ class ReportController extends Controller
 //        $dueDateFormat = DateTime::createFromFormat('d-m-Y', $date);
 //        $date = $dueDateFormat->format('Y-m-d');
         $query = "SELECT lg.payment_amount as payment_amount, lg.updated_amount as debt, lg.collector_id as collector, lg.client_id as client_id, lg.id as loan_id,
-                           c.name as name, c.lastname as lastname, c.address as address
+                           c.name as name, c.lastname as lastname, c.address as address, c.phone as phone
                     FROM loans_granted as lg
                            INNER JOIN clients c on lg.client_id = c.id
                     WHERE lg.status = 'activo'";
