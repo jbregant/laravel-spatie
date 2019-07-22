@@ -5,6 +5,8 @@ $(document).ready(function () {
         return this.optional(element) || /^[1-9]\d*$/.test(value);
     });
 
+
+
     let today = new Date();
     $('.datepicker').datepicker();
     $("#payment-date-txt").datepicker("setDate", today);
@@ -104,40 +106,47 @@ $(document).ready(function () {
             },
         });
 
-
-
         if (!paymentForm.valid())
             return false;
-
-        let data = {
-            paymentId: paymentData.payment_id,
-            paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
-            paymentDate: $('#payment-date-txt').val(),
-            loanGrantedId: $('#loanGrantedIdTxt').val()
-        }
-
-        $.ajax({
-            url: "/incomes/dopayment",
-            type: "POST",
-            data: data
-        }).done(function(response) {
-            $('#paymentForm')[0].reset();
-            $('#paymentPartialDiv').hide();
-            $('#remainingDebtDiv').hide();
-            $('#paymentAmountPaidTxt').prop('placeholder', '');
-            $('#modalMsg').text(response.message);
-            $('#myModal').modal({
-                keyboard: true,
-                fadeDuration: 100
-            });
-            $('#searchClientBtn').click();
-            let today = new Date();
-            $("#payment-date-txt").datepicker("setDate", today);
-        }).fail(function(response) {
-            console.log(response);
-            alert('ERROR');
+        $('.modal').modal({
+            backdrop: false,
+            keyboard: false
         });
-        console.log('ea');
+
+        $('.amount-paid-modal').text('$'+$('#paymentAmountPaidTxt').val());
+        $('.modal').modal('show');
+
+        $('.save-payment-btn').on('click', function () {
+            $('.modal').modal('hide');
+            let data = {
+                paymentId: paymentData.payment_id,
+                paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
+                paymentDate: $('#payment-date-txt').val(),
+                loanGrantedId: $('#loanGrantedIdTxt').val()
+            };
+
+            $.ajax({
+                url: "/incomes/dopayment",
+                type: "POST",
+                data: data
+            }).done(function(response) {
+                $('#paymentForm')[0].reset();
+                $('#paymentPartialDiv').hide();
+                $('#remainingDebtDiv').hide();
+                $('#paymentAmountPaidTxt').prop('placeholder', '');
+                $('#modal-info-msg').text(response.message);
+                $('#modal-info').modal({
+                    keyboard: true,
+                    fadeDuration: 100
+                });
+                $('#searchClientBtn').click();
+                let today = new Date();
+                $("#payment-date-txt").datepicker("setDate", today);
+            }).fail(function(response) {
+                console.log(response);
+                alert('ERROR');
+            });
+        });
     })
 
 });

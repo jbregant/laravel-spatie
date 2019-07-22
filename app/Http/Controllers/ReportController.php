@@ -39,17 +39,42 @@ class ReportController extends Controller
         $collector = (int) $request->get('collector');
 //        $dueDateFormat = DateTime::createFromFormat('d-m-Y', $date);
 //        $date = $dueDateFormat->format('Y-m-d');
-        $query = "SELECT lg.payment_amount as payment_amount, lg.updated_amount as debt, lg.collector_id as collector, lg.client_id as client_id, lg.id as loan_id,
-                           c.name as name, c.lastname as lastname, c.address as address, c.phone as phone
-                    FROM loans_granted as lg
-                           INNER JOIN clients c on lg.client_id = c.id
-                    WHERE lg.status = 'activo'";
+        $query = "SELECT lg.id, lg.payment_amount as payment_amount, lg.updated_amount as debt, lg.collector_id as collector, lg.client_id as client_id, lg.id as loan_id,
+       lg.updated_at,
+       c.name as name, c.lastname as lastname, c.address as address, c.phone as phone,
+       ft.id as loantype
+        FROM loans_granted as lg
+                 INNER JOIN clients c on lg.client_id = c.id
+                 INNER JOIN loan_types lt on lg.loan_type_id = lt.id
+                 INNER JOIN frecuency_types ft on lt.frecuency_type_id = ft.id
+        WHERE lg.status = 'activo'";
         if ($collector){
             $query = $query . "and lg.collector_id = $collector" ;
         }
         $query = $query . ' ORDER BY client_id';
 
         $tableData = DB::select($query);
+        foreach ($tableData as $tableDatum) {
+            $now = new DateTime('now');
+            $lastPaymentDate = new DateTime($tableDatum->updated_at);
+            $tableDatum->mora = false;
+
+            if($tableDatum->loantype == 1){
+                $yesterday = $now->sub(new \DateInterval(' P1D'));
+                if ($yesterday->format('N') == 7)
+                    $now->sub(new \DateInterval('P2D'));
+                if ($lastPaymentDate < $yesterday){
+                    $tableDatum->mora = true;
+                }
+            } elseif( $tableDatum->loantype == 2) {
+                $lastWeek = $now->sub(new \DateInterval(' P7D'));
+                if ($lastWeek->format('N') == 7)
+                    $now->sub(new \DateInterval('P8D'));
+                if ($lastPaymentDate < $lastWeek){
+                    $tableDatum->mora = true;
+                }
+            } else {}
+        }
 //        dd($tableData);
         return view('reports.daily-table', compact('tableData'));
     }
@@ -196,4 +221,9 @@ class ReportController extends Controller
 //            return $dataReturn;
 //        return false;
 //    }
+
+    function isSunday() {
+        $currentDate = new DateTime("now");
+        return $currentDate->format('N') == 6;
+    }
 }

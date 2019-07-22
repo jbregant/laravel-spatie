@@ -16,9 +16,9 @@
     <!-- Scripts -->
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 
-    {{--    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/bootstrap-modal.js') }}"></script>--}}
-    {{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery-3.3.1.min.js') }}"></script>--}}
-    <!-- iziModal -->
+{{--    <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/bootstrap-modal.js') }}"></script>--}}
+{{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery-3.3.1.min.js') }}"></script>--}}
+<!-- iziModal -->
     {{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/iziModal/iziModal.min.js') }}"></script>--}}
     {{--<script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/datatables.min.js') }}"></script>--}}
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js') }}"></script>
@@ -111,11 +111,11 @@
 
     <main class="py-4">
         <div class="container">
-        @yield('content')
+            @yield('content')
         </div>
     </main>
     <!-- Modal -->
-    <div id="myModal" class="modal" tabindex="-1" role="dialog">
+    <div id="modal-info" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -125,15 +125,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="modalMsg"></p>
+                    <p id="modal-info-msg"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
-                {{--<div class="modal-footer">--}}
-                    {{--<button type="button" class="btn btn-outline-primary">Save changes</button>--}}
-                    {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-                {{--</div>--}}
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-prompt" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar imputacion de pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Esta seguro que desea imputar un pago por <span class="amount-paid-modal" style="font-size: -webkit-xxx-large;"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary save-payment-btn">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>

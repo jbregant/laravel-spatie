@@ -1,5 +1,6 @@
 <table id="paymentsTable" class="table table-sm table-bordered" style="width: 80%;">
     <thead>
+    <th>#</th>
     <th>Cliente Nº</th>
     <th>Pago</th>
     <th>Cta</th>
@@ -11,7 +12,8 @@
     </thead>
     <tbody id="tbodyPayments">
     @foreach($tableData as $key => $data)
-        <tr>
+        <tr @if($data->mora)style="background-color: grey;" @endif>
+            <th>{{ $key+1 }}</th>
             <th>{{ $data->client_id }}<span></span></th>
             <td></td>
             <td>{{ $data->payment_amount }}</td>

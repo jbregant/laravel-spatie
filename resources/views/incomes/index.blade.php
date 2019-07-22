@@ -109,13 +109,17 @@
     </div>
     <hr>
     <div class="row">
-
         <div class="col-lg-12" id="div-table-payments" >
         </div>
     </div>
+
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/income.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jQuery-3.3.1/jquery.validate.min.js') }}"></script>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 @endsection
