@@ -108,16 +108,17 @@ $(document).ready(function () {
 
         if (!paymentForm.valid())
             return false;
-        $('.modal').modal({
+        $('#modal-prompt').modal({
             backdrop: false,
-            keyboard: false
+            keyboard: true,
+            fadeDuration: 100
         });
 
         $('.amount-paid-modal').text('$'+$('#paymentAmountPaidTxt').val());
-        $('.modal').modal('show');
+        $('#modal-prompt').modal('show');
 
         $('.save-payment-btn').on('click', function () {
-            $('.modal').modal('hide');
+            $('#modal-prompt').modal('hide');
             let data = {
                 paymentId: paymentData.payment_id,
                 paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
