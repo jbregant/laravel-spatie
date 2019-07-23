@@ -117,37 +117,38 @@ $(document).ready(function () {
         $('.amount-paid-modal').text('$'+$('#paymentAmountPaidTxt').val());
         $('#modal-prompt').modal('show');
 
-        $('.save-payment-btn').on('click', function () {
-            $('#modal-prompt').modal('hide');
-            let data = {
-                paymentId: paymentData.payment_id,
-                paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
-                paymentDate: $('#payment-date-txt').val(),
-                loanGrantedId: $('#loanGrantedIdTxt').val()
-            };
-
-            $.ajax({
-                url: "/incomes/dopayment",
-                type: "POST",
-                data: data
-            }).done(function(response) {
-                $('#paymentForm')[0].reset();
-                $('#paymentPartialDiv').hide();
-                $('#remainingDebtDiv').hide();
-                $('#paymentAmountPaidTxt').prop('placeholder', '');
-                $('#modal-info-msg').text(response.message);
-                $('#modal-info').modal({
-                    keyboard: true,
-                    fadeDuration: 100
-                });
-                $('#searchClientBtn').click();
-                let today = new Date();
-                $("#payment-date-txt").datepicker("setDate", today);
-            }).fail(function(response) {
-                console.log(response);
-                alert('ERROR');
-            });
-        });
     })
+
+    $('.save-payment-btn').on('click', function () {
+        $('#modal-prompt').modal('hide');
+        let data = {
+            paymentId: paymentData.payment_id,
+            paymentAmountPaid: $('#paymentAmountPaidTxt').val(),
+            paymentDate: $('#payment-date-txt').val(),
+            loanGrantedId: $('#loanGrantedIdTxt').val()
+        };
+
+        $.ajax({
+            url: "/incomes/dopayment",
+            type: "POST",
+            data: data
+        }).done(function(response) {
+            $('#paymentForm')[0].reset();
+            $('#paymentPartialDiv').hide();
+            $('#remainingDebtDiv').hide();
+            $('#paymentAmountPaidTxt').prop('placeholder', '');
+            $('#modal-info-msg').text(response.message);
+            $('#modal-info').modal({
+                keyboard: true,
+                fadeDuration: 100
+            });
+            $('#searchClientBtn').click();
+            let today = new Date();
+            $("#payment-date-txt").datepicker("setDate", today);
+        }).fail(function(response) {
+            console.log(response);
+            alert('ERROR');
+        });
+    });
 
 });
