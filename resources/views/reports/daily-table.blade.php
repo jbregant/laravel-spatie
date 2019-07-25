@@ -1,3 +1,23 @@
+<style>
+    .moroso {
+        background-color: grey;
+    }
+
+    @media print {
+        .moroso td {
+            color: white !important;
+            background-color: grey !important;
+        }
+    }
+
+    @media print {
+        .moroso th {
+            color: white !important;
+            background-color: grey !important;
+        }
+    }
+
+</style>
 <table id="paymentsTable" class="table table-sm table-bordered" style="width: 80%;">
     <thead>
     <th>#</th>
@@ -12,7 +32,7 @@
     </thead>
     <tbody id="tbodyPayments">
     @foreach($tableData as $key => $data)
-        <tr @if($data->mora)style="background-color: grey;" @endif>
+        <tr @if($data->mora)class="moroso" @endif>
             <th>{{ $key+1 }}</th>
             <th>{{ $data->client_id }}<span></span></th>
             <td></td>

@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-12" id="report-table"></div>
+        <div class="col-lg-12" id="report-table" style="-webkit-print-color-adjust: exact;"></div>
     </div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="{{ asset('js/jquery-ui-1.12.1.custom/jquery-ui.min.css') }}" rel="stylesheet">
