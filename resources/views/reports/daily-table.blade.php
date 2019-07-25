@@ -6,14 +6,14 @@
     @media print {
         .moroso td {
             color: white !important;
-            background-color: black !important;
+            background-color: grey !important;
         }
     }
 
     @media print {
         .moroso th {
             color: white !important;
-            background-color: black !important;
+            background-color: grey !important;
         }
     }
 
