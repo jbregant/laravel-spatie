@@ -115,7 +115,7 @@
         </div>
     </main>
     <!-- Modal -->
-    <div id="modal-info" class="modal" tabindex="-1" role="dialog">
+    <div id="modal-info" class="modal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -139,7 +139,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Confirmar imputacion de pago</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" tabindex="-1">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -147,8 +147,8 @@
                     <p>Esta seguro que desea imputar un pago por <span class="amount-paid-modal" style="font-size: -webkit-xxx-large;"></span>?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary save-payment-btn">Aceptar</button>
+                    <button type="button" class="btn btn-secondary btn-cancel" data-dismiss="modal" tabindex="1">Cancelar</button>
+                    <button type="button" class="btn btn-primary save-payment-btn" tabindex="2">Aceptar</button>
                 </div>
             </div>
         </div>

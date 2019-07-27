@@ -116,8 +116,9 @@ $(document).ready(function () {
 
         $('.amount-paid-modal').text('$'+$('#paymentAmountPaidTxt').val());
         $('#modal-prompt').modal('show');
+        // $('.btn-cancel').hover();
 
-    })
+    });
 
     $('.save-payment-btn').on('click', function () {
         $('#modal-prompt').modal('hide');
@@ -137,11 +138,12 @@ $(document).ready(function () {
             $('#paymentPartialDiv').hide();
             $('#remainingDebtDiv').hide();
             $('#paymentAmountPaidTxt').prop('placeholder', '');
-            $('#modal-info-msg').text(response.message);
-            $('#modal-info').modal({
-                keyboard: true,
-                fadeDuration: 100
-            });
+
+            // $('#modal-info-msg').text(response.message);
+            // $('#modal-info').modal({
+            //     keyboard: true,
+            //     fadeDuration: 100
+            // });
             $('#searchClientBtn').click();
             let today = new Date();
             $("#payment-date-txt").datepicker("setDate", today);
