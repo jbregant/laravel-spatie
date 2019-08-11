@@ -24,7 +24,7 @@
     @endif
 
     <table id="clients-table" class="hover compact">
-        <thead class="thead-light">
+        <thead class="thead-light" style="border-bottom: 1px solid;">
         <tr>
             <th>No</th>
             <th scope="col">Nombre</th>
@@ -59,10 +59,11 @@
             </tr>
         @endforeach
     </table>
+    <div>{{ $clients->links() }}</div>
     <script>
-        $(document).ready( function () {
-            $('#clients-table').DataTable();
-        } );
+        // $(document).ready( function () {
+        //     $('#clients-table').DataTable();
+        // } );
     </script>
 
 @endsection

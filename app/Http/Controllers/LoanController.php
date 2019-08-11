@@ -36,7 +36,7 @@ class LoanController extends Controller
      */
     public function index(Request $request)
     {
-        $loansGranted = LoansGranted::where('status', 'activo')->get();
+        $loansGranted = LoansGranted::where('status', 'activo')->orderBy('id', 'asc')->paginate(15);
         return view('loans.index', compact('loansGranted'));
     }
 

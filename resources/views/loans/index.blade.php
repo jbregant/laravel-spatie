@@ -27,7 +27,7 @@
 
     <div class="row">
         <table id="loans-table" class="hover compact">
-            <thead class="thead-light">
+            <thead class="thead-light" style="border-bottom: 1px solid;">
             <tr>
                 <th>No Credito</th>
                 <th>No Cliente</th>
@@ -70,12 +70,13 @@
                 </tr>
             @endforeach
         </table>
+        {{ $loansGranted->links() }}
     </div>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.index.js') }}"></script>
     <script>
-        $(document).ready( function () {
-            $('#loans-table').DataTable();
-        } );
+        // $(document).ready( function () {
+        //     $('#loans-table').DataTable();
+        // } );
     </script>
 
 @endsection
