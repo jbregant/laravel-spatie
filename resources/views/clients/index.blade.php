@@ -59,7 +59,7 @@
             </tr>
         @endforeach
     </table>
-    <div>{{ $clients->links() }}</div>
+    <div style="width: 50%; margin: 0 auto;">{{ $clients->links() }}</div>
     <script>
         // $(document).ready( function () {
         //     $('#clients-table').DataTable();

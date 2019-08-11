@@ -70,7 +70,7 @@
                 </tr>
             @endforeach
         </table>
-        {{ $loansGranted->links() }}
+        <div style="width: 50%; margin: 0 auto;">{{ $loansGranted->links() }}</div>
     </div>
     <script language="JavaScript" type="text/javascript" src="{{ asset('js/custom/loan.index.js') }}"></script>
     <script>
