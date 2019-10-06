@@ -81,6 +81,30 @@
 
         </tbody>
     </table>
+
+    @if(!empty($paymentsHistory))
+        <h1>Historial de pagos</h1>
+        <table id="paymentsHistoryTable" class="table table-sm table-bordered">
+            <thead>
+            <th>Fecha de Pago</th>
+            <th>Pago $</th>
+            </thead>
+            <tfoot>
+            <tr>
+                <td>Total</td>
+                <td>{{ $totalPaymentsHistory }}</td>
+            </tr>
+            </tfoot>
+            <tbody id="tbodyPayments">
+            @foreach($paymentsHistory as $data)
+                <tr>
+                    <td>{{ Carbon\Carbon::parse($data->payment_date)->format('d-m-Y') }}</td>
+                    <td>{{ $data->payment_amount_paid }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    @endif
 @else
     <table id="paymentsTable" class="table table-sm">
         <thead>

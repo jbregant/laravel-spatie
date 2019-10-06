@@ -152,6 +152,11 @@ class ReportController extends Controller
 
         $paymentsHistory = DB::select("SELECT * FROM payments_history WHERE loan_granted_id = $loanId");
 
+        $totalPaymentsHistory = 0;
+        foreach ($paymentsHistory as $item) {
+            $totalPaymentsHistory += $item->payment_amount_paid;
+        }
+
         $tableDataAux = DB::select("SELECT lgp.loan_granted_id as loan_id, lgp.payment_number as payment_number, lgp.due_date as due_date, lgp.payment_date as payment_date,
        lgp.payment_amount as payment_amount, lgp.payment_amount_paid as payment_amount_paid, lgp.status as status,
        lg.client_id as client_id, lg.payments as payments, lg.updated_amount as debt,
@@ -189,7 +194,9 @@ class ReportController extends Controller
                 }
             }
         }
-        return view('reports.payment-schedule-table', compact('tableData', 'loanGranted', 'paymentsHistory', 'tableDataOrphans'));
+
+
+        return view('reports.payment-schedule-table', compact('tableData', 'loanGranted', 'paymentsHistory', 'tableDataOrphans', 'totalPaymentsHistory'));
     }
 
     function findPaymentHistory($date, $paymentId, $paymentsHistory){
